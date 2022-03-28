@@ -1,0 +1,85 @@
+.new-note-input {
+  width: 65%;
+  border-radius: 4px;
+  box-shadow: 0 3px 5px rgba(43, 43, 43, 0.214);
+  padding: 0.2rem 1rem;
+  margin: 2rem auto;
+}
+
+.new-note-top-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 2.5rem;
+}
+
+.new-note-top-section > input {
+  width: 90%;
+  border: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 3px 0;
+}
+
+.new-note-icons {
+  font-size: 1.3rem;
+  color: rgb(103, 103, 103);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.new-note-icons i {
+  padding: 0.6rem 0.7rem;
+  margin: 0 0.6rem;
+  border-radius: 50%;
+}
+
+.new-note-top-section .new-note-icons i:nth-child(2) {
+  font-size: 1rem;
+  padding: 0.8rem 0.8rem;
+}
+
+.new-note-bottom-section > input {
+  margin: 1rem 0;
+  padding: 0.4rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 100%;
+  margin-top: 0.5rem;
+  border: none;
+}
+.new-note-bottom-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.new-note-bottom-section-icons {
+  display: flex;
+  align-items: center;
+  width: 60%;
+}
+
+.new-note-bottom-section-icons i {
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  color: rgb(79, 79, 79);
+  flex-wrap: wrap;
+}
+
+.new-note-bottom-section > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.new-note-top-section > input:focus,
+.new-note-bottom-section > input:focus {
+  outline: none;
+}
+
+.alert-error,
+.alert-warning-btn {
+  margin-left: 0;
+}

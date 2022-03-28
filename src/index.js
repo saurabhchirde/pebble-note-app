@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
+import { PebbleNoteProvider } from "./Context/PebbleNoteProvider";
 
 // import { makeServer } from "./server";
 
@@ -11,9 +12,11 @@ import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <PebbleNoteProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </PebbleNoteProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
