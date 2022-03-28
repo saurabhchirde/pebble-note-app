@@ -24,6 +24,19 @@ const noteReducer = (state, action) => {
     case "emptyTrash":
       return { ...state, deletedNotes: [], deletedMsgNotification: true };
 
+    case "hideDeletedMsgNotification":
+      return {
+        ...state,
+        deletedMsgNotification: false,
+        errorMsgForEmptyTrash: false,
+      };
+
+    case "errorMsgForEmptyTrash":
+      return {
+        ...state,
+        errorMsgForEmptyTrash: true,
+      };
+
     case "editOtherNote":
       return {
         ...state,
