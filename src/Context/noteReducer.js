@@ -52,6 +52,7 @@ const noteReducer = (state, action) => {
         showInput: true,
         showIcon: false,
         newInputTitle: "Title",
+        pinNote: false,
       };
 
     case "newNote":
