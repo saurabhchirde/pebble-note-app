@@ -36,6 +36,7 @@ const Note = (props) => {
   };
 
   const pinSrc = props.pinAction === "unPinNote" ? pin2 : pin1;
+  const trashEditIcon = props.action === "restore" ? false : true;
 
   return (
     <div className="note-container">
@@ -51,11 +52,13 @@ const Note = (props) => {
           btnClassName="btn icon-btn-xsm"
           icon={props.icon}
         />
-        <ButtonIcon
-          onClick={editIconClickHandler}
-          btnClassName="btn icon-btn-xsm"
-          icon="fas fa-edit"
-        />
+        {trashEditIcon && (
+          <ButtonIcon
+            onClick={editIconClickHandler}
+            btnClassName="btn icon-btn-xsm"
+            icon="fas fa-edit"
+          />
+        )}
       </div>
     </div>
   );

@@ -14,15 +14,12 @@ const TrashPage = () => {
   const emptyTrashClickHandler = () => {
     if (state.deletedNotes.length < 1) {
       dispatch({ type: "errorMsgForEmptyTrash" });
-      setTimeout(() => {
-        dispatch({ type: "hideDeletedMsgNotification" });
-      }, 3000);
     } else {
       dispatch({ type: "emptyTrash" });
-      setTimeout(() => {
-        dispatch({ type: "hideDeletedMsgNotification" });
-      }, 3000);
     }
+    setTimeout(() => {
+      dispatch({ type: "hideDeletedMsgNotification" });
+    }, 3000);
   };
 
   return (
