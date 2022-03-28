@@ -1,0 +1,53 @@
+.allNotes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.pin-icon {
+  position: absolute;
+  right: 0.6rem;
+  top: 0.5rem;
+  cursor: pointer;
+}
+
+.note-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  width: 15rem;
+  margin: 1rem;
+  box-shadow: 0 3px 5px rgba(43, 43, 43, 0.214);
+}
+
+.note-container h2 {
+  font-size: 1.1rem;
+  padding: 1rem 1rem 0.5rem;
+}
+
+.note-container h3 {
+  padding: 0.5rem 1rem 1rem;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.note-nav-btn {
+  margin: 0.6rem 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgb(210, 210, 210);
+}
+
+.note-nav-btn button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem;
+  border-radius: 50%;
+}
+
+.note-nav-btn button:nth-child(4) {
+  padding: 0.7rem 1rem;
+}

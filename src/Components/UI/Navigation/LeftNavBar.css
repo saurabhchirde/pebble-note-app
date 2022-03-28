@@ -1,0 +1,36 @@
+.left-nav-div {
+  width: 14rem;
+  padding: 0.6rem 1rem 1rem;
+  position: sticky;
+  height: 100%;
+  top: 4.5rem;
+}
+
+.left-nav-div li {
+  display: flex;
+  align-self: center;
+  justify-content: space-around;
+  margin: 1rem 1rem 1rem 0;
+  padding: 0rem 0.8rem;
+  cursor: pointer;
+  width: 100%;
+  color: var(--text-dark);
+}
+
+.left-nav-div li h2,
+.left-nav-div li i {
+  text-align: left;
+  font-weight: 500;
+  padding: 0.4rem;
+}
+
+.left-nav-div li h2 {
+  width: 70%;
+  font-size: 1rem;
+}
+
+.left-nav-div li i {
+  width: 30%;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}

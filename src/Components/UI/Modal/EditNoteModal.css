@@ -1,0 +1,44 @@
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.447);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 4;
+}
+
+.note-title-area,
+.note-text-area {
+  padding: 12px;
+  margin: 5px 0;
+  font-size: 1rem;
+  min-width: 18rem;
+  resize: vertical;
+}
+.note-title-area::-webkit-scrollbar,
+.note-text-area ::-webkit-scrollbar {
+  display: none;
+}
+
+.note-title-area {
+  min-height: 4rem;
+}
+
+.note-text-area {
+  min-height: 12rem;
+}
+
+.signin-modal {
+  min-width: 21rem;
+}
+
+.edit-modal-btn {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 1.5rem;
+  background-color: aquamarine;
+}
+
+.edit-modal-btn button {
+  margin: 0;
+}
