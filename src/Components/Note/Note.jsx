@@ -40,9 +40,11 @@ const Note = (props) => {
 
   return (
     <div className="note-container">
-      <div onClick={pinClickHandler} className="pin-icon">
-        <img src={pinSrc} alt="pin" />
-      </div>
+      {trashEditIcon && (
+        <div onClick={pinClickHandler} className="pin-icon">
+          <img src={pinSrc} alt="pin" />
+        </div>
+      )}
       <h2>{props.title}</h2>
       <h3 placeholder="Note text will appear here">{props.text}</h3>
       <div className="note-nav-btn">
