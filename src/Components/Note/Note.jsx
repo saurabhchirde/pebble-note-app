@@ -36,7 +36,7 @@ const Note = (props) => {
   };
 
   const pinSrc = props.pinAction === "unPinNote" ? pin2 : pin1;
-  const trashEditIcon = props.action === "restore" ? false : true;
+  const trashEditIcon = props.restoreAction === "restore" ? false : true;
 
   return (
     <div className="note-container">
@@ -45,7 +45,6 @@ const Note = (props) => {
       </div>
       <h2>{props.title}</h2>
       <h3 placeholder="Note text will appear here">{props.text}</h3>
-
       <div className="note-nav-btn">
         <ButtonIcon
           onClick={delRestoreIconClickHandler}

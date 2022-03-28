@@ -11,12 +11,13 @@ const initialState = {
   addState: "Add New Note",
   showInput: false,
   pinnedNote: [],
-  noteActionIcon: "fas fa-trash",
   emptyNoteError: false,
   unSavedError: false,
   showIcon: true,
   pinNote: false,
   errorMsgForEmptyTrash: false,
+  noteDeletedAlert: false,
+  noteRestoredAlert: false,
 };
 
 const noteContext = createContext(initialState);

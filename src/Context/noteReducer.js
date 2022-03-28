@@ -10,6 +10,20 @@ const noteReducer = (state, action) => {
         pinnedNote: [
           ...state.pinnedNote.filter((item) => item.id !== action.payload.id),
         ],
+        noteDeletedAlert: true,
+        noteRestoredAlert: false,
+      };
+
+    case "hideDeletedAlert":
+      return {
+        ...state,
+        noteDeletedAlert: false,
+      };
+
+    case "hideRestoredAlert":
+      return {
+        ...state,
+        noteRestoredAlert: false,
       };
 
     case "restoreNote":
@@ -19,6 +33,8 @@ const noteReducer = (state, action) => {
           ...state.deletedNotes.filter((item) => item.id !== action.payload.id),
         ],
         allNotes: [action.payload, ...state.allNotes],
+        noteDeletedAlert: false,
+        noteRestoredAlert: true,
       };
 
     case "emptyTrash":
