@@ -1,0 +1,146 @@
+.landing {
+  margin: auto;
+  width: 80%;
+  height: 90vh;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.landing-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto auto 2rem;
+  padding: 0 2rem;
+}
+
+.landing-header img {
+  width: 12rem;
+}
+
+.landing-login-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.landing-login-section button {
+  width: 100%;
+}
+
+.landing-title {
+  font-size: 2.2rem;
+}
+.landing-sub-title {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.landing-body {
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  justify-content: space-between;
+  position: fixed;
+  width: 80%;
+  margin: 0 auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.landing-body-features {
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.landing-body-features h3 {
+  font-size: 1.4rem;
+}
+
+.landing-body-features li {
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+.landing-body-text {
+  text-align: left;
+  padding: 1rem 1rem;
+  width: 60%;
+}
+
+.landing-body-header {
+  font-size: 1.8rem;
+  margin: 1rem 1rem 2rem;
+}
+.landing-body-header-text {
+  font-size: 1.2rem;
+  margin: 0 1rem;
+}
+
+.landing-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 1.2rem;
+}
+
+.landing-nav-btn p {
+  font-size: 1.2rem;
+}
+
+.landing-nav-btn > button {
+  margin-left: 1rem;
+}
+
+@media screen and (max-width: 1080px) {
+  .landing {
+    width: 100%;
+  }
+
+  .landing-body {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .landing-nav-btn button,
+  .landing-login-section button {
+    margin: 0 8px;
+    font-size: 1rem;
+  }
+  .landing-body-text {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .landing {
+    margin: auto;
+    padding: 0;
+  }
+  .landing-header {
+    padding: 0 1rem;
+  }
+
+  .landing-body {
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    margin: 6rem auto 5rem;
+  }
+
+  .landing-body-text {
+    width: 100%;
+  }
+
+  .landing-nav-btn {
+    justify-content: center;
+    margin: 1rem 0 2rem;
+    padding: 0;
+  }
+
+  .landing-nav-btn button {
+    margin: 0 0 0 1rem;
+  }
+}
