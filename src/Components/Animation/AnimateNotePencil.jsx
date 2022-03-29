@@ -1,4 +1,3 @@
-import "./AnimateNotePencil.css";
 import { useEffect } from "react";
 import note_pencil from "../../Data/Images/Animation/note-pencil.json";
 import lottie from "lottie-web";
