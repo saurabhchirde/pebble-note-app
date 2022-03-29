@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import EditNoteModal from "./Components/UI/Modal/EditNoteModal";
 import LeftNavBar from "./Components/UI/Navigation/LeftNavBar";
@@ -14,12 +14,17 @@ import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 
 function App() {
   const { editModal } = usePebbleNote();
+  const location = useLocation();
+  const hideNav = location.pathname === "/" ? false : true;
+  console.log(location.pathname);
+  console.log(location.pathname);
+
   return (
     <>
       {editModal && <EditNoteModal />}
-      <NavBar />
+      {hideNav && <NavBar />}
       <BodyWrapper>
-        <LeftNavBar />
+        {hideNav && <LeftNavBar />}
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<HomePage />} />

@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { PebbleNoteProvider } from "./Context/PebbleNoteProvider";
+import { AnimationProvider } from "./Context/AnimationProvider";
 
 // import { makeServer } from "./server";
 
@@ -12,11 +13,13 @@ import { PebbleNoteProvider } from "./Context/PebbleNoteProvider";
 
 ReactDOM.render(
   <React.StrictMode>
-    <PebbleNoteProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </PebbleNoteProvider>
+    <AnimationProvider>
+      <PebbleNoteProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PebbleNoteProvider>
+    </AnimationProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
