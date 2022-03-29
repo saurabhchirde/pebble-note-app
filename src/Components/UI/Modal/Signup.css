@@ -1,0 +1,17 @@
+.existing-account-btn {
+  text-align: center;
+  cursor: pointer;
+}
+
+.existing-account-btn h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 10px;
+  color: var(--text-light);
+}
+
+.existing-account-btn span {
+  padding: 0 10px;
+  font-weight: bold;
+  color: var(--primary-color);
+}

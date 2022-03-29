@@ -1,50 +1,16 @@
-import { createContext, useContext, useReducer, useState } from "react";
-import { v4 as uuid } from "uuid";
-import { noteReducer } from "./noteReducer";
-import { demoNotes } from "../Data/demoNotes";
-
-const initialState = {
-  deletedNotes: [],
-  allNotes: [...demoNotes],
-  deletedMsgNotification: false,
-  newInputTitle: "Take a note..",
-  addState: "Add New Note",
-  showInput: false,
-  pinnedNote: [],
-  emptyNoteError: false,
-  unSavedError: false,
-  showIcon: true,
-  pinNote: false,
-  errorMsgForEmptyTrash: false,
-  noteDeletedAlert: false,
-  noteRestoredAlert: false,
-};
-
-const noteContext = createContext(initialState);
+import { BrowserRouter } from "react-router-dom";
+import { AnimationProvider, ModalProvider, NoteProvider } from "./index";
 
 const PebbleNoteProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(noteReducer, {
-    ...initialState,
-    deletedNotes: JSON.parse(localStorage.getItem("deletedNotes")) ?? [],
-    allNotes: JSON.parse(localStorage.getItem("savedNotes")) ?? [...demoNotes],
-    pinnedNote: JSON.parse(localStorage.getItem("pinnedNotes")) ?? [],
-  });
-  const [newNote, setNewNote] = useState({
-    id: uuid(),
-    title: "",
-    text: "",
-  });
-  const [editModal, setEditModal] = useState(false);
-
   return (
-    <noteContext.Provider
-      value={{ state, dispatch, newNote, setNewNote, editModal, setEditModal }}
-    >
-      {children}
-    </noteContext.Provider>
+    <BrowserRouter>
+      <AnimationProvider>
+        <ModalProvider>
+          <NoteProvider>{children}</NoteProvider>
+        </ModalProvider>
+      </AnimationProvider>
+    </BrowserRouter>
   );
 };
 
-const usePebbleNote = () => useContext(noteContext);
-
-export { PebbleNoteProvider, usePebbleNote };
+export { PebbleNoteProvider };

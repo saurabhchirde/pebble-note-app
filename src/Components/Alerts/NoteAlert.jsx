@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { usePebbleNote } from "../../Context/PebbleNoteProvider";
+import { usePebbleNote } from "../../Context";
 
 const NoteAlert = (props) => {
   const { dispatch } = usePebbleNote();

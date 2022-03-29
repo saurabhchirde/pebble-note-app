@@ -1,5 +1,5 @@
 import "./NewNote.css";
-import { usePebbleNote } from "../../Context/PebbleNoteProvider";
+import { usePebbleNote } from "../../Context";
 import ButtonSimple from "../UI/Button/ButtonSimple";
 import { v4 as uuid } from "uuid";
 import NoteAlert from "../Alerts/NoteAlert";

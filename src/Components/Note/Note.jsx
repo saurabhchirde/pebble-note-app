@@ -2,7 +2,7 @@ import "./Note.css";
 import pin1 from "../../Data/Images/Icons/pin1.svg";
 import pin2 from "../../Data/Images/Icons/pin2.svg";
 import ButtonIcon from "../UI/Button/ButtonIcon";
-import { usePebbleNote } from "../../Context/PebbleNoteProvider";
+import { usePebbleNote } from "../../Context";
 
 const Note = (props) => {
   const { dispatch, setNewNote, setEditModal } = usePebbleNote();
