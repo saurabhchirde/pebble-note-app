@@ -34,3 +34,9 @@
   font-size: 1.2rem;
   color: var(--primary-color);
 }
+
+.activeNav {
+  border-radius: 4px;
+  outline: 1px solid var(--primary-color);
+  transition: 0.3s ease-in;
+}
