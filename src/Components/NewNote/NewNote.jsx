@@ -2,6 +2,7 @@ import "./NewNote.css";
 import { usePebbleNote } from "../../Context/PebbleNoteProvider";
 import ButtonSimple from "../UI/Button/ButtonSimple";
 import { v4 as uuid } from "uuid";
+import NoteAlert from "../Alerts/NoteAlert";
 
 const NewNote = () => {
   const { state, dispatch, newNote, setNewNote, editModal, setEditModal } =
@@ -23,9 +24,6 @@ const NewNote = () => {
     e.preventDefault();
     if (newNote.title.trim() === "" && newNote.text.trim() === "") {
       dispatch({ type: "emptyNoteError" });
-      setTimeout(() => {
-        dispatch({ type: "hideEmptyNoteError" });
-      }, 3000);
     } else {
       if (!unSavedError) {
         if (pinNote) {
@@ -93,10 +91,12 @@ const NewNote = () => {
     <>
       <form onSubmit={onSubmitHandler} className="new-note-input">
         {emptyNoteError && (
-          <div className="alert-error">
-            <i className="fas fa-exclamation-circle alert-icon"></i>
-            <span className="p-md">Input cannot be blank, try again.</span>
-          </div>
+          <NoteAlert
+            alert="alert-error"
+            icon="fas fa-exclamation-circle alert-icon"
+            text="Input cannot be blank, try again."
+            dispatchType="hideEmptyNoteError"
+          />
         )}
         {unSavedError && (
           <div className="alert-warning-btn">
