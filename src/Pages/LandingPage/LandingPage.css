@@ -55,6 +55,11 @@
 
 .landing-body-features h3 {
   font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.landing-body-features ul {
+  padding: 2px 0 0 1rem;
 }
 
 .landing-body-features li {
@@ -85,7 +90,7 @@
 }
 
 .landing-nav-btn p {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .landing-nav-btn > button {
