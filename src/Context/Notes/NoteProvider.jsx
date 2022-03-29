@@ -11,13 +11,17 @@ const initialState = {
   addState: "Add New Note",
   showInput: false,
   pinnedNote: [],
+  archivedNotes: [],
   emptyNoteError: false,
   unSavedError: false,
   showIcon: true,
   pinNote: false,
+  archivedNote: false,
   errorMsgForEmptyTrash: false,
   noteDeletedAlert: false,
   noteRestoredAlert: false,
+  noteArchiveAlert: false,
+  noteUnarchiveAlert: false,
 };
 
 const noteContext = createContext(initialState);
@@ -28,6 +32,7 @@ const NoteProvider = ({ children }) => {
     deletedNotes: JSON.parse(localStorage.getItem("deletedNotes")) ?? [],
     allNotes: JSON.parse(localStorage.getItem("savedNotes")) ?? [...demoNotes],
     pinnedNote: JSON.parse(localStorage.getItem("pinnedNotes")) ?? [],
+    archivedNotes: JSON.parse(localStorage.getItem("archivedNotes")) ?? [],
   });
   const [newNote, setNewNote] = useState({
     id: uuid(),

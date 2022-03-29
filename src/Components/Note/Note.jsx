@@ -5,11 +5,11 @@ import ButtonIcon from "../UI/Button/ButtonIcon";
 import { usePebbleNote } from "../../Context";
 
 const Note = (props) => {
-  const { dispatch, setNewNote, setEditModal } = usePebbleNote();
+  const { state, dispatch, setNewNote, setEditModal } = usePebbleNote();
 
   const pinClickHandler = () => {
     dispatch({
-      type: props.pinAction === "unPinNote" ? "unPinNote" : "pinNote",
+      type: props.pinAction === "pinnedNote" ? "unPinNote" : "pinNote",
       payload: props,
     });
   };
@@ -25,8 +25,10 @@ const Note = (props) => {
     setEditModal(true);
     if (props.editAction === "editPinned") {
       dispatch({ type: "editPinnedNote", payload: props });
-    } else {
-      dispatch({ type: "editOtherNote", payload: props });
+    } else if (props.editAction === "editUnPinned") {
+      dispatch({ type: "editUnPinned", payload: props });
+    } else if (props.editAction === "editArchive") {
+      dispatch({ type: "editArchived", payload: props });
     }
     setNewNote({
       id: props.id,
@@ -35,12 +37,27 @@ const Note = (props) => {
     });
   };
 
-  const pinSrc = props.pinAction === "unPinNote" ? pin2 : pin1;
+  const archiveIconClickHandler = () => {
+    dispatch({
+      type:
+        props.archiveAction === "archive"
+          ? props.pinAction === "pinnedNote"
+            ? "addPinnedToArchive"
+            : "addToArchive"
+          : "removeFromArchive",
+      payload: props,
+    });
+  };
+
+  const pinSrc = props.pinAction === "pinnedNote" ? pin2 : pin1;
   const trashEditIcon = props.restoreAction === "restore" ? false : true;
+  const archiveIcon =
+    props.archiveAction === "restore" ? "fas fa-upload" : "fas fa-file-archive";
+  const hidePinInArchive = props.archiveAction === "restore" ? false : true;
 
   return (
     <div className="note-container">
-      {trashEditIcon && (
+      {trashEditIcon && hidePinInArchive && (
         <div onClick={pinClickHandler} className="pin-icon">
           <img src={pinSrc} alt="pin" />
         </div>
@@ -50,13 +67,20 @@ const Note = (props) => {
       <div className="note-nav-btn">
         <ButtonIcon
           onClick={delRestoreIconClickHandler}
-          btnClassName="btn icon-btn-xsm"
+          btnClassName="btn icon-btn-sm"
           icon={props.icon}
         />
         {trashEditIcon && (
           <ButtonIcon
+            onClick={archiveIconClickHandler}
+            btnClassName="btn icon-btn-sm"
+            icon={archiveIcon}
+          />
+        )}
+        {trashEditIcon && (
+          <ButtonIcon
             onClick={editIconClickHandler}
-            btnClassName="btn icon-btn-xsm"
+            btnClassName="btn icon-btn-sm"
             icon="fas fa-edit"
           />
         )}

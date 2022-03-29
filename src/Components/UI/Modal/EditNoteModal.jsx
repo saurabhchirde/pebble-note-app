@@ -41,7 +41,9 @@ const EditNoteModal = () => {
       setEditModal(true);
     } else {
       if (!state.unSavedError) {
-        if (state.pinNote) {
+        if (state.archivedNote) {
+          dispatch({ type: "addToArchive", payload: newNote });
+        } else if (state.pinNote) {
           dispatch({ type: "pinNote", payload: newNote });
         } else {
           dispatch({ type: "newNote", payload: newNote });

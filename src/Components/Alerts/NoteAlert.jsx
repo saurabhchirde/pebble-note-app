@@ -7,7 +7,7 @@ const NoteAlert = (props) => {
   useEffect(() => {
     const alertTime = setTimeout(() => {
       dispatch({ type: props.dispatchType });
-    }, 2500);
+    }, 1700);
     return () => {
       clearTimeout(alertTime);
     };
