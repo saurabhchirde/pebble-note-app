@@ -1,5 +1,5 @@
 import "./NewNote.css";
-import { usePebbleNote } from "../../Context";
+import { usePebbleNote, useTheme } from "../../Context";
 import ButtonSimple from "../UI/Button/ButtonSimple";
 import { v4 as uuid } from "uuid";
 import NoteAlert from "../Alerts/NoteAlert";
@@ -15,6 +15,7 @@ const NewNote = () => {
     unSavedError,
     pinNote,
   } = state;
+  const { darkTheme } = useTheme();
 
   const clickOnNewNoteHandler = () => {
     dispatch({ type: "clickOnNewNoteHandler" });
@@ -87,9 +88,13 @@ const NewNote = () => {
     setEditModal(false);
   };
 
+  const darkThemeClass = darkTheme
+    ? "new-note-input dark-mode-new-note"
+    : "new-note-input";
+
   return (
     <>
-      <form onSubmit={onSubmitHandler} className="new-note-input">
+      <form onSubmit={onSubmitHandler} className={darkThemeClass}>
         {emptyNoteError && (
           <NoteAlert
             alert="alert-error"

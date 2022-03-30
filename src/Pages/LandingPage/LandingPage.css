@@ -3,7 +3,13 @@
   width: 80%;
   height: 90vh;
   text-align: center;
-  padding: 2rem 0;
+  padding: 0;
+  position: relative;
+}
+
+.landing > button {
+  bottom: 1rem;
+  font-size: 5rem;
 }
 
 .landing-header {
@@ -18,12 +24,14 @@
   width: 12rem;
 }
 
-.landing-login-section {
+.landing-join-section {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 12rem;
 }
-.landing-login-section button {
+
+.landing-join-section button:nth-child(1) {
   width: 100%;
 }
 
@@ -109,9 +117,9 @@
 
 @media screen and (max-width: 760px) {
   .landing-nav-btn button,
-  .landing-login-section button {
+  .landing-join-section button {
     margin: 0 8px;
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
   .landing-body-text {
     width: 70%;
@@ -124,7 +132,16 @@
     padding: 0;
   }
   .landing-header {
-    padding: 0 1rem;
+    padding: 0 8px;
+  }
+  .landing-join-section button:nth-child(1) {
+    font-size: 1rem;
+  }
+
+  .landing-join-section button:nth-child(2) {
+    margin: auto 5px;
+    padding: 8px;
+    font-size: 1.2rem;
   }
 
   .landing-body {
@@ -143,9 +160,5 @@
     justify-content: center;
     margin: 1rem 0 2rem;
     padding: 0;
-  }
-
-  .landing-nav-btn button {
-    margin: 0 0 0 1rem;
   }
 }

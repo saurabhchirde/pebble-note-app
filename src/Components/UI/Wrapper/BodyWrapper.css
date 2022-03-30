@@ -1,6 +1,13 @@
 .body {
   display: flex;
   align-items: flex-start;
-  padding: 1rem 0;
-  min-height: 90vh;
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+}
+
+@media screen and (max-width: 580px) {
+  .body {
+    padding: 1rem 0 1rem;
+  }
 }

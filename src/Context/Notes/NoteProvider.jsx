@@ -7,7 +7,7 @@ const initialState = {
   deletedNotes: [],
   allNotes: [...demoNotes],
   deletedMsgNotification: false,
-  newInputTitle: "Take a note..",
+  newInputTitle: "Take a new note..",
   addState: "Add New Note",
   showInput: false,
   pinnedNote: [],

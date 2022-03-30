@@ -2,12 +2,13 @@ import "./Note.css";
 import pin1 from "../../Data/Images/Icons/pin1.svg";
 import pin2 from "../../Data/Images/Icons/pin2.svg";
 import ButtonIcon from "../UI/Button/ButtonIcon";
-import { usePebbleNote } from "../../Context";
+import { usePebbleNote, useTheme } from "../../Context";
 import archiveIcon from "../../Data/Images/Icons/archive.svg";
 import unarchiveIcon from "../../Data/Images/Icons/unarchive.svg";
 
 const Note = (props) => {
   const { dispatch, setNewNote, setEditModal } = usePebbleNote();
+  const { darkTheme } = useTheme();
 
   const pinClickHandler = () => {
     dispatch({
@@ -56,9 +57,12 @@ const Note = (props) => {
   const showArchiveIcon =
     props.archiveAction === "restore" ? unarchiveIcon : archiveIcon;
   const hidePinInArchive = props.archiveAction === "restore" ? false : true;
+  const darkThemeClass = darkTheme
+    ? "note-container dark-mode-card"
+    : "note-container";
 
   return (
-    <div className="note-container">
+    <div className={darkThemeClass}>
       {trashEditIcon && hidePinInArchive && (
         <div onClick={pinClickHandler} className="pin-icon">
           <img src={pinSrc} alt="pin" />

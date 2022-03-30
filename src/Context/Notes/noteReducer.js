@@ -64,7 +64,6 @@ const noteReducer = (state, action) => {
       };
 
     case "addPinnedToArchive":
-      console.log(action.payload);
       return {
         ...state,
         pinnedNote: [
@@ -171,6 +170,7 @@ const noteReducer = (state, action) => {
         ...state,
         showInput: false,
         unSavedError: false,
+        newInputTitle: "Take a new note..",
       };
 
     case "hideInputWithData":
@@ -183,7 +183,7 @@ const noteReducer = (state, action) => {
       return {
         ...state,
         showInput: false,
-        newInputTitle: "Take a note..",
+        newInputTitle: "Take a new note..",
       };
 
     case "pinNote":
