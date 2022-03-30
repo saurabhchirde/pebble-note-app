@@ -83,3 +83,9 @@
 .alert-warning-btn {
   margin-left: 0;
 }
+
+@media screen and (max-width: 760px) {
+  .new-note-input {
+    width: 95%;
+  }
+}

@@ -18,12 +18,13 @@
   border-radius: 4px;
   width: 15rem;
   margin: 1rem;
+  padding-top: 1rem;
   box-shadow: 0 3px 5px rgba(43, 43, 43, 0.214);
 }
 
 .note-container h2 {
   font-size: 1.1rem;
-  padding: 1rem 1rem 0.5rem;
+  padding: 0 1rem 0.5rem;
 }
 
 .note-container h3 {
@@ -46,8 +47,16 @@
   justify-content: center;
   padding: 0.7rem;
   border-radius: 50%;
+  font-size: 0.9rem;
 }
 
 .note-nav-btn button:nth-child(4) {
   padding: 0.7rem 1rem;
+}
+
+@media screen and (max-width: 760px) {
+  .note-container {
+    width: 11rem;
+    margin: 5px 8px;
+  }
 }

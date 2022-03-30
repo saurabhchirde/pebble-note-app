@@ -65,8 +65,9 @@ const EditNoteModal = () => {
         <a onClick={closeEditModal}>
           <i className="fas fa-times"></i>
         </a>
-        <div className="edit-note- mg-1-top">
-          <div>
+        <div className="mg-1-top">
+          <div className="mg-1-bot">
+            Title
             <div className="input-icon">
               <textarea
                 onChange={onChangeHandler}
@@ -79,6 +80,7 @@ const EditNoteModal = () => {
             </div>
           </div>
           <div>
+            Text
             <div className="input-icon">
               <textarea
                 onChange={onChangeHandler}

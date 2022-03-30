@@ -2,6 +2,7 @@ import Note from "../../Components/Note/Note";
 import { usePebbleNote } from "../../Context";
 import { useEffect } from "react";
 import NoteAlert from "../../Components/Alerts/NoteAlert";
+import "./ArchivePage.css";
 
 const ArchivePage = () => {
   const { state } = usePebbleNote();
@@ -22,18 +23,22 @@ const ArchivePage = () => {
         />
       )}
       <div className="allNotes">
-        {archivedNotes.map((item) => {
-          return (
-            <Note
-              title={item.title}
-              text={item.text}
-              id={item.id}
-              key={item.id}
-              archiveAction="restore"
-              editAction="editArchive"
-            />
-          );
-        })}
+        {archivedNotes.length < 1 ? (
+          <i className="fas fa-file-archive archive-page"></i>
+        ) : (
+          archivedNotes.map((item) => {
+            return (
+              <Note
+                title={item.title}
+                text={item.text}
+                id={item.id}
+                key={item.id}
+                archiveAction="restore"
+                editAction="editArchive"
+              />
+            );
+          })
+        )}
       </div>
     </div>
   );

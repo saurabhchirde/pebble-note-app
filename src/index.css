@@ -44,3 +44,11 @@ code {
   background-color: rgb(255, 255, 255);
   width: 1rem;
 }
+
+@media screen and (max-width: 760px) {
+  .body-content {
+    width: 100%;
+    min-height: 100vh;
+    margin-bottom: 4rem;
+  }
+}
