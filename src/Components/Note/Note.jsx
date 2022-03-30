@@ -3,9 +3,11 @@ import pin1 from "../../Data/Images/Icons/pin1.svg";
 import pin2 from "../../Data/Images/Icons/pin2.svg";
 import ButtonIcon from "../UI/Button/ButtonIcon";
 import { usePebbleNote } from "../../Context";
+import archiveIcon from "../../Data/Images/Icons/archive.svg";
+import unarchiveIcon from "../../Data/Images/Icons/unarchive.svg";
 
 const Note = (props) => {
-  const { state, dispatch, setNewNote, setEditModal } = usePebbleNote();
+  const { dispatch, setNewNote, setEditModal } = usePebbleNote();
 
   const pinClickHandler = () => {
     dispatch({
@@ -51,8 +53,8 @@ const Note = (props) => {
 
   const pinSrc = props.pinAction === "pinnedNote" ? pin2 : pin1;
   const trashEditIcon = props.restoreAction === "restore" ? false : true;
-  const archiveIcon =
-    props.archiveAction === "restore" ? "fas fa-upload" : "fas fa-file-archive";
+  const showArchiveIcon =
+    props.archiveAction === "restore" ? unarchiveIcon : archiveIcon;
   const hidePinInArchive = props.archiveAction === "restore" ? false : true;
 
   return (
@@ -71,11 +73,9 @@ const Note = (props) => {
           icon={props.icon}
         />
         {trashEditIcon && (
-          <ButtonIcon
-            onClick={archiveIconClickHandler}
-            btnClassName="btn icon-btn-sm"
-            icon={archiveIcon}
-          />
+          <div onClick={archiveIconClickHandler} className="note-icons">
+            <img src={showArchiveIcon} alt="icon" />
+          </div>
         )}
         {trashEditIcon && (
           <ButtonIcon

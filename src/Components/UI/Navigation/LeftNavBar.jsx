@@ -1,5 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import "./LeftNavBar.css";
+import ideaIcon from "../../../Data/Images/Icons/idea.svg";
+import labelIcon from "../../../Data/Images/Icons/label.svg";
+import archiveIcon from "../../../Data/Images/Icons/archive.svg";
+import trashIcon from "../../../Data/Images/Icons/trash.svg";
+import userIcon from "../../../Data/Images/Icons/user.svg";
 
 const LeftNavBar = () => {
   const location = useLocation();
@@ -15,31 +20,31 @@ const LeftNavBar = () => {
       <ul>
         <Link to="/home">
           <li className={activeHome}>
-            <i className="far fa-lightbulb"></i>
+            <img src={ideaIcon} alt="idea-icon" className="nav-icons" />
             <h2> Home</h2>
           </li>
         </Link>
         <Link to="/label">
           <li className={activeLabel}>
-            <i className="fas fa-tag"></i>
+            <img src={labelIcon} alt="label-icon" className="nav-icons" />
             <h2> Label</h2>
           </li>
         </Link>
         <Link to="/archive">
           <li className={activeArchive}>
-            <i className="far fa-file-archive"></i>
+            <img src={archiveIcon} alt="archive-icon" className="nav-icons" />
             <h2> Archive</h2>
           </li>
         </Link>
         <Link to="/trash">
           <li className={activeTrash}>
-            <i className="far fa-trash-alt"></i>
+            <img src={trashIcon} alt="trash-icon" className="nav-icons" />
             <h2> Trash</h2>
           </li>
         </Link>
         <Link to="/profile">
           <li className={activeProfile}>
-            <i className="fas fa-user"></i>
+            <img src={userIcon} alt="user-icon" className="nav-icons" />
             <h2> Profile</h2>
           </li>
         </Link>

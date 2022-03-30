@@ -11,6 +11,16 @@
   cursor: pointer;
 }
 
+.note-icons {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.note-icons img {
+  width: 1.4rem;
+}
+
 .note-container {
   position: relative;
   display: flex;

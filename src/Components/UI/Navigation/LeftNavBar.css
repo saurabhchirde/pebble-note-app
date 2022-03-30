@@ -8,34 +8,23 @@
 
 .left-nav-div li {
   display: flex;
-  align-self: center;
-  margin: 1rem 1rem 1rem 0;
-  padding: 0rem 0.8rem;
-  cursor: pointer;
-  width: 100%;
+  align-items: center;
   color: var(--text-dark);
-}
-
-.left-nav-div li h2,
-.left-nav-div li i {
-  text-align: left;
-  font-weight: 500;
-  padding: 0.4rem;
+  padding: 5px 1rem;
+  margin: 8px 0;
 }
 
 .left-nav-div li h2 {
-  width: 70%;
+  font-weight: 500;
+  padding: 0.4rem;
+  width: 100%;
   font-size: 1rem;
 }
 
-.left-nav-div li i {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30%;
+.left-nav-div li .nav-icons {
+  width: 2.2rem;
   margin-right: 1rem;
-  font-size: 1.2rem;
-  color: var(--primary-color);
+  padding: 5px;
 }
 
 .activeNav {
@@ -47,27 +36,28 @@
 @media screen and (max-width: 760px) {
   .left-nav-div {
     width: 100%;
-    height: 4.5rem;
+    height: 4rem;
     position: fixed;
-    padding: 0 1rem;
+    padding: 5px 0;
     top: 100%;
     transform: translate(0, -100%);
     background-color: var(--primary-bg);
     box-shadow: 0 -4px 10px var(--modal-shadow);
     z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .left-nav-div ul {
     display: flex;
-    justify-content: space-between;
   }
 
   .left-nav-div li h2 {
     display: none;
   }
 
-  .left-nav-div li i {
-    margin-right: 0;
-    width: 100%;
-    font-size: 1.4rem;
+  .left-nav-div li .nav-icons {
+    width: 2.4rem;
+    margin: 0;
   }
 }

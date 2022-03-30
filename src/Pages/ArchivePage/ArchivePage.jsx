@@ -3,6 +3,7 @@ import { usePebbleNote } from "../../Context";
 import { useEffect } from "react";
 import NoteAlert from "../../Components/Alerts/NoteAlert";
 import "./ArchivePage.css";
+import archiveIcon from "../../Data/Images/Icons/archive.svg";
 
 const ArchivePage = () => {
   const { state } = usePebbleNote();
@@ -24,7 +25,7 @@ const ArchivePage = () => {
       )}
       <div className="allNotes">
         {archivedNotes.length < 1 ? (
-          <i className="fas fa-file-archive archive-page"></i>
+          <img src={archiveIcon} alt="archive-icon" className="archive-page" />
         ) : (
           archivedNotes.map((item) => {
             return (
