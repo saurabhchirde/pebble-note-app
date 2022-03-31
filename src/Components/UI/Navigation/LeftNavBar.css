@@ -8,29 +8,56 @@
 
 .left-nav-div li {
   display: flex;
-  align-self: center;
-  justify-content: space-around;
-  margin: 1rem 1rem 1rem 0;
-  padding: 0rem 0.8rem;
-  cursor: pointer;
-  width: 100%;
+  align-items: center;
   color: var(--text-dark);
-}
-
-.left-nav-div li h2,
-.left-nav-div li i {
-  text-align: left;
-  font-weight: 500;
-  padding: 0.4rem;
+  padding: 5px 1rem;
+  margin: 8px 0;
 }
 
 .left-nav-div li h2 {
-  width: 70%;
+  font-weight: 500;
+  padding: 0.4rem;
+  width: 100%;
   font-size: 1rem;
 }
 
-.left-nav-div li i {
-  width: 30%;
-  font-size: 1.2rem;
-  color: var(--primary-color);
+.left-nav-div li .nav-icons {
+  width: 2.2rem;
+  margin-right: 1rem;
+  padding: 5px;
+}
+
+.activeNav {
+  border-radius: 4px;
+  outline: 1px solid var(--primary-color);
+  transition: 0.3s ease-in;
+}
+
+@media screen and (max-width: 760px) {
+  .left-nav-div {
+    width: 100%;
+    height: 4rem;
+    position: fixed;
+    padding: 5px 0;
+    top: 100%;
+    transform: translate(0, -100%);
+    background-color: var(--primary-bg);
+    box-shadow: 0 -4px 10px var(--modal-shadow);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .left-nav-div ul {
+    display: flex;
+  }
+
+  .left-nav-div li h2 {
+    display: none;
+  }
+
+  .left-nav-div li .nav-icons {
+    width: 2.4rem;
+    margin: 0;
+  }
 }

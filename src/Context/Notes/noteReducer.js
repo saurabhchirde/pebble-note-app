@@ -53,7 +53,53 @@ const noteReducer = (state, action) => {
         errorMsgForEmptyTrash: true,
       };
 
-    case "editOtherNote":
+    case "addToArchive":
+      return {
+        ...state,
+        allNotes: [
+          ...state.allNotes.filter((item) => item.id !== action.payload.id),
+        ],
+        archivedNotes: [action.payload, ...state.archivedNotes],
+        noteArchiveAlert: true,
+      };
+
+    case "addPinnedToArchive":
+      console.log(action.payload);
+      return {
+        ...state,
+        pinnedNote: [
+          ...state.pinnedNote.filter((item) => item.id !== action.payload.id),
+        ],
+        archivedNotes: [action.payload, ...state.archivedNotes],
+        pinNote: false,
+        noteArchiveAlert: true,
+      };
+
+    case "removeFromArchive":
+      return {
+        ...state,
+        archivedNotes: [
+          ...state.archivedNotes.filter(
+            (item) => item.id !== action.payload.id
+          ),
+        ],
+        allNotes: [action.payload, ...state.allNotes],
+        noteUnarchiveAlert: true,
+      };
+
+    case "hideUnarchiveAlert":
+      return {
+        ...state,
+        noteUnarchiveAlert: false,
+      };
+
+    case "hideArchiveAlert":
+      return {
+        ...state,
+        noteArchiveAlert: false,
+      };
+
+    case "editUnPinned":
       return {
         ...state,
         allNotes: [
@@ -73,6 +119,17 @@ const noteReducer = (state, action) => {
           }),
         ],
         pinNote: true,
+      };
+
+    case "editArchived":
+      return {
+        ...state,
+        archivedNotes: [
+          ...state.archivedNotes.filter((item) => {
+            return item.id !== action.payload.id;
+          }),
+        ],
+        archivedNote: true,
       };
 
     case "clickOnNewNoteHandler":

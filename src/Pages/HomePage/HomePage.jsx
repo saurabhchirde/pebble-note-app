@@ -7,7 +7,7 @@ import NoteAlert from "../../Components/Alerts/NoteAlert";
 
 const HomePage = () => {
   const { state, dispatch } = usePebbleNote();
-  const { allNotes, pinnedNote, noteDeletedAlert } = state;
+  const { allNotes, pinnedNote, noteDeletedAlert, noteArchiveAlert } = state;
 
   useEffect(() => {
     localStorage.setItem("savedNotes", JSON.stringify(allNotes));
@@ -24,8 +24,16 @@ const HomePage = () => {
         <NoteAlert
           alert="alert-info"
           icon="fas fa-info alert-icon"
-          text="Note has been deleted"
+          text="Note Deleted"
           dispatchType="hideDeletedAlert"
+        />
+      )}
+      {noteArchiveAlert && (
+        <NoteAlert
+          alert="alert-info"
+          icon="fas fa-info alert-icon"
+          text="Note Archived"
+          dispatchType="hideArchiveAlert"
         />
       )}
       <NewNote />
@@ -43,9 +51,10 @@ const HomePage = () => {
                       id={item.id}
                       key={item.id}
                       icon={"fas fa-trash"}
-                      pinAction="unPinNote"
+                      pinAction="pinnedNote"
                       delAction="del"
                       editAction="editPinned"
+                      archiveAction="archive"
                     />
                   );
                 })}
@@ -68,6 +77,7 @@ const HomePage = () => {
                   icon={"fas fa-trash"}
                   delAction="del"
                   editAction="editUnPinned"
+                  archiveAction="archive"
                 />
               );
             })}

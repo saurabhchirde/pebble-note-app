@@ -3,6 +3,7 @@ import { usePebbleNote } from "../../Context";
 import { useEffect } from "react";
 import ButtonSimple from "../../Components/UI/Button/ButtonSimple";
 import NoteAlert from "../../Components/Alerts/NoteAlert";
+import "./TrashPage.css";
 
 const TrashPage = () => {
   const { state, dispatch } = usePebbleNote();
@@ -62,18 +63,22 @@ const TrashPage = () => {
         />
       </div>
       <div className="allNotes">
-        {deletedNotes.map((item) => {
-          return (
-            <Note
-              title={item.title}
-              text={item.text}
-              id={item.id}
-              key={item.id}
-              icon={"fas fa-undo"}
-              restoreAction="restore"
-            />
-          );
-        })}
+        {deletedNotes.length < 1 ? (
+          <i className="fas fa-trash-alt trash-page"></i>
+        ) : (
+          deletedNotes.map((item) => {
+            return (
+              <Note
+                title={item.title}
+                text={item.text}
+                id={item.id}
+                key={item.id}
+                icon={"fas fa-undo"}
+                restoreAction="restore"
+              />
+            );
+          })
+        )}
       </div>
     </div>
   );
