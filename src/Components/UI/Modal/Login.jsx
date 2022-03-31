@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useModal } from "../../../Context";
+import { useAxiosCalls, useModal } from "../../../Context";
 import Button from "../Button/Button";
 import InputTypeOne from "../Input/InputTypeOne";
 import "./Login.css";
@@ -12,12 +11,24 @@ const Login = () => {
   });
 
   const { setShowLogin, setShowSignup } = useModal();
-  const navigate = useNavigate();
+  const { userLogin } = useAxiosCalls();
+
+  const loginConfig = {
+    url: "/api/auth/login",
+    data: loginInput,
+  };
+
+  const onLoginClickFormHandler = () => {
+    if (loginInput.name === "" || loginInput.password === "") {
+      return;
+    } else {
+      userLogin(loginConfig);
+    }
+  };
 
   const onLoginSubmitHandler = (e) => {
     e.preventDefault();
-    navigate("/home");
-    setShowLogin(false);
+    onLoginClickFormHandler();
   };
 
   const onModalInputHandler = (e) => {
@@ -29,6 +40,14 @@ const Login = () => {
         [name]: value,
       };
     });
+  };
+
+  const onTestButtonClickFormHandler = () => {
+    setLoginInput({
+      email: "test@gmail.com",
+      password: "test@123",
+    });
+    userLogin(loginConfig);
   };
 
   return (
@@ -80,10 +99,17 @@ const Login = () => {
             type="submit"
             label="Sign In"
             btnClassName="btn primary-btn-md"
-            onClick={onLoginSubmitHandler}
+            onClick={onLoginClickFormHandler}
+          />
+          <Button
+            btnWrapper="signin-btn"
+            type="submit"
+            label="Test User (double click)"
+            btnClassName="btn primary-outline-btn-md"
+            onClick={onTestButtonClickFormHandler}
           />
           <p>
-            Forgot your password?
+            Forgot your password?{" "}
             <span>
               <a> Reset Password </a>
             </span>

@@ -17,7 +17,9 @@ const LeftNavBar = () => {
   const activeTrash = location.pathname === "/trash" ? "activeNav" : "";
   const activeProfile = location.pathname === "/profile" ? "activeNav" : "";
 
-  const navBarClass = darkTheme ? "left-nav-div" : "left-nav-div bg-white";
+  const navBarClass = darkTheme
+    ? "left-nav-div bg-dark"
+    : "left-nav-div bg-white";
 
   return (
     <div className={navBarClass}>

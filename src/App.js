@@ -4,7 +4,7 @@ import EditNoteModal from "./Components/UI/Modal/EditNoteModal";
 import LeftNavBar from "./Components/UI/Navigation/LeftNavBar";
 import NavBar from "./Components/UI/Navigation/NavBar";
 import BodyWrapper from "./Components/UI/Wrapper/BodyWrapper";
-import { useModal, usePebbleNote, useTheme } from "./Context";
+import { useAuth, useModal, usePebbleNote, useTheme } from "./Context";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import HomePage from "./Pages/HomePage/HomePage";
 import LabelPage from "./Pages/LabelPage/LabelPage";
@@ -16,11 +16,15 @@ import Signup from "./Components/UI/Modal/Signup";
 import Mockman from "mockman-js";
 import MobileNavBar from "./Components/UI/Navigation/MobileNavBar";
 import { useEffect } from "react";
+import SignupAlertModal from "./Components/UI/Modal/SignupAlertModal";
+import AlertModal from "./Components/UI/Modal/AlertModal";
+import NotFound from "./Pages/NotFound/NotFound";
 
 function App() {
-  const { showLogin, showSignup } = useModal();
+  const { showLogin, showSignup, showSignupAlert, showError } = useModal();
   const { editModal } = usePebbleNote();
   const { darkTheme } = useTheme();
+  const { auth } = useAuth();
 
   const location = useLocation();
   const hideNav =
@@ -36,19 +40,22 @@ function App() {
     <>
       {showLogin && <Login />}
       {showSignup && <Signup />}
+      {showSignupAlert && <SignupAlertModal />}
+      {showError && <AlertModal />}
       {editModal && <EditNoteModal />}
-      {hideNav && <NavBar />}
-      {hideNav && <MobileNavBar />}
+      {hideNav && auth.login && <NavBar />}
+      {hideNav && auth.login && <MobileNavBar />}
       <BodyWrapper>
-        {hideNav && <LeftNavBar />}
+        {hideNav && auth.login && <LeftNavBar />}
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/label" element={<LabelPage />} />
-          <Route path="/archive" element={<ArchivePage />} />
-          <Route path="/trash" element={<TrashPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          {auth.login && <Route path="/home" element={<HomePage />} />}
+          {auth.login && <Route path="/label" element={<LabelPage />} />}
+          {auth.login && <Route path="/archive" element={<ArchivePage />} />}
+          {auth.login && <Route path="/trash" element={<TrashPage />} />}
+          {auth.login && <Route path="/profile" element={<ProfilePage />} />}
           <Route path="mockman" element={<Mockman />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BodyWrapper>
     </>

@@ -3,12 +3,14 @@ import ButtonSimple from "../../Components/UI/Button/ButtonSimple";
 import "./LandingPage.css";
 import logoLight from "../../Data/Images/Logo/logo-light.svg";
 import logoDark from "../../Data/Images/Logo/logo-dark.svg";
-import { useModal, useTheme } from "../../Context";
+import { useAuth, useModal, useTheme } from "../../Context";
 import ButtonIcon from "../../Components/UI/Button/ButtonIcon";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   const { darkTheme, setDarkTheme } = useTheme();
   const { setShowLogin, setShowSignup } = useModal();
+  const { auth } = useAuth();
 
   const joinNowClickHandler = () => {
     setShowLogin(false);
@@ -24,9 +26,6 @@ const LandingPage = () => {
     setDarkTheme((preTheme) => !preTheme);
   };
   const themeIcon = darkTheme ? "fa fa-sun" : "fa fa-moon";
-  const navBarClass = darkTheme
-    ? "desktop-navigation-bar dark-mode"
-    : "desktop-navigation-bar";
 
   return (
     <div className="landing">
@@ -37,11 +36,21 @@ const LandingPage = () => {
           className="landing-logo"
         />
         <div className="landing-join-section">
-          <ButtonSimple
-            onClick={joinNowClickHandler}
-            btnClassName="btn primary-btn-lg"
-            label="Join Now"
-          />
+          {!auth.login && (
+            <ButtonSimple
+              onClick={joinNowClickHandler}
+              btnClassName="btn primary-btn-lg"
+              label="Join Now"
+            />
+          )}
+          {auth.login && (
+            <Link to="/home">
+              <ButtonSimple
+                btnClassName="btn primary-btn-lg"
+                label="Take Note"
+              />
+            </Link>
+          )}
           <ButtonIcon
             onClick={onThemeTogglerClick}
             icon={themeIcon}
@@ -67,12 +76,16 @@ const LandingPage = () => {
             </ul>
           </div>
           <div className="landing-nav-btn">
-            <p>alerady have an account?</p>
-            <ButtonSimple
-              onClick={signinClickHandler}
-              btnClassName="btn primary-text-btn-lg"
-              label="Login"
-            />
+            {!auth.login && (
+              <>
+                <p>alerady have an account?</p>
+                <ButtonSimple
+                  onClick={signinClickHandler}
+                  btnClassName="btn primary-text-btn-lg"
+                  label="Login"
+                />
+              </>
+            )}
           </div>
         </div>
       </div>

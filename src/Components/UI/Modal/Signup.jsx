@@ -1,7 +1,7 @@
 import Button from "../Button/Button";
 import "./Signup.css";
 import InputTypeOne from "../Input/InputTypeOne";
-import { useModal } from "../../../Context";
+import { useAxiosCalls, useModal } from "../../../Context";
 import { useState } from "react";
 
 const initialSignupState = {
@@ -14,9 +14,18 @@ const initialSignupState = {
 const Signup = () => {
   const { setShowLogin, setShowSignup } = useModal();
   const [user, setUser] = useState(initialSignupState);
+  const { userSignup } = useAxiosCalls();
+
+  const signupConfig = {
+    url: "/api/auth/signup",
+    data: user,
+  };
 
   const onSignupFormSubmitHandler = (e) => {
     e.preventDefault();
+    userSignup(signupConfig);
+    setShowSignup(false);
+    setUser(initialSignupState);
   };
 
   const onInputChangeHandler = (e) => {
@@ -43,12 +52,7 @@ const Signup = () => {
 
   return (
     <>
-      <div
-        className="modal-backdrop"
-        onClick={() => {
-          setShowSignup(false);
-        }}
-      ></div>
+      <div className="modal-backdrop"></div>
       <div className="signup-modal-one">
         <h1>Sign Up</h1>
         <p>Please provide your details.</p>

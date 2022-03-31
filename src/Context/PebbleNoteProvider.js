@@ -5,20 +5,26 @@ import {
   NoteProvider,
   ScrollToTop,
   ThemeProvider,
+  AxiosCallProvider,
+  AuthProvider,
 } from "./index";
 
 const PebbleNoteProvider = ({ children }) => {
   return (
     <BrowserRouter>
-      <ThemeProvider>
-        <ScrollToTop>
-          <AnimationProvider>
-            <ModalProvider>
-              <NoteProvider>{children}</NoteProvider>
-            </ModalProvider>
-          </AnimationProvider>
-        </ScrollToTop>
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <ScrollToTop>
+            <AnimationProvider>
+              <ModalProvider>
+                <NoteProvider>
+                  <AxiosCallProvider>{children}</AxiosCallProvider>
+                </NoteProvider>
+              </ModalProvider>
+            </AnimationProvider>
+          </ScrollToTop>
+        </ThemeProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 };
