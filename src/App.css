@@ -1,8 +1,8 @@
 :root {
-  --dark-bg-color: #191a1c;
-  --dark-theme-card-bg: #2b2d2e;
-  --dark-theme-card-hover: rgba(40, 40, 40, 0.666);
-  --dark-theme-new-note: #1e2122;
+  --dark-bg-color: #2f2f2f;
+  --dark-theme-card-bg: #393939;
+  --dark-theme-card-hover: rgb(81, 81, 81);
+  --dark-theme-new-note: #353535;
   --title-color: #e9e9e9;
 }
 
@@ -16,10 +16,19 @@
 }
 
 .dark-mode-new-note,
-.dark-mode-new-note input {
+.dark-mode-new-note input,
+.dark-mode-new-note p {
   background-color: var(--dark-theme-new-note);
   color: var(--title-color);
   border: 1px solid gray;
+}
+
+.dark-mode-new-note p::placeholder {
+  color: var(--title-color);
+}
+
+.dark-mode-new-note p {
+  border: none;
 }
 
 .dark-mode-card,

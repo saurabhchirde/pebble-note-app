@@ -1,9 +1,12 @@
 .left-nav-div {
-  width: 14rem;
+  width: 16rem;
   padding: 0.6rem 1rem 1rem;
   position: sticky;
-  height: 100%;
+  height: 90vh;
   top: 4.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .left-nav-div li {
@@ -12,6 +15,7 @@
   color: var(--text-dark);
   padding: 5px 1rem;
   margin: 8px 0;
+  cursor: pointer;
 }
 
 .left-nav-div li h2 {
@@ -25,6 +29,31 @@
   width: 2.2rem;
   margin-right: 1rem;
   padding: 5px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 8px;
+}
+
+.user div {
+  display: flex;
+  align-items: center;
+}
+
+.user h2 {
+  font-size: 0.9rem;
+  margin-left: 8px;
+}
+
+.user button {
+  font-size: 1.3rem;
+  color: var(--primary-color);
+  padding: 8px 10px;
+  border-radius: 50%;
+  margin: 0%;
 }
 
 .activeNav {
@@ -60,12 +89,20 @@
     display: flex;
   }
 
+  .left-nav-div li {
+    margin: auto 5px;
+  }
+
   .left-nav-div li h2 {
     display: none;
   }
 
   .left-nav-div li .nav-icons {
-    width: 2.4rem;
-    margin: 0;
+    width: 2rem;
+    margin: auto 0px;
+  }
+
+  .user {
+    display: none;
   }
 }

@@ -69,7 +69,7 @@ const Note = (props) => {
     }
     setNewNote({
       title: props.title,
-      text: props.text,
+      color: props.color,
       tags: props.tags,
     });
   };
@@ -98,8 +98,8 @@ const Note = (props) => {
   const hideDelButton = props.archiveAction === "restore" ? false : true;
 
   const darkThemeClass = darkTheme
-    ? "note-container dark-mode-card"
-    : "note-container";
+    ? "note-container card-shadow-two dark-mode-card"
+    : "note-container card-shadow-two";
 
   return (
     <div className={darkThemeClass}>
@@ -109,8 +109,12 @@ const Note = (props) => {
         </div>
       )}
       <h2>{props.title}</h2>
-      <h3 placeholder="Note text will appear here">{props.text}</h3>
+      <div
+        className="note-text"
+        dangerouslySetInnerHTML={{ __html: props.text }}
+      />
       <div className="note-nav-btn">
+        <ButtonIcon btnClassName="btn icon-btn-sm" icon="fas fa-palette" />
         {hideDelButton && (
           <ButtonIcon
             onClick={delRestoreIconClickHandler}

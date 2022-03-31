@@ -1,15 +1,27 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./LeftNavBar.css";
-import ideaIcon from "../../../Data/Images/Icons/idea.svg";
+import noteIcon from "../../../Data/Images/Logo/logo-icon.svg";
 import labelIcon from "../../../Data/Images/Icons/label.svg";
 import archiveIcon from "../../../Data/Images/Icons/archive.svg";
 import trashIcon from "../../../Data/Images/Icons/trash.svg";
 import userIcon from "../../../Data/Images/Icons/user.svg";
-import { useTheme } from "../../../Context";
+import { useAuth, useModal, useTheme } from "../../../Context";
+import ButtonIcon from "../Button/ButtonIcon";
 
 const LeftNavBar = () => {
   const { darkTheme } = useTheme();
   const location = useLocation();
+  const { auth, authDispatch } = useAuth();
+  const { user } = auth;
+  const { setError, setShowError } = useModal();
+  const navigate = useNavigate();
+
+  const logOutClickHandler = () => {
+    authDispatch({ type: "logout" });
+    setError("Logout Successfully");
+    setShowError(true);
+    navigate("/");
+  };
 
   const activeHome = location.pathname === "/home" ? "activeNav" : "";
   const activeLabel = location.pathname === "/label" ? "activeNav" : "";
@@ -26,8 +38,8 @@ const LeftNavBar = () => {
       <ul>
         <Link to="/home">
           <li className={activeHome}>
-            <img src={ideaIcon} alt="idea-icon" className="nav-icons" />
-            <h2> Home</h2>
+            <img src={noteIcon} alt="idea-icon" className="nav-icons" />
+            <h2> Notes</h2>
           </li>
         </Link>
         <Link to="/label">
@@ -55,6 +67,17 @@ const LeftNavBar = () => {
           </li>
         </Link>
       </ul>
+      <div className="user">
+        <div>
+          <div class="avatar text-avatar-xsm-round">{user.dp}</div>
+          <h2>{`${user.firstName} ${user.lastName}`}</h2>
+        </div>
+        <ButtonIcon
+          btnClassName="btn icon-btn-md"
+          icon="fas fa-sign-out-alt"
+          onClick={logOutClickHandler}
+        />
+      </div>
     </div>
   );
 };

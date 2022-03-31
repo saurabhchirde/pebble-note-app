@@ -5,7 +5,6 @@ import {
   useReducer,
   useState,
 } from "react";
-import { v4 as uuid } from "uuid";
 import { noteReducer } from "./noteReducer";
 import { useAuth } from "../Auth/AuthProvider";
 import { useModal } from "../Modal/ModalProvider";
@@ -16,7 +15,7 @@ const initialState = {
   allNotes: [],
   deletedMsgNotification: false,
   newInputTitle: "Take a new note..",
-  addState: "Add New Note",
+  addState: "Add",
   showInput: false,
   pinnedNote: [],
   archivedNotes: [],
@@ -36,12 +35,14 @@ const noteContext = createContext(initialState);
 
 const NoteProvider = ({ children }) => {
   const [state, dispatch] = useReducer(noteReducer, initialState);
+  const [noteText, setNoteText] = useState("");
   const [newNote, setNewNote] = useState({
-    id: uuid(),
     title: "",
-    text: "",
-    tags: [],
+    pinned: false,
+    labels: [],
+    color: "",
   });
+
   const [editModal, setEditModal] = useState(false);
   const { auth } = useAuth();
   const { setError, setShowError } = useModal();
@@ -68,7 +69,16 @@ const NoteProvider = ({ children }) => {
 
   return (
     <noteContext.Provider
-      value={{ state, dispatch, newNote, setNewNote, editModal, setEditModal }}
+      value={{
+        state,
+        dispatch,
+        newNote,
+        setNewNote,
+        noteText,
+        setNoteText,
+        editModal,
+        setEditModal,
+      }}
     >
       {children}
     </noteContext.Provider>
