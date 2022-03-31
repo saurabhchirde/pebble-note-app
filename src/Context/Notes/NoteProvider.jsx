@@ -35,13 +35,7 @@ const initialState = {
 const noteContext = createContext(initialState);
 
 const NoteProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(noteReducer, {
-    ...initialState,
-    deletedNotes: JSON.parse(localStorage.getItem("deletedNotes")) ?? [],
-    allNotes: JSON.parse(localStorage.getItem("savedNotes")) ?? [],
-    pinnedNote: JSON.parse(localStorage.getItem("pinnedNotes")) ?? [],
-    archivedNotes: JSON.parse(localStorage.getItem("archivedNotes")) ?? [],
-  });
+  const [state, dispatch] = useReducer(noteReducer, initialState);
   const [newNote, setNewNote] = useState({
     id: uuid(),
     title: "",
@@ -59,6 +53,7 @@ const NoteProvider = ({ children }) => {
           const res = await axios.get("/api/notes", {
             headers: { authorization: auth.token },
           });
+          dispatch({ type: "getNotesFromServer", payload: res.data.notes });
           console.log(res.data.notes);
         } catch (error) {
           setError(error.message);

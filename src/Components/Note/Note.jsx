@@ -18,7 +18,7 @@ const Note = (props) => {
   const { auth } = useAuth();
 
   const delNoteConfig = {
-    url: `/api/notes/${props.id}`,
+    url: `/api/notes/${props._id}`,
     headers: { headers: { authorization: auth.token } },
   };
 
@@ -29,13 +29,13 @@ const Note = (props) => {
   };
 
   const archiveNoteConfig = {
-    url: `/api/notes/archives/${props.id}`,
+    url: `/api/notes/archives/${props._id}`,
     body: { note: { ...props } },
     headers: { headers: { authorization: auth.token } },
   };
 
   const restoreFromArchiveConfig = {
-    url: `/api/archives/restore/${props.id}`,
+    url: `/api/archives/restore/${props._id}`,
     headers: { headers: { authorization: auth.token } },
   };
 
@@ -47,18 +47,19 @@ const Note = (props) => {
   };
 
   const delRestoreIconClickHandler = () => {
-    props.delAction === "del"
-      ? addToTrashOnServer(delNoteConfig)
-      : addNoteOnServer(restoreFromTrashConfig);
-
-    // dispatch({
-    //   type: props.delAction === "del" ? "deleteNote" : "restoreNote",
-    //   payload: props,
-    // });
+    if (props.delAction === "del") {
+      addToTrashOnServer(delNoteConfig);
+      dispatch({ type: "deleteNote", payload: props });
+    } else {
+      addNoteOnServer(restoreFromTrashConfig);
+      dispatch({ type: "restoreNote", payload: props });
+    }
   };
 
   const editIconClickHandler = () => {
     setEditModal(true);
+    addToTrashOnServer(delNoteConfig);
+    //pinned on client side only
     if (props.editAction === "editPinned") {
       dispatch({ type: "editPinnedNote", payload: props });
     } else if (props.editAction === "editUnPinned") {
@@ -67,9 +68,9 @@ const Note = (props) => {
       dispatch({ type: "editArchived", payload: props });
     }
     setNewNote({
-      id: props.id,
       title: props.title,
       text: props.text,
+      tags: props.tags,
     });
   };
 
@@ -77,30 +78,32 @@ const Note = (props) => {
     props.archiveAction === "archive"
       ? addNoteToArchiveOnServer(archiveNoteConfig)
       : restoreArchiveFromServer(restoreFromArchiveConfig);
-
-    dispatch({
-      type:
-        props.archiveAction === "archive"
-          ? props.pinAction === "pinnedNote"
-            ? "addPinnedToArchive"
-            : "addToArchive"
-          : "removeFromArchive",
-      payload: props,
-    });
   };
 
   const pinSrc = props.pinAction === "pinnedNote" ? pin2 : pin1;
   const trashEditIcon = props.restoreAction === "restore" ? false : true;
+  const hideEditIcon =
+    props.restoreAction !== "restore" && props.archiveAction === "archive"
+      ? true
+      : false;
+
   const showArchiveIcon =
     props.archiveAction === "restore" ? unarchiveIcon : archiveIcon;
-  const hidePinInArchive = props.archiveAction === "restore" ? false : true;
+
+  const hidePinIcon =
+    props.archiveAction !== "restore" && props.restoreAction !== "restore"
+      ? true
+      : false;
+
+  const hideDelButton = props.archiveAction === "restore" ? false : true;
+
   const darkThemeClass = darkTheme
     ? "note-container dark-mode-card"
     : "note-container";
 
   return (
     <div className={darkThemeClass}>
-      {trashEditIcon && hidePinInArchive && (
+      {hidePinIcon && (
         <div onClick={pinClickHandler} className="pin-icon">
           <img src={pinSrc} alt="pin" />
         </div>
@@ -108,17 +111,23 @@ const Note = (props) => {
       <h2>{props.title}</h2>
       <h3 placeholder="Note text will appear here">{props.text}</h3>
       <div className="note-nav-btn">
-        <ButtonIcon
-          onClick={delRestoreIconClickHandler}
-          btnClassName="btn icon-btn-sm"
-          icon={props.icon}
-        />
-        {trashEditIcon && (
-          <div onClick={archiveIconClickHandler} className="note-icons">
-            <img src={showArchiveIcon} alt="icon" />
-          </div>
+        {hideDelButton && (
+          <ButtonIcon
+            onClick={delRestoreIconClickHandler}
+            btnClassName="btn icon-btn-sm"
+            icon={props.icon}
+          />
         )}
         {trashEditIcon && (
+          <div onClick={archiveIconClickHandler} className="note-icons">
+            <img
+              src={showArchiveIcon}
+              alt="icon"
+              className="archive-btn-icon"
+            />
+          </div>
+        )}
+        {hideEditIcon && (
           <ButtonIcon
             onClick={editIconClickHandler}
             btnClassName="btn icon-btn-sm"

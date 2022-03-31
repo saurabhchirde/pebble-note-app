@@ -10,6 +10,14 @@ const noteReducer = (state, action) => {
       };
 
     // Server side functionality
+
+    // getNotesFromServer
+    case "getNotesFromServer":
+      return {
+        ...state,
+        allNotes: action.payload,
+      };
+
     // after login
     case "authNoteInitiate":
       return {
@@ -31,13 +39,17 @@ const noteReducer = (state, action) => {
       return {
         ...state,
         allNotes: [...action.payload],
+        unSavedError: false,
       };
 
     //  after deleting
     case "notesAfterDelete": {
       return {
         ...state,
-        allNotes: [...action.payload],
+        allNotes: action.payload,
+        pinnedNote: [
+          ...state.pinnedNote.filter((item) => item._id !== action.payload._id),
+        ],
       };
     }
 
@@ -45,8 +57,9 @@ const noteReducer = (state, action) => {
     case "notesAfterArchive": {
       return {
         ...state,
-        allNotes: [...action.payload.notes],
-        archivedNotes: [...action.payload.archives],
+        allNotes: action.payload.notes,
+        archivedNotes: action.payload.archives,
+        noteArchiveAlert: true,
       };
     }
 
@@ -54,28 +67,19 @@ const noteReducer = (state, action) => {
     case "notesAfterUnArchive": {
       return {
         ...state,
-        allNotes: [...action.payload.notes],
-        archivedNotes: [...action.payload.archives],
+        allNotes: action.payload.notes,
+        archivedNotes: action.payload.archives,
+        noteUnarchiveAlert: true,
       };
     }
 
-    // Client side functionality
-    case "newNote":
-      return {
-        ...state,
-        allNotes: [action.payload, ...state.allNotes],
-        unSavedError: false,
-      };
-
+    // on client side
     case "deleteNote":
       return {
         ...state,
         deletedNotes: [...state.deletedNotes, action.payload],
-        allNotes: [
-          ...state.allNotes.filter((item) => item.id !== action.payload.id),
-        ],
         pinnedNote: [
-          ...state.pinnedNote.filter((item) => item.id !== action.payload.id),
+          ...state.pinnedNote.filter((item) => item._id !== action.payload._id),
         ],
         noteDeletedAlert: true,
         noteRestoredAlert: false,
@@ -85,44 +89,31 @@ const noteReducer = (state, action) => {
       return {
         ...state,
         deletedNotes: [
-          ...state.deletedNotes.filter((item) => item.id !== action.payload.id),
+          ...state.deletedNotes.filter(
+            (item) => item._id !== action.payload._id
+          ),
         ],
-        allNotes: [action.payload, ...state.allNotes],
         noteDeletedAlert: false,
         noteRestoredAlert: true,
       };
 
-    case "addToArchive":
+    case "pinNote":
       return {
         ...state,
         allNotes: [
-          ...state.allNotes.filter((item) => item.id !== action.payload.id),
+          ...state.allNotes.filter((item) => item._id !== action.payload._id),
         ],
-        archivedNotes: [action.payload, ...state.archivedNotes],
-        noteArchiveAlert: true,
+        pinnedNote: [action.payload, ...state.pinnedNote],
+        unSavedError: false,
       };
 
-    case "addPinnedToArchive":
+    case "unPinNote":
       return {
         ...state,
-        pinnedNote: [
-          ...state.pinnedNote.filter((item) => item.id !== action.payload.id),
-        ],
-        archivedNotes: [action.payload, ...state.archivedNotes],
-        pinNote: false,
-        noteArchiveAlert: true,
-      };
-
-    case "removeFromArchive":
-      return {
-        ...state,
-        archivedNotes: [
-          ...state.archivedNotes.filter(
-            (item) => item.id !== action.payload.id
-          ),
-        ],
         allNotes: [action.payload, ...state.allNotes],
-        noteUnarchiveAlert: true,
+        pinnedNote: [
+          ...state.pinnedNote.filter((item) => item._id !== action.payload._id),
+        ],
       };
 
     case "editUnPinned":
@@ -158,29 +149,17 @@ const noteReducer = (state, action) => {
         archivedNote: true,
       };
 
-    case "pinNote":
-      return {
-        ...state,
-        allNotes: [
-          ...state.allNotes.filter((item) => item.id !== action.payload.id),
-        ],
-        pinnedNote: [action.payload, ...state.pinnedNote],
-        unSavedError: false,
-      };
-
-    case "unPinNote":
-      return {
-        ...state,
-        allNotes: [action.payload, ...state.allNotes],
-        pinnedNote: [
-          ...state.pinnedNote.filter((item) => item.id !== action.payload.id),
-        ],
-      };
-
     case "emptyTrash":
       return { ...state, deletedNotes: [], deletedMsgNotification: true };
 
-    // alerts
+    // all alerts
+    case "alertDeleted":
+      return {
+        ...state,
+        noteDeletedAlert: true,
+        noteRestoredAlert: false,
+      };
+
     case "hideDeletedAlert":
       return {
         ...state,

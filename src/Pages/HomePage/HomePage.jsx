@@ -48,8 +48,8 @@ const HomePage = () => {
                     <Note
                       title={item.title}
                       text={item.text}
-                      id={item.id}
-                      key={item.id}
+                      _id={item._id}
+                      key={item._id}
                       icon={"fas fa-trash"}
                       pinAction="pinnedNote"
                       delAction="del"
@@ -72,8 +72,8 @@ const HomePage = () => {
                 <Note
                   title={item.title}
                   text={item.text}
-                  id={item.id}
-                  key={item.id}
+                  _id={item._id}
+                  key={item._id}
                   icon={"fas fa-trash"}
                   delAction="del"
                   editAction="editUnPinned"

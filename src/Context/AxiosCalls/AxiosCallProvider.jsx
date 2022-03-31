@@ -29,7 +29,6 @@ const AxiosCallProvider = ({ children }) => {
         type: "login",
         payload: response.data,
       });
-      console.log(response.data.foundUser.notes);
       //set initial data (notes and archives)
       dispatch({
         type: "authNoteInitiate",
@@ -67,7 +66,6 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.post(url, body, headers);
       //update after adding note
       dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
-      console.log("notesAfterAddingNew", res.data);
     } catch (error) {
       setError(error.message);
       setShowError(true);
@@ -82,7 +80,6 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.delete(url, headers);
       //update after deleting note
       dispatch({ type: "notesAfterDelete", payload: res.data.notes });
-      console.log("notesAfterDelete", res.data.notes);
     } catch (error) {
       setError(error.message);
       setShowError(true);
@@ -96,9 +93,6 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.post(url, body, headers);
       //update after archiving note
       dispatch({ type: "notesAfterArchive", payload: res.data });
-
-      console.log("notesAfterArchive-notes", res.data.notes);
-      console.log("notesAfterArchive-archive", res.data.archives);
     } catch (error) {
       setError(error.message);
       setShowError(true);
@@ -113,8 +107,6 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.post(url, {}, headers);
       //update after un-archiving note
       dispatch({ type: "notesAfterUnArchive", payload: res.data });
-      console.log("notesAfterUnArchive-notes", res.data.notes);
-      console.log("notesAfterUnArchive-archive", res.data.archives);
     } catch (error) {
       setError(error.message);
       setShowError(true);

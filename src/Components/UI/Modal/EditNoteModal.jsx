@@ -1,10 +1,23 @@
-import { usePebbleNote } from "../../../Context";
-import { v4 as uuid } from "uuid";
+import { useAuth, useAxiosCalls, usePebbleNote } from "../../../Context";
 import "./EditNoteModal.css";
 
 const EditNoteModal = () => {
   const { state, newNote, setNewNote, dispatch, setEditModal } =
     usePebbleNote();
+  const { addNoteOnServer, addNoteToArchiveOnServer } = useAxiosCalls();
+  const { auth } = useAuth();
+
+  const newNoteConfig = {
+    url: "/api/notes",
+    body: { note: { ...newNote } },
+    headers: { headers: { authorization: auth.token } },
+  };
+
+  const archiveNoteConfig = {
+    url: `/api/notes/archives/${newNote._id}`,
+    body: { note: { ...newNote } },
+    headers: { headers: { authorization: auth.token } },
+  };
 
   const closeEditModal = () => {
     if (
@@ -41,20 +54,14 @@ const EditNoteModal = () => {
       setEditModal(true);
     } else {
       if (!state.unSavedError) {
-        if (state.archivedNote) {
-          dispatch({ type: "addToArchive", payload: newNote });
-        } else if (state.pinNote) {
-          dispatch({ type: "pinNote", payload: newNote });
-        } else {
-          dispatch({ type: "newNote", payload: newNote });
-        }
+        addNoteOnServer(newNoteConfig);
         setEditModal(false);
       }
     }
     setNewNote({
-      id: uuid(),
       title: "",
       text: "",
+      tags: [],
     });
   };
 
