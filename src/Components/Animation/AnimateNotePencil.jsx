@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import note_pencil from "../../Data/Images/Animation/note-pencil.json";
 import lottie from "lottie-web";
-import { useAnimation } from "../../Context/AnimationProvider";
+import { useAnimation } from "../../Context/Animation/AnimationProvider";
 
 const AnimateNotePencil = () => {
-  const { loader, setLoader } = useAnimation();
+  const { setLoader } = useAnimation();
 
   useEffect(() => {
     lottie.loadAnimation({

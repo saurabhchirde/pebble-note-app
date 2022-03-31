@@ -2,14 +2,31 @@ import AnimateNotePencil from "../../Components/Animation/AnimateNotePencil";
 import ButtonSimple from "../../Components/UI/Button/ButtonSimple";
 import "./LandingPage.css";
 import logo from "../../Data/Images/Logo/logo.svg";
+import { useModal } from "../../Context";
 
 const LandingPage = () => {
+  const { setShowLogin, setShowSignup } = useModal();
+
+  const joinNowClickHandler = () => {
+    setShowLogin(false);
+    setShowSignup(true);
+  };
+
+  const signinClickHandler = () => {
+    setShowLogin(true);
+    setShowSignup(false);
+  };
+
   return (
     <div className="landing">
       <div className="landing-header">
         <img src={logo} alt="logo" className="landing-logo" />
         <div className="landing-login-section">
-          <ButtonSimple btnClassName="btn primary-btn-lg" label="Join Now" />
+          <ButtonSimple
+            onClick={joinNowClickHandler}
+            btnClassName="btn primary-btn-lg"
+            label="Join Now"
+          />
         </div>
       </div>
       <div className="landing-body">
@@ -32,6 +49,7 @@ const LandingPage = () => {
           <div className="landing-nav-btn">
             <p>alerady have an account?</p>
             <ButtonSimple
+              onClick={signinClickHandler}
               btnClassName="btn primary-text-btn-lg"
               label="Login"
             />

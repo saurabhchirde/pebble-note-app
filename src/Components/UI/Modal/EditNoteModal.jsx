@@ -1,4 +1,4 @@
-import { usePebbleNote } from "../../../Context/PebbleNoteProvider";
+import { usePebbleNote } from "../../../Context";
 import { v4 as uuid } from "uuid";
 import "./EditNoteModal.css";
 

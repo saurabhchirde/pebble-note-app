@@ -1,6 +1,6 @@
 import Note from "../../Components/Note/Note";
 import NewNote from "../../Components/NewNote/NewNote";
-import { usePebbleNote } from "../../Context/PebbleNoteProvider";
+import { usePebbleNote } from "../../Context";
 import { useEffect } from "react";
 import "./HomePage.css";
 import NoteAlert from "../../Components/Alerts/NoteAlert";

@@ -1,5 +1,5 @@
 import Note from "../../Components/Note/Note";
-import { usePebbleNote } from "../../Context/PebbleNoteProvider";
+import { usePebbleNote } from "../../Context";
 import { useEffect } from "react";
 import ButtonSimple from "../../Components/UI/Button/ButtonSimple";
 import NoteAlert from "../../Components/Alerts/NoteAlert";
