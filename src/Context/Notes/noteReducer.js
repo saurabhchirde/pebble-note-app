@@ -1,5 +1,72 @@
 const noteReducer = (state, action) => {
   switch (action.type) {
+    case "clickOnNewNoteHandler":
+      return {
+        ...state,
+        showInput: true,
+        showIcon: false,
+        newInputTitle: "Title",
+        pinNote: false,
+      };
+
+    // Server side functionality
+    // after login
+    case "authNoteInitiate":
+      return {
+        ...state,
+        allNotes: action.payload.notes,
+        archivedNotes: action.payload.archives,
+      };
+
+    // for not loged in
+    case "emptyAllNotes":
+      return {
+        ...state,
+        allNotes: [],
+        archivedNotes: [],
+      };
+
+    // after adding notes
+    case "notesAfterAddingNew":
+      return {
+        ...state,
+        allNotes: [...action.payload],
+      };
+
+    //  after deleting
+    case "notesAfterDelete": {
+      return {
+        ...state,
+        allNotes: [...action.payload],
+      };
+    }
+
+    // after archving
+    case "notesAfterArchive": {
+      return {
+        ...state,
+        allNotes: [...action.payload.notes],
+        archivedNotes: [...action.payload.archives],
+      };
+    }
+
+    // after unArchiving
+    case "notesAfterUnArchive": {
+      return {
+        ...state,
+        allNotes: [...action.payload.notes],
+        archivedNotes: [...action.payload.archives],
+      };
+    }
+
+    // Client side functionality
+    case "newNote":
+      return {
+        ...state,
+        allNotes: [action.payload, ...state.allNotes],
+        unSavedError: false,
+      };
+
     case "deleteNote":
       return {
         ...state,
@@ -14,18 +81,6 @@ const noteReducer = (state, action) => {
         noteRestoredAlert: false,
       };
 
-    case "hideDeletedAlert":
-      return {
-        ...state,
-        noteDeletedAlert: false,
-      };
-
-    case "hideRestoredAlert":
-      return {
-        ...state,
-        noteRestoredAlert: false,
-      };
-
     case "restoreNote":
       return {
         ...state,
@@ -35,22 +90,6 @@ const noteReducer = (state, action) => {
         allNotes: [action.payload, ...state.allNotes],
         noteDeletedAlert: false,
         noteRestoredAlert: true,
-      };
-
-    case "emptyTrash":
-      return { ...state, deletedNotes: [], deletedMsgNotification: true };
-
-    case "hideDeletedMsgNotification":
-      return {
-        ...state,
-        deletedMsgNotification: false,
-        errorMsgForEmptyTrash: false,
-      };
-
-    case "errorMsgForEmptyTrash":
-      return {
-        ...state,
-        errorMsgForEmptyTrash: true,
       };
 
     case "addToArchive":
@@ -86,18 +125,6 @@ const noteReducer = (state, action) => {
         noteUnarchiveAlert: true,
       };
 
-    case "hideUnarchiveAlert":
-      return {
-        ...state,
-        noteUnarchiveAlert: false,
-      };
-
-    case "hideArchiveAlert":
-      return {
-        ...state,
-        noteArchiveAlert: false,
-      };
-
     case "editUnPinned":
       return {
         ...state,
@@ -131,20 +158,64 @@ const noteReducer = (state, action) => {
         archivedNote: true,
       };
 
-    case "clickOnNewNoteHandler":
+    case "pinNote":
       return {
         ...state,
-        showInput: true,
-        showIcon: false,
-        newInputTitle: "Title",
-        pinNote: false,
+        allNotes: [
+          ...state.allNotes.filter((item) => item.id !== action.payload.id),
+        ],
+        pinnedNote: [action.payload, ...state.pinnedNote],
+        unSavedError: false,
       };
 
-    case "newNote":
+    case "unPinNote":
       return {
         ...state,
         allNotes: [action.payload, ...state.allNotes],
-        unSavedError: false,
+        pinnedNote: [
+          ...state.pinnedNote.filter((item) => item.id !== action.payload.id),
+        ],
+      };
+
+    case "emptyTrash":
+      return { ...state, deletedNotes: [], deletedMsgNotification: true };
+
+    // alerts
+    case "hideDeletedAlert":
+      return {
+        ...state,
+        noteDeletedAlert: false,
+      };
+
+    case "hideRestoredAlert":
+      return {
+        ...state,
+        noteRestoredAlert: false,
+      };
+
+    case "hideDeletedMsgNotification":
+      return {
+        ...state,
+        deletedMsgNotification: false,
+        errorMsgForEmptyTrash: false,
+      };
+
+    case "errorMsgForEmptyTrash":
+      return {
+        ...state,
+        errorMsgForEmptyTrash: true,
+      };
+
+    case "hideUnarchiveAlert":
+      return {
+        ...state,
+        noteUnarchiveAlert: false,
+      };
+
+    case "hideArchiveAlert":
+      return {
+        ...state,
+        noteArchiveAlert: false,
       };
 
     case "emptyNoteError":
@@ -184,25 +255,6 @@ const noteReducer = (state, action) => {
         ...state,
         showInput: false,
         newInputTitle: "Take a new note..",
-      };
-
-    case "pinNote":
-      return {
-        ...state,
-        allNotes: [
-          ...state.allNotes.filter((item) => item.id !== action.payload.id),
-        ],
-        pinnedNote: [action.payload, ...state.pinnedNote],
-        unSavedError: false,
-      };
-
-    case "unPinNote":
-      return {
-        ...state,
-        allNotes: [action.payload, ...state.allNotes],
-        pinnedNote: [
-          ...state.pinnedNote.filter((item) => item.id !== action.payload.id),
-        ],
       };
 
     default:

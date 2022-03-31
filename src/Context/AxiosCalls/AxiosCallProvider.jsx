@@ -24,15 +24,18 @@ const AxiosCallProvider = ({ children }) => {
       );
       setShowError(true);
 
+      //save login credentials
       authDispatch({
         type: "login",
         payload: response.data,
       });
-
+      console.log(response.data.foundUser.notes);
+      //set initial data (notes and archives)
       dispatch({
         type: "authNoteInitiate",
         payload: response.data.foundUser,
       });
+
       setShowLogin(false);
       navigate("/home");
     } catch (error) {
@@ -62,20 +65,9 @@ const AxiosCallProvider = ({ children }) => {
 
     try {
       const res = await axios.post(url, body, headers);
-      console.log(res.data);
-    } catch (error) {
-      setError(error.message);
-      setShowError(true);
-    }
-  };
-
-  // restore note from trash
-  const restoreFromTrashOnServer = async (noteConfig) => {
-    const { url, body, headers, item } = noteConfig;
-
-    try {
-      const res = await axios.post(url, body, headers);
-      console.log(res.data);
+      //update after adding note
+      dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
+      console.log("notesAfterAddingNew", res.data);
     } catch (error) {
       setError(error.message);
       setShowError(true);
@@ -83,12 +75,14 @@ const AxiosCallProvider = ({ children }) => {
   };
 
   // remove note
-  const addToTrashFromServer = async (noteConfig) => {
-    const { url, headers, item } = noteConfig;
-
+  const addToTrashOnServer = async (noteConfig) => {
+    const { url, headers } = noteConfig;
+    //
     try {
       const res = await axios.delete(url, headers);
-      console.log(res.data);
+      //update after deleting note
+      dispatch({ type: "notesAfterDelete", payload: res.data.notes });
+      console.log("notesAfterDelete", res.data.notes);
     } catch (error) {
       setError(error.message);
       setShowError(true);
@@ -100,7 +94,11 @@ const AxiosCallProvider = ({ children }) => {
     const { url, body, headers } = archiveConfig;
     try {
       const res = await axios.post(url, body, headers);
-      dispatch({ type: "archiveUpdate", payload: res.data.archives });
+      //update after archiving note
+      dispatch({ type: "notesAfterArchive", payload: res.data });
+
+      console.log("notesAfterArchive-notes", res.data.notes);
+      console.log("notesAfterArchive-archive", res.data.archives);
     } catch (error) {
       setError(error.message);
       setShowError(true);
@@ -108,25 +106,15 @@ const AxiosCallProvider = ({ children }) => {
   };
 
   // remove from archive
-  const removeArchiveFromServer = async (archiveConfig) => {
-    const { url, headers, item } = archiveConfig;
+  const restoreArchiveFromServer = async (archiveConfig) => {
+    const { url, headers } = archiveConfig;
 
     try {
-      const res = await axios.post(url, headers);
-      console.log(res.data);
-    } catch (error) {
-      setError(error.message);
-      setShowError(true);
-    }
-  };
-
-  // delete from archive
-  const deleteArchiveFromServer = async (archiveConfig) => {
-    const { url, headers, item } = archiveConfig;
-
-    try {
-      const res = await axios.post(url, headers);
-      console.log(res.data);
+      const res = await axios.post(url, {}, headers);
+      //update after un-archiving note
+      dispatch({ type: "notesAfterUnArchive", payload: res.data });
+      console.log("notesAfterUnArchive-notes", res.data.notes);
+      console.log("notesAfterUnArchive-archive", res.data.archives);
     } catch (error) {
       setError(error.message);
       setShowError(true);
@@ -139,11 +127,9 @@ const AxiosCallProvider = ({ children }) => {
         userLogin,
         userSignup,
         addNoteOnServer,
-        restoreFromTrashOnServer,
-        addToTrashFromServer,
+        addToTrashOnServer,
         addNoteToArchiveOnServer,
-        removeArchiveFromServer,
-        deleteArchiveFromServer,
+        restoreArchiveFromServer,
       }}
     >
       {children}

@@ -2,13 +2,42 @@ import "./Note.css";
 import pin1 from "../../Data/Images/Icons/pin1.svg";
 import pin2 from "../../Data/Images/Icons/pin2.svg";
 import ButtonIcon from "../UI/Button/ButtonIcon";
-import { usePebbleNote, useTheme } from "../../Context";
+import { useAuth, useAxiosCalls, usePebbleNote, useTheme } from "../../Context";
 import archiveIcon from "../../Data/Images/Icons/archive.svg";
 import unarchiveIcon from "../../Data/Images/Icons/unarchive.svg";
 
 const Note = (props) => {
   const { dispatch, setNewNote, setEditModal } = usePebbleNote();
   const { darkTheme } = useTheme();
+  const {
+    addToTrashOnServer,
+    addNoteOnServer,
+    addNoteToArchiveOnServer,
+    restoreArchiveFromServer,
+  } = useAxiosCalls();
+  const { auth } = useAuth();
+
+  const delNoteConfig = {
+    url: `/api/notes/${props.id}`,
+    headers: { headers: { authorization: auth.token } },
+  };
+
+  const restoreFromTrashConfig = {
+    url: "/api/notes",
+    body: { note: { ...props } },
+    headers: { headers: { authorization: auth.token } },
+  };
+
+  const archiveNoteConfig = {
+    url: `/api/notes/archives/${props.id}`,
+    body: { note: { ...props } },
+    headers: { headers: { authorization: auth.token } },
+  };
+
+  const restoreFromArchiveConfig = {
+    url: `/api/archives/restore/${props.id}`,
+    headers: { headers: { authorization: auth.token } },
+  };
 
   const pinClickHandler = () => {
     dispatch({
@@ -18,10 +47,14 @@ const Note = (props) => {
   };
 
   const delRestoreIconClickHandler = () => {
-    dispatch({
-      type: props.delAction === "del" ? "deleteNote" : "restoreNote",
-      payload: props,
-    });
+    props.delAction === "del"
+      ? addToTrashOnServer(delNoteConfig)
+      : addNoteOnServer(restoreFromTrashConfig);
+
+    // dispatch({
+    //   type: props.delAction === "del" ? "deleteNote" : "restoreNote",
+    //   payload: props,
+    // });
   };
 
   const editIconClickHandler = () => {
@@ -41,6 +74,10 @@ const Note = (props) => {
   };
 
   const archiveIconClickHandler = () => {
+    props.archiveAction === "archive"
+      ? addNoteToArchiveOnServer(archiveNoteConfig)
+      : restoreArchiveFromServer(restoreFromArchiveConfig);
+
     dispatch({
       type:
         props.archiveAction === "archive"

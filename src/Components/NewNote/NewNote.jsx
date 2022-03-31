@@ -1,5 +1,5 @@
 import "./NewNote.css";
-import { usePebbleNote, useTheme } from "../../Context";
+import { useAuth, useAxiosCalls, usePebbleNote, useTheme } from "../../Context";
 import ButtonSimple from "../UI/Button/ButtonSimple";
 import { v4 as uuid } from "uuid";
 import NoteAlert from "../Alerts/NoteAlert";
@@ -16,6 +16,14 @@ const NewNote = () => {
     pinNote,
   } = state;
   const { darkTheme } = useTheme();
+  const { addNoteOnServer } = useAxiosCalls();
+  const { auth } = useAuth();
+
+  const newNoteConfig = {
+    url: "/api/notes",
+    body: { note: { ...newNote } },
+    headers: { headers: { authorization: auth.token } },
+  };
 
   const clickOnNewNoteHandler = () => {
     dispatch({ type: "clickOnNewNoteHandler" });
@@ -28,9 +36,11 @@ const NewNote = () => {
     } else {
       if (!unSavedError) {
         if (pinNote) {
-          dispatch({ type: "pinNote", payload: newNote });
+          addNoteOnServer(newNoteConfig);
+          // dispatch({ type: "pinNote", payload: newNote });
         } else {
-          dispatch({ type: "newNote", payload: newNote });
+          addNoteOnServer(newNoteConfig);
+          // dispatch({ type: "newNote", payload: newNote });
         }
       }
     }
