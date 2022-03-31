@@ -5,8 +5,10 @@ import labelIcon from "../../../Data/Images/Icons/label.svg";
 import archiveIcon from "../../../Data/Images/Icons/archive.svg";
 import trashIcon from "../../../Data/Images/Icons/trash.svg";
 import userIcon from "../../../Data/Images/Icons/user.svg";
+import { useTheme } from "../../../Context";
 
 const LeftNavBar = () => {
+  const { darkTheme } = useTheme();
   const location = useLocation();
 
   const activeHome = location.pathname === "/home" ? "activeNav" : "";
@@ -15,8 +17,10 @@ const LeftNavBar = () => {
   const activeTrash = location.pathname === "/trash" ? "activeNav" : "";
   const activeProfile = location.pathname === "/profile" ? "activeNav" : "";
 
+  const navBarClass = darkTheme ? "left-nav-div" : "left-nav-div bg-white";
+
   return (
-    <div className="left-nav-div">
+    <div className={navBarClass}>
       <ul>
         <Link to="/home">
           <li className={activeHome}>

@@ -4,7 +4,7 @@ import EditNoteModal from "./Components/UI/Modal/EditNoteModal";
 import LeftNavBar from "./Components/UI/Navigation/LeftNavBar";
 import NavBar from "./Components/UI/Navigation/NavBar";
 import BodyWrapper from "./Components/UI/Wrapper/BodyWrapper";
-import { useModal, usePebbleNote } from "./Context";
+import { useModal, usePebbleNote, useTheme } from "./Context";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import HomePage from "./Pages/HomePage/HomePage";
 import LabelPage from "./Pages/LabelPage/LabelPage";
@@ -14,15 +14,23 @@ import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import Login from "./Components/UI/Modal/Login";
 import Signup from "./Components/UI/Modal/Signup";
 import Mockman from "mockman-js";
+import MobileNavBar from "./Components/UI/Navigation/MobileNavBar";
+import { useEffect } from "react";
 
 function App() {
   const { showLogin, showSignup } = useModal();
   const { editModal } = usePebbleNote();
+  const { darkTheme } = useTheme();
+
   const location = useLocation();
   const hideNav =
     location.pathname === "/" || location.pathname === "/mockman"
       ? false
       : true;
+
+  useEffect(() => {
+    localStorage.setItem("darkTheme", JSON.stringify(darkTheme));
+  }, [darkTheme]);
 
   return (
     <>
@@ -30,6 +38,7 @@ function App() {
       {showSignup && <Signup />}
       {editModal && <EditNoteModal />}
       {hideNav && <NavBar />}
+      {hideNav && <MobileNavBar />}
       <BodyWrapper>
         {hideNav && <LeftNavBar />}
         <Routes>
