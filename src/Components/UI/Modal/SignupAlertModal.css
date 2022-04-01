@@ -1,0 +1,14 @@
+.discard-modal-md {
+  width: 25.5rem;
+  height: auto;
+  z-index: 4;
+  padding: 2rem 2rem 1rem;
+}
+
+.discard-modal-md p {
+  font-size: 1rem;
+}
+
+.discard-modal-btn {
+  margin-right: 10px;
+}

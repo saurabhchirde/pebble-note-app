@@ -51,6 +51,11 @@
   .bg-white {
     background-color: var(--primary-bg);
   }
+
+  .bg-dark {
+    background-color: var(--dark-bg-color);
+  }
+
   .left-nav-div ul {
     display: flex;
   }

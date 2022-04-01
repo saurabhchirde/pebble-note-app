@@ -1,21 +1,27 @@
 import "./NewNote.css";
-import { usePebbleNote, useTheme } from "../../Context";
+import { useAuth, useAxiosCalls, usePebbleNote, useTheme } from "../../Context";
 import ButtonSimple from "../UI/Button/ButtonSimple";
-import { v4 as uuid } from "uuid";
 import NoteAlert from "../Alerts/NoteAlert";
 
 const NewNote = () => {
   const { state, dispatch, newNote, setNewNote, editModal, setEditModal } =
     usePebbleNote();
-  const {
-    newInputTitle,
-    addState,
-    showInput,
-    emptyNoteError,
-    unSavedError,
-    pinNote,
-  } = state;
+  const { newInputTitle, addState, showInput, emptyNoteError, unSavedError } =
+    state;
   const { darkTheme } = useTheme();
+  const { addNoteOnServer, addToTrashOnServer } = useAxiosCalls();
+  const { auth } = useAuth();
+
+  const newNoteConfig = {
+    url: "/api/notes",
+    body: { note: { ...newNote } },
+    headers: { headers: { authorization: auth.token } },
+  };
+
+  const delNoteConfig = {
+    url: `/api/notes/${newNote._id}`,
+    headers: { headers: { authorization: auth.token } },
+  };
 
   const clickOnNewNoteHandler = () => {
     dispatch({ type: "clickOnNewNoteHandler" });
@@ -26,21 +32,17 @@ const NewNote = () => {
     if (newNote.title.trim() === "" && newNote.text.trim() === "") {
       dispatch({ type: "emptyNoteError" });
     } else {
-      if (!unSavedError) {
-        if (pinNote) {
-          dispatch({ type: "pinNote", payload: newNote });
-        } else {
-          dispatch({ type: "newNote", payload: newNote });
-        }
-      }
+      !unSavedError && addNoteOnServer(newNoteConfig);
     }
     setNewNote({
-      id: uuid(),
       title: "",
       text: "",
+      pinned: false,
+      tags: [],
     });
   };
 
+  // alerts on clicking close button
   const clickOnCloseNewNote = () => {
     if (unSavedError && newNote.title === "" && newNote.text === "") {
       dispatch({ type: "hideInputField" });
@@ -51,6 +53,7 @@ const NewNote = () => {
     }
   };
 
+  // new note input data
   const newInputOnChangeHandler = (e) => {
     const value = e.target.value;
     const name = e.target.name;
@@ -63,27 +66,27 @@ const NewNote = () => {
     });
   };
 
+  // unsaved alert - delete handler
   const unsavedAlertDeleteHandler = () => {
     dispatch({ type: "dontSave" });
+    addToTrashOnServer(delNoteConfig);
     setNewNote({
-      id: uuid(),
       title: "",
       text: "",
       pinned: false,
+      tags: [],
     });
     setEditModal(false);
   };
 
+  // unsaved alert - save handler
   const unsavedAlertSaveHandler = () => {
-    if (state.pinNote) {
-      dispatch({ type: "pinNote", payload: newNote });
-    } else {
-      dispatch({ type: "newNote", payload: newNote });
-    }
+    addNoteOnServer(newNoteConfig);
     setNewNote({
-      id: uuid(),
       title: "",
       text: "",
+      pinned: false,
+      tags: [],
     });
     setEditModal(false);
   };

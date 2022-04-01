@@ -71,8 +71,8 @@ const TrashPage = () => {
               <Note
                 title={item.title}
                 text={item.text}
-                id={item.id}
-                key={item.id}
+                _id={item._id}
+                key={item._id}
                 icon={"fas fa-undo"}
                 restoreAction="restore"
               />
