@@ -1,11 +1,37 @@
-import { useAuth, useAxiosCalls, usePebbleNote } from "../../../Context";
+import {
+  useAuth,
+  useAxiosCalls,
+  usePebbleNote,
+  useTheme,
+} from "../../../Context";
 import "./EditNoteModal.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import labelIcon from "../../../Data/Images/Icons/label.svg";
+import ButtonIcon from "../Button/ButtonIcon";
+import ColorPicker from "../ColorPicker/ColorPicker";
 
 const EditNoteModal = () => {
-  const { state, newNote, setNewNote, dispatch, setEditModal } =
-    usePebbleNote();
-  const { addNoteOnServer, addNoteToArchiveOnServer } = useAxiosCalls();
+  const {
+    state,
+    dispatch,
+    newNote,
+    setNewNote,
+    noteText,
+    setNoteText,
+    editNote,
+    setEditNote,
+    noteColor,
+    setNoteColor,
+    showColor,
+    setShowColor,
+    editModal,
+    setEditModal,
+  } = usePebbleNote();
+  const { newInputTitle, showInput, emptyNoteError, unSavedError } = state;
+  const { addNoteOnServer, updateNoteOnServer } = useAxiosCalls();
   const { auth } = useAuth();
+  const { darkTheme } = useTheme();
 
   const newNoteConfig = {
     url: "/api/notes",
@@ -13,57 +39,101 @@ const EditNoteModal = () => {
     headers: { headers: { authorization: auth.token } },
   };
 
-  const archiveNoteConfig = {
-    url: `/api/notes/archives/${newNote._id}`,
-    body: { note: { ...newNote } },
+  const updateNoteConfig = {
+    url: `/api/notes/${newNote._id}`,
+    body: {
+      note: { ...newNote, text: noteText },
+    },
     headers: { headers: { authorization: auth.token } },
+  };
+
+  const modules = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["blockquote", "code-block"],
+      ["link", "image", "video"],
+    ],
+  };
+
+  const initialNoteDetails = {
+    title: "",
+    pinned: false,
+    tags: [],
+    date: new Date().toLocaleDateString(),
   };
 
   const closeEditModal = () => {
     if (
-      (state.unSavedError &&
-        newNote.title.trim() === "" &&
-        newNote.text.trim() === "") ||
-      (newNote.title.trim() === "" && newNote.text.trim() === "")
+      unSavedError &&
+      newNote.title.trim() === "" &&
+      (noteText === "" || noteText === "<p><br></p>")
     ) {
       dispatch({ type: "hideInputField" });
-      setEditModal(false);
+      setNewNote(initialNoteDetails);
+      setNoteText("");
+    } else if (
+      newNote.title.trim() === "" &&
+      (noteText === "" || noteText === "<p><br></p>")
+    ) {
+      dispatch({ type: "hideInputField" });
+      setNewNote(initialNoteDetails);
+      setNoteText("");
     } else {
       dispatch({ type: "hideInputWithData" });
     }
+    setShowColor(false);
+    setNoteColor("#f0fbff");
   };
 
   const onChangeHandler = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
-
-    setNewNote((oldNote) => {
+    setNewNote((oldData) => {
       return {
-        ...oldNote,
-        [name]: value,
+        ...oldData,
+        title: e.target.value,
       };
     });
   };
 
   const seveNoteClick = () => {
-    if (newNote.title.trim() === "" && newNote.text.trim() === "") {
+    if (
+      newNote.title.trim() === "" &&
+      (noteText === "" || noteText === "<p><br></p>")
+    ) {
       dispatch({ type: "emptyNoteError" });
       setTimeout(() => {
         dispatch({ type: "hideEmptyNoteError" });
       }, 3000);
       setEditModal(true);
     } else {
-      if (!state.unSavedError) {
+      if (editNote) {
+        updateNoteOnServer(updateNoteConfig);
+      } else {
         addNoteOnServer(newNoteConfig);
-        setEditModal(false);
       }
     }
-    setNewNote({
-      title: "",
-      text: "",
-      tags: [],
-    });
+    setNewNote(initialNoteDetails);
+    setShowColor(false);
+    setNoteText("");
+    setNoteColor("#f0fbff");
+    setEditNote(false);
   };
+
+  const colorPaletteHandler = () => {
+    setShowColor((showPalette) => !showPalette);
+  };
+
+  const changeNoteColorHandler = (e) => {
+    setNoteColor(e.target.value);
+  };
+
+  const darkThemeClass = darkTheme
+    ? "new-note-input card-shadow-two dark-mode-new-note"
+    : "new-note-input card-shadow-two";
+
+  const darkThemeEditor = darkTheme
+    ? "text-editor dark-mode-new-note"
+    : "text-editor ";
 
   return (
     <>
@@ -89,15 +159,31 @@ const EditNoteModal = () => {
           <div>
             Text
             <div className="input-icon">
-              <textarea
-                onChange={onChangeHandler}
-                type="text"
-                name="text"
-                autoComplete="off"
-                className="note-text-area"
-                value={newNote.text}
+              <ReactQuill
+                modules={modules}
+                value={noteText}
+                placeholder="Take a note..."
+                onChange={setNoteText}
+                className={darkThemeEditor}
+                style={{ backgroundColor: noteColor }}
               />
             </div>
+          </div>
+          <div className="note-nav-btn-left">
+            <ButtonIcon
+              btnClassName="btn icon-btn-md"
+              icon="fas fa-palette"
+              onMouseEnter={colorPaletteHandler}
+            />
+            {showColor && (
+              <ColorPicker
+                onChange={changeNoteColorHandler}
+                label={noteColor}
+                value={noteColor}
+              />
+            )}
+            <img src={labelIcon} alt="label-icon" className="nav-icons" />
+            <h2>{newNote.date}</h2>
           </div>
           <div className="signin-btn edit-modal-btn">
             <button

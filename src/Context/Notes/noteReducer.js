@@ -6,7 +6,6 @@ const noteReducer = (state, action) => {
         showInput: true,
         showIcon: false,
         newInputTitle: "Title",
-        pinNote: false,
       };
 
     // Server side functionality
@@ -46,10 +45,7 @@ const noteReducer = (state, action) => {
     case "notesAfterDelete": {
       return {
         ...state,
-        allNotes: action.payload,
-        pinnedNote: [
-          ...state.pinnedNote.filter((item) => item._id !== action.payload._id),
-        ],
+        allNotes: [...action.payload],
       };
     }
 
@@ -78,9 +74,6 @@ const noteReducer = (state, action) => {
       return {
         ...state,
         deletedNotes: [...state.deletedNotes, action.payload],
-        pinnedNote: [
-          ...state.pinnedNote.filter((item) => item._id !== action.payload._id),
-        ],
         noteDeletedAlert: true,
         noteRestoredAlert: false,
       };
@@ -97,56 +90,10 @@ const noteReducer = (state, action) => {
         noteRestoredAlert: true,
       };
 
-    case "pinNote":
+    case "editNote":
       return {
         ...state,
-        allNotes: [
-          ...state.allNotes.filter((item) => item._id !== action.payload._id),
-        ],
-        pinnedNote: [action.payload, ...state.pinnedNote],
-        unSavedError: false,
-      };
-
-    case "unPinNote":
-      return {
-        ...state,
-        allNotes: [action.payload, ...state.allNotes],
-        pinnedNote: [
-          ...state.pinnedNote.filter((item) => item._id !== action.payload._id),
-        ],
-      };
-
-    case "editUnPinned":
-      return {
-        ...state,
-        allNotes: [
-          ...state.allNotes.filter((item) => {
-            return item.id !== action.payload.id;
-          }),
-        ],
-        pinNote: false,
-      };
-
-    case "editPinnedNote":
-      return {
-        ...state,
-        pinnedNote: [
-          ...state.pinnedNote.filter((item) => {
-            return item.id !== action.payload.id;
-          }),
-        ],
-        pinNote: true,
-      };
-
-    case "editArchived":
-      return {
-        ...state,
-        archivedNotes: [
-          ...state.archivedNotes.filter((item) => {
-            return item.id !== action.payload.id;
-          }),
-        ],
-        archivedNote: true,
+        showInput: true,
       };
 
     case "emptyTrash":
@@ -213,6 +160,7 @@ const noteReducer = (state, action) => {
       return {
         ...state,
         unSavedError: false,
+        showInput: true,
       };
 
     case "hideInputField":

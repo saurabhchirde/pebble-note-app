@@ -69,9 +69,7 @@ const TrashPage = () => {
           deletedNotes.map((item) => {
             return (
               <Note
-                title={item.title}
-                text={item.text}
-                _id={item._id}
+                item={item}
                 key={item._id}
                 icon={"fas fa-undo"}
                 restoreAction="restore"

@@ -65,6 +65,23 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.post(url, body, headers);
       //update after adding note
       dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
+      // console.log(res.data.notes);
+    } catch (error) {
+      setError(error.message);
+      setShowError(true);
+    }
+  };
+
+  // update note
+  const updateNoteOnServer = async (noteConfig) => {
+    const { url, body, headers, item } = noteConfig;
+    console.log(url, body, headers);
+    try {
+      const res = await axios.post(url, body, headers);
+      //update after adding note
+      dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
+
+      console.log("after update notes", res.data.notes);
     } catch (error) {
       setError(error.message);
       setShowError(true);
@@ -118,6 +135,7 @@ const AxiosCallProvider = ({ children }) => {
         userLogin,
         userSignup,
         addNoteOnServer,
+        updateNoteOnServer,
         addToTrashOnServer,
         addNoteToArchiveOnServer,
         restoreArchiveFromServer,

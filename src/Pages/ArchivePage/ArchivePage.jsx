@@ -30,8 +30,7 @@ const ArchivePage = () => {
           archivedNotes.map((item) => {
             return (
               <Note
-                title={item.title}
-                text={item.text}
+                item={item}
                 _id={item._id}
                 key={item._id}
                 archiveAction="restore"

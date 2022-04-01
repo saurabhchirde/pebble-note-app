@@ -71,7 +71,7 @@ const LeftNavBar = () => {
       </ul>
       <div className="user">
         <div>
-          <div class="avatar text-avatar-xsm-round">{user.dp}</div>
+          <div className="avatar text-avatar-xsm-round">{user.dp}</div>
           <h2>{`${user.firstName} ${user.lastName}`}</h2>
         </div>
         <ButtonIcon

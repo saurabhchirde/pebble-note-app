@@ -32,9 +32,15 @@
 }
 
 .dark-mode-card,
-.dark-mode-card h1,
-.dark-mode-card h2,
 .dark-mode-card p {
   background-color: var(--dark-theme-card-bg);
   color: var(--title-color);
+}
+
+.dark-mode-card h2,
+.dark-mode-card .note-text,
+.dark-mode-card p {
+  background-color: transparent;
+  color: var(--text-dark);
+  font-weight: 500;
 }

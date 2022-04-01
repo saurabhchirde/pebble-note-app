@@ -1,0 +1,22 @@
+.color-palette-drawer {
+  position: absolute;
+  width: 8.7rem;
+  padding: 10px 10px 0;
+  text-align: center;
+  margin-left: 40%;
+  margin-top: 0;
+  border-radius: 4px;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-bg);
+  z-index: 3;
+}
+
+.color-palette-drawer input {
+  outline: 1px solid var(--text-dark);
+  height: 1.8rem;
+}
+
+.color-palette-drawer label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
