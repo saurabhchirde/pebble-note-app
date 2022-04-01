@@ -1,10 +1,12 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./LeftNavBar.css";
 import noteIcon from "../../../Data/Images/Logo/logo-icon.svg";
-import labelIcon from "../../../Data/Images/Icons/label.svg";
-import archiveIcon from "../../../Data/Images/Icons/archive.svg";
-import trashIcon from "../../../Data/Images/Icons/trash.svg";
-import userIcon from "../../../Data/Images/Icons/user.svg";
+import {
+  archiveIcon,
+  labelIcon,
+  trashIcon,
+  userIcon,
+} from "../../../Data/Images/Icons";
 import { useAuth, useModal, useTheme } from "../../../Context";
 import ButtonIcon from "../Button/ButtonIcon";
 

@@ -18,7 +18,6 @@ const AxiosCallProvider = ({ children }) => {
 
     try {
       const response = await axios.post(url, data);
-      console.log(response);
       setError(
         `Welcome back ${response.data.foundUser.firstName} ${response.data.foundUser.lastName}`
       );

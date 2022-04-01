@@ -46,7 +46,7 @@ const Note = (props) => {
     });
   };
 
-  const delRestoreIconClickHandler = () => {
+  const delRestoreNoteHandler = () => {
     if (props.delAction === "del") {
       addToTrashOnServer(delNoteConfig);
       dispatch({ type: "deleteNote", payload: props });
@@ -56,7 +56,7 @@ const Note = (props) => {
     }
   };
 
-  const editIconClickHandler = () => {
+  const editNoteHandler = () => {
     setEditModal(true);
     addToTrashOnServer(delNoteConfig);
     //pinned on client side only
@@ -74,7 +74,7 @@ const Note = (props) => {
     });
   };
 
-  const archiveIconClickHandler = () => {
+  const archiveNoteHandler = () => {
     props.archiveAction === "archive"
       ? addNoteToArchiveOnServer(archiveNoteConfig)
       : restoreArchiveFromServer(restoreFromArchiveConfig);
@@ -117,13 +117,13 @@ const Note = (props) => {
         <ButtonIcon btnClassName="btn icon-btn-sm" icon="fas fa-palette" />
         {hideDelButton && (
           <ButtonIcon
-            onClick={delRestoreIconClickHandler}
+            onClick={delRestoreNoteHandler}
             btnClassName="btn icon-btn-sm"
             icon={props.icon}
           />
         )}
         {trashEditIcon && (
-          <div onClick={archiveIconClickHandler} className="note-icons">
+          <div onClick={archiveNoteHandler} className="note-icons">
             <img
               src={showArchiveIcon}
               alt="icon"
@@ -133,7 +133,7 @@ const Note = (props) => {
         )}
         {hideEditIcon && (
           <ButtonIcon
-            onClick={editIconClickHandler}
+            onClick={editNoteHandler}
             btnClassName="btn icon-btn-sm"
             icon="fas fa-edit"
           />
