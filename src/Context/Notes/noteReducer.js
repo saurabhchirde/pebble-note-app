@@ -70,7 +70,7 @@ const noteReducer = (state, action) => {
     case "deleteNote":
       return {
         ...state,
-        deletedNotes: [...state.deletedNotes, action.payload],
+        deletedNotes: [action.payload, ...state.deletedNotes],
       };
 
     case "restoreNote":
@@ -87,6 +87,13 @@ const noteReducer = (state, action) => {
       return {
         ...state,
         showInput: false,
+      };
+
+    case "hideInputField":
+      return {
+        ...state,
+        showInput: false,
+        newInputTitle: "Take a new note..",
       };
 
     case "emptyTrash":

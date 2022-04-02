@@ -107,7 +107,6 @@ const alertReducer = (alertState, action) => {
         ...alertState,
         noteSavedAlert: true,
         unSavedError: false,
-        showInput: true,
       };
 
     case "hideNoteSavedAlert":
@@ -121,7 +120,6 @@ const alertReducer = (alertState, action) => {
         ...alertState,
         noteDiscardAlert: true,
         unSavedError: false,
-        showInput: true,
       };
 
     case "hideDiscardAlert":
@@ -133,22 +131,13 @@ const alertReducer = (alertState, action) => {
     case "hideInputField":
       return {
         ...alertState,
-        showInput: false,
         unSavedError: false,
-        newInputTitle: "Take a new note..",
       };
 
     case "hideInputWithData":
       return {
         ...alertState,
         unSavedError: true,
-      };
-
-    case "outsideClick":
-      return {
-        ...alertState,
-        showInput: false,
-        newInputTitle: "Take a new note..",
       };
 
     default:

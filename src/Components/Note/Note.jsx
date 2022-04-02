@@ -55,8 +55,6 @@ const Note = ({
       note: {
         ...item,
         pinned: pinAction === "pinnedNote" ? false : true,
-        text: text,
-        color: color,
       },
     },
     headers: { headers: { authorization: auth.token } },

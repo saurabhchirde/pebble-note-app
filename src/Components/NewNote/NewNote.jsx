@@ -58,6 +58,14 @@ const NewNote = () => {
     ],
   };
 
+  const resetData = () => {
+    setNewNote(initialNoteDetails);
+    setShowColor(false);
+    setNoteText("");
+    setNoteColor("#f0fbff");
+    setEditNote(false);
+  };
+
   const newNoteConfig = {
     url: "/api/notes",
     body: { note: { ...newNote, text: noteText, color: noteColor } },
@@ -91,11 +99,7 @@ const NewNote = () => {
         alertDispatch({ type: "alertNewAdded" });
       }
     }
-    setNewNote(initialNoteDetails);
-    setShowColor(false);
-    setNoteText("");
-    setNoteColor("#f0fbff");
-    setEditNote(false);
+    resetData();
   };
 
   // alerts on clicking close button
@@ -105,6 +109,7 @@ const NewNote = () => {
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
+      dispatch({ type: "hideInputField" });
       alertDispatch({ type: "hideInputField" });
       setNewNote(initialNoteDetails);
       setNoteText("");
@@ -112,6 +117,7 @@ const NewNote = () => {
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
+      dispatch({ type: "hideInputField" });
       alertDispatch({ type: "hideInputField" });
       setNewNote(initialNoteDetails);
       setNoteText("");
@@ -143,17 +149,15 @@ const NewNote = () => {
   // unsaved alert - delete handler
   const unsavedAlertDeleteHandler = () => {
     alertDispatch({ type: "dontSave" });
+    dispatch({ type: "dontSave" });
     setEditModal(false);
-    setNewNote(initialNoteDetails);
-    setShowColor(false);
-    setNoteText("");
-    setNoteColor("#f0fbff");
-    setEditNote(false);
+    resetData();
   };
 
   // unsaved alert - save handler
   const unsavedAlertSaveHandler = () => {
     alertDispatch({ type: "noteSavedAlert" });
+    dispatch({ type: "noteSavedAlert" });
     onSubmitHandler();
     setEditModal(false);
   };

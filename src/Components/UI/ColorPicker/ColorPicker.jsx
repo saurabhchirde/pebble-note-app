@@ -1,45 +1,28 @@
-import { usePebbleNote } from "../../../Context";
 import "./ColorPicker.css";
+
+const palette = [
+  { color: "#ffffd8", className: "color yellow" },
+  { color: "#ffd9fa", className: "color red" },
+  { color: "#dcffe3", className: "color green" },
+  { color: "#d9f2ff", className: "color blue" },
+  { color: "#ecdbff", className: "color violet" },
+  { color: "#ffffff", className: "color white" },
+];
 
 const ColorPicker = (props) => {
   return (
     <div className="color-input color-palette-drawer">
-      <div
-        onClick={() => {
-          props.setter("#ffffd8");
-        }}
-        className="color yellow"
-      ></div>
-      <div
-        onClick={() => {
-          props.setter("#ffd9fa");
-        }}
-        className="color red"
-      ></div>
-      <div
-        onClick={() => {
-          props.setter("#dcffe3");
-        }}
-        className="color green"
-      ></div>
-      <div
-        onClick={() => {
-          props.setter("#d9f2ff");
-        }}
-        className="color blue"
-      ></div>
-      <div
-        onClick={() => {
-          props.setter("#ecdbff");
-        }}
-        className="color violet"
-      ></div>
-      <div
-        onClick={() => {
-          props.setter("#ffffff");
-        }}
-        className="color white"
-      ></div>
+      {palette.map((item) => {
+        return (
+          <div
+            key={item.color}
+            onClick={() => {
+              props.setter(item.color);
+            }}
+            className={item.className}
+          />
+        );
+      })}
     </div>
   );
 };
