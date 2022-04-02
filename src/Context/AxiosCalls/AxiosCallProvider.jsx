@@ -2,11 +2,14 @@ import { createContext, useContext } from "react";
 import axios from "axios";
 import { useModal, useAuth, usePebbleNote } from "../index";
 import { useNavigate } from "react-router-dom";
+import { useAlert } from "../Alerts/AlertProvider";
 
 const axiosContext = createContext(null);
 
 const AxiosCallProvider = ({ children }) => {
   const { dispatch } = usePebbleNote();
+  const { alertDispatch } = useAlert();
+
   const { setError, setShowError, setShowLogin, setShowSignupAlert } =
     useModal();
   const { authDispatch } = useAuth();

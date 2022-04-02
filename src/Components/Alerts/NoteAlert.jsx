@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { usePebbleNote } from "../../Context";
+import { useAlert } from "../../Context";
 
 const NoteAlert = (props) => {
-  const { dispatch } = usePebbleNote();
+  const { alertDispatch } = useAlert();
 
   useEffect(() => {
     const alertTime = setTimeout(() => {
-      dispatch({ type: props.dispatchType });
+      alertDispatch({ type: props.dispatchType });
     }, 1700);
     return () => {
       clearTimeout(alertTime);

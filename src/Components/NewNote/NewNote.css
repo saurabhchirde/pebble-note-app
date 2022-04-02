@@ -46,10 +46,10 @@
 .rich-text-editor {
   display: flex;
   flex-direction: column;
-  margin: 8px 0;
   align-items: center;
   font-size: 1rem;
-  border: none;
+  border: 1px solid var(--primary-color);
+  padding-top: 8px;
 }
 
 .rich-text-editor p {
@@ -68,7 +68,7 @@
 }
 
 .ql-toolbar {
-  border-radius: 5px 5px 0 0;
+  border-radius: 0;
 }
 
 .quill {

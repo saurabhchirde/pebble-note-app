@@ -1,5 +1,5 @@
 import Note from "../../Components/Note/Note";
-import { usePebbleNote } from "../../Context";
+import { useAlert, usePebbleNote } from "../../Context";
 import { useEffect } from "react";
 import ButtonSimple from "../../Components/UI/Button/ButtonSimple";
 import NoteAlert from "../../Components/Alerts/NoteAlert";
@@ -7,12 +7,12 @@ import "./TrashPage.css";
 
 const TrashPage = () => {
   const { state, dispatch } = usePebbleNote();
+  const { deletedNotes, deletedMsgNotification } = state;
+
   const {
-    deletedNotes,
-    deletedMsgNotification,
-    errorMsgForEmptyTrash,
-    noteRestoredAlert,
-  } = state;
+    alertState: { errorMsgForEmptyTrash, noteRestoredAlert },
+    alertDispatch,
+  } = useAlert();
 
   useEffect(() => {
     localStorage.setItem("deletedNotes", JSON.stringify(deletedNotes));
@@ -20,9 +20,12 @@ const TrashPage = () => {
 
   const emptyTrashClickHandler = () => {
     if (state.deletedNotes.length < 1) {
-      dispatch({ type: "errorMsgForEmptyTrash" });
+      alertDispatch({ type: "errorMsgForEmptyTrash" });
     } else {
       dispatch({ type: "emptyTrash" });
+      setTimeout(() => {
+        dispatch({ type: "hideEmptyTrashMessage" });
+      }, 1700);
     }
   };
 

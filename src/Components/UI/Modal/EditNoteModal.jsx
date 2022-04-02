@@ -1,4 +1,5 @@
 import {
+  useAlert,
   useAuth,
   useAxiosCalls,
   usePebbleNote,
@@ -13,22 +14,21 @@ import ColorPicker from "../ColorPicker/ColorPicker";
 
 const EditNoteModal = () => {
   const {
-    state,
-    dispatch,
     newNote,
     setNewNote,
     noteText,
     setNoteText,
     editNote,
-    setEditNote,
     noteColor,
     setNoteColor,
     showColor,
     setShowColor,
-    editModal,
     setEditModal,
   } = usePebbleNote();
-  const { newInputTitle, showInput, emptyNoteError, unSavedError } = state;
+  const {
+    alertState: { unSavedError },
+    alertDispatch,
+  } = useAlert();
   const { addNoteOnServer, updateNoteOnServer } = useAxiosCalls();
   const { auth } = useAuth();
   const { darkTheme } = useTheme();
@@ -42,7 +42,7 @@ const EditNoteModal = () => {
   const updateNoteConfig = {
     url: `/api/notes/${newNote._id}`,
     body: {
-      note: { ...newNote, text: noteText },
+      note: { ...newNote, text: noteText, color: noteColor },
     },
     headers: { headers: { authorization: auth.token } },
   };
@@ -69,18 +69,18 @@ const EditNoteModal = () => {
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
-      dispatch({ type: "hideInputField" });
+      alertDispatch({ type: "hideInputField" });
       setNewNote(initialNoteDetails);
       setNoteText("");
     } else if (
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
-      dispatch({ type: "hideInputField" });
+      alertDispatch({ type: "hideInputField" });
       setNewNote(initialNoteDetails);
       setNoteText("");
     } else {
-      dispatch({ type: "hideInputWithData" });
+      alertDispatch({ type: "hideInputWithData" });
     }
     setShowColor(false);
     setNoteColor("#f0fbff");
@@ -100,23 +100,22 @@ const EditNoteModal = () => {
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
-      dispatch({ type: "emptyNoteError" });
-      setTimeout(() => {
-        dispatch({ type: "hideEmptyNoteError" });
-      }, 3000);
+      alertDispatch({ type: "emptyNoteError" });
       setEditModal(true);
     } else {
       if (editNote) {
         updateNoteOnServer(updateNoteConfig);
+        alertDispatch({ type: "alertNoteEdited" });
       } else {
         addNoteOnServer(newNoteConfig);
+        alertDispatch({ type: "alertNewAdded" });
       }
+      setEditModal(false);
+      setNewNote(initialNoteDetails);
+      setShowColor(false);
+      setNoteText("");
+      setNoteColor("#f0fbff");
     }
-    setNewNote(initialNoteDetails);
-    setShowColor(false);
-    setNoteText("");
-    setNoteColor("#f0fbff");
-    setEditNote(false);
   };
 
   const colorPaletteHandler = () => {
@@ -138,42 +137,36 @@ const EditNoteModal = () => {
   return (
     <>
       <div className="modal-backdrop"></div>
-      <div className="signin-modal">
+      <div className="signin-modal" style={{ backgroundColor: noteColor }}>
         <a onClick={closeEditModal}>
           <i className="fas fa-times"></i>
         </a>
-        <div className="mg-1-top">
-          <div className="mg-1-bot">
-            Title
-            <div className="input-icon">
-              <textarea
-                onChange={onChangeHandler}
-                type="text"
-                name="title"
-                autoComplete="off"
-                className="note-title-area"
-                value={newNote.title}
-              />
-            </div>
+        <div className="edit-modal mg-1-top">
+          <div className="edit-title">
+            <input
+              onChange={onChangeHandler}
+              type="text"
+              name="title"
+              autoComplete="off"
+              value={newNote.title}
+              style={{ backgroundColor: noteColor }}
+            />
           </div>
-          <div>
-            Text
-            <div className="input-icon">
-              <ReactQuill
-                modules={modules}
-                value={noteText}
-                placeholder="Take a note..."
-                onChange={setNoteText}
-                className={darkThemeEditor}
-                style={{ backgroundColor: noteColor }}
-              />
-            </div>
+          <div className="edit-text rich-text-editor">
+            <ReactQuill
+              modules={modules}
+              value={noteText}
+              placeholder="Take a note..."
+              onChange={setNoteText}
+              className={darkThemeEditor}
+              style={{ backgroundColor: noteColor }}
+            />
           </div>
           <div className="note-nav-btn-left">
             <ButtonIcon
               btnClassName="btn icon-btn-md"
               icon="fas fa-palette"
-              onMouseEnter={colorPaletteHandler}
+              onClick={colorPaletteHandler}
             />
             {showColor && (
               <ColorPicker
@@ -183,14 +176,12 @@ const EditNoteModal = () => {
               />
             )}
             <img src={labelIcon} alt="label-icon" className="nav-icons" />
-            <h2>{newNote.date}</h2>
           </div>
           <div className="signin-btn edit-modal-btn">
             <button
               onClick={seveNoteClick}
               type="submit"
               className="btn primary-btn-md"
-              disabled={state.unSavedError}
             >
               Save
             </button>

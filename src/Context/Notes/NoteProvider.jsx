@@ -17,15 +17,6 @@ const initialState = {
   newInputTitle: "Take a new note..",
   showInput: false,
   archivedNotes: [],
-  emptyNoteError: false,
-  unSavedError: false,
-  showIcon: true,
-  archivedNote: false,
-  errorMsgForEmptyTrash: false,
-  noteDeletedAlert: false,
-  noteRestoredAlert: false,
-  noteArchiveAlert: false,
-  noteUnarchiveAlert: false,
 };
 
 const noteContext = createContext(initialState);

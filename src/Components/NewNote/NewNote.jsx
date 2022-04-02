@@ -1,5 +1,11 @@
 import "./NewNote.css";
-import { useAuth, useAxiosCalls, usePebbleNote, useTheme } from "../../Context";
+import {
+  useAlert,
+  useAuth,
+  useAxiosCalls,
+  usePebbleNote,
+  useTheme,
+} from "../../Context";
 import ButtonSimple from "../UI/Button/ButtonSimple";
 import NoteAlert from "../Alerts/NoteAlert";
 import ButtonIcon from "../UI/Button/ButtonIcon";
@@ -26,7 +32,13 @@ const NewNote = () => {
     setEditModal,
   } = usePebbleNote();
 
-  const { newInputTitle, showInput, emptyNoteError, unSavedError } = state;
+  const { newInputTitle, showInput } = state;
+
+  const {
+    alertState: { emptyNoteError, unSavedError },
+    alertDispatch,
+  } = useAlert();
+
   const { darkTheme } = useTheme();
   const { addNoteOnServer, updateNoteOnServer } = useAxiosCalls();
   const { auth } = useAuth();
@@ -70,12 +82,14 @@ const NewNote = () => {
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
-      dispatch({ type: "emptyNoteError" });
+      alertDispatch({ type: "emptyNoteError" });
     } else {
       if (editNote) {
         updateNoteOnServer(updateNoteConfig);
+        alertDispatch({ type: "alertNoteEdited" });
       } else {
         addNoteOnServer(newNoteConfig);
+        alertDispatch({ type: "alertNewAdded" });
       }
     }
     setNewNote(initialNoteDetails);
@@ -92,18 +106,18 @@ const NewNote = () => {
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
-      dispatch({ type: "hideInputField" });
+      alertDispatch({ type: "hideInputField" });
       setNewNote(initialNoteDetails);
       setNoteText("");
     } else if (
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
-      dispatch({ type: "hideInputField" });
+      alertDispatch({ type: "hideInputField" });
       setNewNote(initialNoteDetails);
       setNoteText("");
     } else {
-      dispatch({ type: "hideInputWithData" });
+      alertDispatch({ type: "hideInputWithData" });
     }
     setShowColor(false);
     setNoteColor("#f0fbff");
@@ -129,7 +143,7 @@ const NewNote = () => {
 
   // unsaved alert - delete handler
   const unsavedAlertDeleteHandler = () => {
-    dispatch({ type: "dontSave" });
+    alertDispatch({ type: "dontSave" });
     setEditModal(false);
     setNewNote(initialNoteDetails);
     setShowColor(false);
@@ -140,6 +154,7 @@ const NewNote = () => {
 
   // unsaved alert - save handler
   const unsavedAlertSaveHandler = () => {
+    alertDispatch({ type: "noteSavedAlert" });
     onSubmitHandler();
     setEditModal(false);
   };
@@ -190,7 +205,7 @@ const NewNote = () => {
             name="title"
             autoComplete="off"
             value={editModal ? "" : newNote.title}
-            style={{ backgroundColor: noteColor }}
+            style={{ backgroundColor: editModal ? "#f0fbff" : noteColor }}
           />
         </div>
         {showInput && (

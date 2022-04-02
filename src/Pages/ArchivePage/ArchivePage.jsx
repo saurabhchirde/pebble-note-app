@@ -1,5 +1,5 @@
 import Note from "../../Components/Note/Note";
-import { usePebbleNote } from "../../Context";
+import { useAlert, usePebbleNote } from "../../Context";
 import { useEffect } from "react";
 import NoteAlert from "../../Components/Alerts/NoteAlert";
 import "./ArchivePage.css";
@@ -7,7 +7,10 @@ import archiveIcon from "../../Data/Images/Icons/archive.svg";
 
 const ArchivePage = () => {
   const { state } = usePebbleNote();
-  const { archivedNotes, noteUnarchiveAlert } = state;
+  const { archivedNotes } = state;
+  const {
+    alertState: { noteUnarchiveAlert },
+  } = useAlert();
 
   useEffect(() => {
     localStorage.setItem("archivedNotes", JSON.stringify(archivedNotes));
@@ -19,7 +22,7 @@ const ArchivePage = () => {
         <NoteAlert
           alert="alert-info"
           icon="fas fa-info alert-icon"
-          text="Note Sent to Inbox"
+          text="Note Un-Archived"
           dispatchType="hideUnarchiveAlert"
         />
       )}

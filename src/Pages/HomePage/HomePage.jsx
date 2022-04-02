@@ -1,18 +1,62 @@
 import Note from "../../Components/Note/Note";
 import NewNote from "../../Components/NewNote/NewNote";
-import { usePebbleNote } from "../../Context";
+import { useAlert, usePebbleNote } from "../../Context";
 import "./HomePage.css";
 import NoteAlert from "../../Components/Alerts/NoteAlert";
 
 const HomePage = () => {
-  const { state } = usePebbleNote();
-  const { allNotes, noteDeletedAlert, noteArchiveAlert } = state;
+  const {
+    state: { allNotes },
+  } = usePebbleNote();
+
+  const {
+    alertState: {
+      noteAddedAlert,
+      noteEditedAlert,
+      noteSavedAlert,
+      noteDiscardAlert,
+      noteDeletedAlert,
+      noteArchiveAlert,
+    },
+  } = useAlert();
 
   const pinnedNotes = [...allNotes.filter((item) => item.pinned)];
   const otherNotes = [...allNotes.filter((item) => !item.pinned)];
 
   return (
     <div className="body-content">
+      {noteAddedAlert && (
+        <NoteAlert
+          alert="alert-info"
+          icon="fas fa-info alert-icon"
+          text="New Note added"
+          dispatchType="hideNoteAddedAlert"
+        />
+      )}
+      {noteEditedAlert && (
+        <NoteAlert
+          alert="alert-info"
+          icon="fas fa-info alert-icon"
+          text="Note Edited Successfully"
+          dispatchType="hideNoteEditedAlert"
+        />
+      )}
+      {noteSavedAlert && (
+        <NoteAlert
+          alert="alert-info"
+          icon="fas fa-info alert-icon"
+          text="Note Saved"
+          dispatchType="hideNoteSavedAlert"
+        />
+      )}
+      {noteDiscardAlert && (
+        <NoteAlert
+          alert="alert-info"
+          icon="fas fa-info alert-icon"
+          text="Note Discarded"
+          dispatchType="hideDiscardAlert"
+        />
+      )}
       {noteDeletedAlert && (
         <NoteAlert
           alert="alert-info"

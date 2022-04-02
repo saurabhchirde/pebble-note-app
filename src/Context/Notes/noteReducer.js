@@ -38,7 +38,6 @@ const noteReducer = (state, action) => {
       return {
         ...state,
         allNotes: [...action.payload],
-        unSavedError: false,
       };
 
     //  after deleting
@@ -55,7 +54,6 @@ const noteReducer = (state, action) => {
         ...state,
         allNotes: action.payload.notes,
         archivedNotes: action.payload.archives,
-        noteArchiveAlert: true,
       };
     }
 
@@ -65,7 +63,6 @@ const noteReducer = (state, action) => {
         ...state,
         allNotes: action.payload.notes,
         archivedNotes: action.payload.archives,
-        noteUnarchiveAlert: true,
       };
     }
 
@@ -74,8 +71,6 @@ const noteReducer = (state, action) => {
       return {
         ...state,
         deletedNotes: [...state.deletedNotes, action.payload],
-        noteDeletedAlert: true,
-        noteRestoredAlert: false,
       };
 
     case "restoreNote":
@@ -86,103 +81,19 @@ const noteReducer = (state, action) => {
             (item) => item._id !== action.payload._id
           ),
         ],
-        noteDeletedAlert: false,
-        noteRestoredAlert: true,
       };
 
     case "editNote":
       return {
         ...state,
-        showInput: true,
+        showInput: false,
       };
 
     case "emptyTrash":
       return { ...state, deletedNotes: [], deletedMsgNotification: true };
 
-    // all alerts
-    case "alertDeleted":
-      return {
-        ...state,
-        noteDeletedAlert: true,
-        noteRestoredAlert: false,
-      };
-
-    case "hideDeletedAlert":
-      return {
-        ...state,
-        noteDeletedAlert: false,
-      };
-
-    case "hideRestoredAlert":
-      return {
-        ...state,
-        noteRestoredAlert: false,
-      };
-
-    case "hideDeletedMsgNotification":
-      return {
-        ...state,
-        deletedMsgNotification: false,
-        errorMsgForEmptyTrash: false,
-      };
-
-    case "errorMsgForEmptyTrash":
-      return {
-        ...state,
-        errorMsgForEmptyTrash: true,
-      };
-
-    case "hideUnarchiveAlert":
-      return {
-        ...state,
-        noteUnarchiveAlert: false,
-      };
-
-    case "hideArchiveAlert":
-      return {
-        ...state,
-        noteArchiveAlert: false,
-      };
-
-    case "emptyNoteError":
-      return {
-        ...state,
-        emptyNoteError: true,
-      };
-
-    case "hideEmptyNoteError":
-      return {
-        ...state,
-        emptyNoteError: false,
-      };
-
-    case "dontSave":
-      return {
-        ...state,
-        unSavedError: false,
-        showInput: true,
-      };
-
-    case "hideInputField":
-      return {
-        ...state,
-        showInput: false,
-        unSavedError: false,
-        newInputTitle: "Take a new note..",
-      };
-
-    case "hideInputWithData":
-      return {
-        ...state,
-        unSavedError: true,
-      };
-
-    case "outsideClick":
-      return {
-        ...state,
-        showInput: false,
-        newInputTitle: "Take a new note..",
-      };
+    case "hideEmptyTrashMessage":
+      return { ...state, deletedMsgNotification: false };
 
     default:
       return state;

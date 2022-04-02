@@ -2,7 +2,13 @@ import "./Note.css";
 import pin1 from "../../Data/Images/Icons/pin1.svg";
 import pin2 from "../../Data/Images/Icons/pin2.svg";
 import ButtonIcon from "../UI/Button/ButtonIcon";
-import { useAuth, useAxiosCalls, usePebbleNote, useTheme } from "../../Context";
+import {
+  useAlert,
+  useAuth,
+  useAxiosCalls,
+  usePebbleNote,
+  useTheme,
+} from "../../Context";
 import archiveIcon from "../../Data/Images/Icons/archive.svg";
 import unarchiveIcon from "../../Data/Images/Icons/unarchive.svg";
 import ColorPicker from "../UI/ColorPicker/ColorPicker";
@@ -25,6 +31,8 @@ const Note = ({
     setEditNote,
     setEditModal,
   } = usePebbleNote();
+
+  const { alertDispatch } = useAlert();
   const { darkTheme } = useTheme();
   const {
     addToTrashOnServer,
@@ -77,6 +85,9 @@ const Note = ({
   };
 
   const pinClickHandler = () => {
+    pinAction === "pinnedNote"
+      ? alertDispatch({ type: "alertUnPinned" })
+      : alertDispatch({ type: "alertPinned" });
     updateNoteOnServer(updateNoteConfig);
   };
 
@@ -96,9 +107,11 @@ const Note = ({
     if (delAction === "del") {
       addToTrashOnServer(delNoteConfig);
       dispatch({ type: "deleteNote", payload: item });
+      alertDispatch({ type: "alertDeleted" });
     } else {
       addNoteOnServer(restoreFromTrashConfig);
       dispatch({ type: "restoreNote", payload: item });
+      alertDispatch({ type: "alertRestored" });
     }
   };
 
@@ -106,16 +119,19 @@ const Note = ({
     setEditNote(true);
     setEditModal(true);
     dispatch({ type: "editNote" });
-
     setNewNote(item);
     setNoteText(text);
     setNoteColor(color);
   };
 
   const archiveNoteHandler = () => {
-    archiveAction === "archive"
-      ? addNoteToArchiveOnServer(archiveNoteConfig)
-      : restoreArchiveFromServer(restoreFromArchiveConfig);
+    if (archiveAction === "archive") {
+      addNoteToArchiveOnServer(archiveNoteConfig);
+      alertDispatch({ type: "alertArchived" });
+    } else {
+      restoreArchiveFromServer(restoreFromArchiveConfig);
+      alertDispatch({ type: "alertUnArchived" });
+    }
   };
 
   const pinSrc = pinAction === "pinnedNote" ? pin2 : pin1;
