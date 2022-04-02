@@ -91,16 +91,16 @@ const Note = ({
     updateNoteOnServer(updateNoteConfig);
   };
 
-  const changeNoteColorHandler = (e) => {
-    setSingleNoteColor(e.target.value);
-  };
-
   const onOutsideClickHandler = () => {
     setShowColorForNote(false);
   };
 
-  const colorPickerToggler = () => {
-    setShowColorForNote((show) => !show);
+  const showColorPaletteHandler = () => {
+    setShowColorForNote(true);
+  };
+
+  const hideColorPaletteHandler = () => {
+    setShowColorForNote(false);
   };
 
   const delRestoreNoteHandler = () => {
@@ -169,20 +169,17 @@ const Note = ({
         <h2>{title}</h2>
         <div className="note-text" dangerouslySetInnerHTML={{ __html: text }} />
         <div className="note-nav-btn">
-          {hideEditIcon && (
-            <ButtonIcon
-              onClick={colorPickerToggler}
-              btnClassName="btn icon-btn-sm"
-              icon="fas fa-palette"
-            />
-          )}
-          {showColorForNote && (
-            <ColorPicker
-              onChange={changeNoteColorHandler}
-              label={singleNoteColor}
-              value={singleNoteColor}
-            />
-          )}
+          <div onMouseLeave={hideColorPaletteHandler}>
+            {hideEditIcon && (
+              <button
+                onMouseEnter={showColorPaletteHandler}
+                className="btn icon-btn-md"
+              >
+                <i className="fas fa-palette"></i>
+              </button>
+            )}
+            {showColorForNote && <ColorPicker setter={setSingleNoteColor} />}
+          </div>
           {hideDelButton && (
             <ButtonIcon
               onClick={delRestoreNoteHandler}

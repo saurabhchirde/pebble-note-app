@@ -8,7 +8,6 @@ import {
 } from "../../Context";
 import ButtonSimple from "../UI/Button/ButtonSimple";
 import NoteAlert from "../Alerts/NoteAlert";
-import ButtonIcon from "../UI/Button/ButtonIcon";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import labelIcon from "../../Data/Images/Icons/label.svg";
@@ -133,12 +132,12 @@ const NewNote = () => {
     });
   };
 
-  const colorPaletteHandler = () => {
-    setShowColor((showPalette) => !showPalette);
+  const showColorPaletteHandler = () => {
+    setShowColor(true);
   };
 
-  const changeNoteColorHandler = (e) => {
-    setNoteColor(e.target.value);
+  const hideColorPaletteHandler = () => {
+    setShowColor(false);
   };
 
   // unsaved alert - delete handler
@@ -169,7 +168,10 @@ const NewNote = () => {
 
   return (
     <>
-      <div className={darkThemeClass} style={{ backgroundColor: noteColor }}>
+      <div
+        className={darkThemeClass}
+        style={{ backgroundColor: editModal ? "#f0fbff" : noteColor }}
+      >
         {emptyNoteError && (
           <NoteAlert
             alert="alert-error"
@@ -220,20 +222,18 @@ const NewNote = () => {
                 style={{ backgroundColor: noteColor }}
               />
             </div>
+
             <div className="new-note-nav-btn">
               <div className="note-nav-btn-left">
-                <ButtonIcon
-                  btnClassName="btn icon-btn-md"
-                  icon="fas fa-palette"
-                  onMouseEnter={colorPaletteHandler}
-                />
-                {showColor && (
-                  <ColorPicker
-                    onChange={changeNoteColorHandler}
-                    label={noteColor}
-                    value={noteColor}
-                  />
-                )}
+                <div onMouseLeave={hideColorPaletteHandler}>
+                  <button
+                    onMouseEnter={showColorPaletteHandler}
+                    className="btn icon-btn-md"
+                  >
+                    <i className="fas fa-palette"></i>
+                  </button>
+                  {showColor && <ColorPicker setter={setNoteColor} />}
+                </div>
                 <img src={labelIcon} alt="label-icon" className="nav-icons" />
                 <h2>{newNote.date}</h2>
               </div>

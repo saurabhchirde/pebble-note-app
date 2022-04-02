@@ -31,6 +31,9 @@
   min-width: 21rem;
 }
 
+.edit-modal .note-nav-btn-left {
+  justify-content: flex-start;
+}
 .edit-modal-btn {
   width: 100%;
   display: grid;

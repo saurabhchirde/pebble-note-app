@@ -9,7 +9,6 @@ import "./EditNoteModal.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import labelIcon from "../../../Data/Images/Icons/label.svg";
-import ButtonIcon from "../Button/ButtonIcon";
 import ColorPicker from "../ColorPicker/ColorPicker";
 
 const EditNoteModal = () => {
@@ -23,6 +22,7 @@ const EditNoteModal = () => {
     setNoteColor,
     showColor,
     setShowColor,
+    setEditNote,
     setEditModal,
   } = usePebbleNote();
   const {
@@ -110,6 +110,7 @@ const EditNoteModal = () => {
         addNoteOnServer(newNoteConfig);
         alertDispatch({ type: "alertNewAdded" });
       }
+      setEditNote(false);
       setEditModal(false);
       setNewNote(initialNoteDetails);
       setShowColor(false);
@@ -118,12 +119,12 @@ const EditNoteModal = () => {
     }
   };
 
-  const colorPaletteHandler = () => {
-    setShowColor((showPalette) => !showPalette);
+  const showColorPaletteHandler = () => {
+    setShowColor(true);
   };
 
-  const changeNoteColorHandler = (e) => {
-    setNoteColor(e.target.value);
+  const hideColorPaletteHandler = () => {
+    setShowColor(false);
   };
 
   const darkThemeClass = darkTheme
@@ -163,18 +164,15 @@ const EditNoteModal = () => {
             />
           </div>
           <div className="note-nav-btn-left">
-            <ButtonIcon
-              btnClassName="btn icon-btn-md"
-              icon="fas fa-palette"
-              onClick={colorPaletteHandler}
-            />
-            {showColor && (
-              <ColorPicker
-                onChange={changeNoteColorHandler}
-                label={noteColor}
-                value={noteColor}
-              />
-            )}
+            <div onMouseLeave={hideColorPaletteHandler}>
+              <button
+                onMouseEnter={showColorPaletteHandler}
+                className="btn icon-btn-md"
+              >
+                <i className="fas fa-palette"></i>
+              </button>
+              {showColor && <ColorPicker setter={setNoteColor} />}
+            </div>
             <img src={labelIcon} alt="label-icon" className="nav-icons" />
           </div>
           <div className="signin-btn edit-modal-btn">
