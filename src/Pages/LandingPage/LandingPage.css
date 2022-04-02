@@ -62,7 +62,7 @@
 }
 
 .landing-body-features h3 {
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   font-weight: 500;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .landing-body-features li {
-  font-size: 1rem;
+  font-size: 1.3rem;
   margin: 10px 0;
 }
 
@@ -82,11 +82,11 @@
 }
 
 .landing-body-header {
-  font-size: 1.8rem;
+  font-size: 2.4rem;
   margin: 1rem 1rem 2rem;
 }
 .landing-body-header-text {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin: 0 1rem;
 }
 
@@ -122,7 +122,7 @@
     font-size: 1.2rem;
   }
   .landing-body-text {
-    width: 70%;
+    width: 80%;
   }
 }
 
@@ -149,7 +149,7 @@
     justify-content: center;
     position: relative;
     width: 100%;
-    margin: 6rem auto 5rem;
+    margin: 11rem auto 5rem;
   }
 
   .landing-body-text {
