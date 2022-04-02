@@ -39,6 +39,7 @@
   margin: 8px;
   padding: 10px;
   z-index: 1;
+  word-wrap: break-word;
 }
 
 .note-container h2 {
