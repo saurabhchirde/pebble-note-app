@@ -1,0 +1,25 @@
+.note-label {
+  background-color: var(--primary-bg);
+  color: var(--text-dark);
+  width: 10rem;
+  height: 3.5rem;
+  border-radius: 4px;
+  position: absolute;
+  padding: 1rem 10px;
+  z-index: 2;
+  display: flex;
+  top: -0.6rem;
+  margin-left: 1rem;
+  align-items: center;
+  border: 1px solid var(--primary-color);
+}
+
+.note-label input {
+  width: 6rem;
+  background: transparent;
+  color: var(--text-dark);
+  padding: 5px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}

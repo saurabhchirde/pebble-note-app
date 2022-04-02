@@ -4,7 +4,13 @@ import EditNoteModal from "./Components/UI/Modal/EditNoteModal";
 import LeftNavBar from "./Components/UI/Navigation/LeftNavBar";
 import NavBar from "./Components/UI/Navigation/NavBar";
 import BodyWrapper from "./Components/UI/Wrapper/BodyWrapper";
-import { useAuth, useModal, usePebbleNote, useTheme } from "./Context";
+import {
+  useAnimation,
+  useAuth,
+  useModal,
+  usePebbleNote,
+  useTheme,
+} from "./Context";
 import LandingPage from "./Pages/LandingPage/LandingPage";
 import HomePage from "./Pages/HomePage/HomePage";
 import LabelPage from "./Pages/LabelPage/LabelPage";
@@ -19,9 +25,12 @@ import { useEffect } from "react";
 import SignupAlertModal from "./Components/UI/Modal/SignupAlertModal";
 import AlertModal from "./Components/UI/Modal/AlertModal";
 import NotFound from "./Pages/NotFound/NotFound";
+import AnimateLoader from "./Components/Animation/AnimateLoader";
+import AnimateNote from "./Components/Animation/AnimateNote";
 
 function App() {
   const { showLogin, showSignup, showSignupAlert, showError } = useModal();
+  const { loader, loginAnimate } = useAnimation();
   const { editModal } = usePebbleNote();
   const { darkTheme } = useTheme();
   const { auth } = useAuth();
@@ -38,6 +47,8 @@ function App() {
 
   return (
     <>
+      {loginAnimate && <AnimateNote />}
+      {loader && <AnimateLoader />}
       {showLogin && <Login />}
       {showSignup && <Signup />}
       {showSignupAlert && <SignupAlertModal />}

@@ -8,6 +8,40 @@ const noteReducer = (state, action) => {
         newInputTitle: "Title",
       };
 
+    // add label
+    case "addLabelToNote":
+      return {
+        ...state,
+        tempLabels: [...state.tempLabels, action.payload],
+      };
+
+    // remove label from note
+    case "removeLabelFromNote":
+      console.log(action.payload);
+      return {
+        ...state,
+        tempLabels: [
+          ...state.tempLabels.filter((item) => item != action.payload),
+        ],
+      };
+
+    // remove label
+    case "removeLabel":
+      console.log(action.payload);
+      return {
+        ...state,
+        tempLabels: [
+          ...state.tempLabels.filter((item) => item != action.payload),
+        ],
+      };
+
+    // clear temp labels
+    case "clearTempLabel":
+      return {
+        ...state,
+        tempLabels: [],
+      };
+
     // Server side functionality
 
     // getNotesFromServer
@@ -35,6 +69,15 @@ const noteReducer = (state, action) => {
 
     // after adding notes
     case "notesAfterAddingNew":
+      console.log("after adding note", action.payload);
+      return {
+        ...state,
+        allNotes: [...action.payload],
+      };
+
+    // after updating notes
+    case "notesAfterUpdating":
+      console.log(action.payload);
       return {
         ...state,
         allNotes: [...action.payload],

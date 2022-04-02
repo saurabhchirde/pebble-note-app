@@ -59,7 +59,7 @@ const EditNoteModal = () => {
   const initialNoteDetails = {
     title: "",
     pinned: false,
-    tags: [],
+    labels: [],
     date: new Date().toLocaleDateString(),
   };
 

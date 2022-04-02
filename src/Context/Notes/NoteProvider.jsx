@@ -17,6 +17,7 @@ const initialState = {
   newInputTitle: "Take a new note..",
   showInput: false,
   archivedNotes: [],
+  tempLabels: [],
 };
 
 const noteContext = createContext(initialState);
@@ -27,12 +28,14 @@ const NoteProvider = ({ children }) => {
   const [newNote, setNewNote] = useState({
     title: "",
     pinned: false,
-    tags: [],
+    labels: [],
     date: new Date().toLocaleDateString(),
   });
   const [editNote, setEditNote] = useState(false);
-  const [noteColor, setNoteColor] = useState("#f0fbff");
+  const [noteColor, setNoteColor] = useState("#ffffff");
   const [showColor, setShowColor] = useState(false);
+  const [showLabel, setShowLabel] = useState(false);
+  const [label, setLabel] = useState("");
   const [editModal, setEditModal] = useState(false);
   const { auth } = useAuth();
   const { setError, setShowError } = useModal();
@@ -73,6 +76,10 @@ const NoteProvider = ({ children }) => {
         setNoteColor,
         showColor,
         setShowColor,
+        showLabel,
+        setShowLabel,
+        label,
+        setLabel,
         editModal,
         setEditModal,
       }}

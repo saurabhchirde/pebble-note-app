@@ -45,8 +45,8 @@ export const createNoteHandler = function (schema, request) {
       );
     }
     const { note } = JSON.parse(request.requestBody);
-    if (!note.tags) {
-      user.notes.push({ ...note, _id: uuid(), tags: [] });
+    if (!note.labels) {
+      user.notes.push({ ...note, _id: uuid(), labels: [] });
     } else {
       user.notes.push({ ...note, _id: uuid() });
     }
