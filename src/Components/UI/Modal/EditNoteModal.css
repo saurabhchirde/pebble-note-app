@@ -6,37 +6,38 @@
   z-index: 4;
 }
 
-.note-title-area,
-.note-text-area {
-  padding: 12px;
-  margin: 5px 0;
-  font-size: 1rem;
-  min-width: 18rem;
+.edit-title,
+.edit-text {
+  margin: 0;
   resize: vertical;
 }
-.note-title-area::-webkit-scrollbar,
-.note-text-area ::-webkit-scrollbar {
+.edit-title::-webkit-scrollbar,
+.edit-text ::-webkit-scrollbar {
   display: none;
 }
 
-.note-title-area {
-  min-height: 4rem;
+.edit-title input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border: 1px solid var(--primary-color);
 }
 
-.note-text-area {
-  min-height: 12rem;
+.edit-text {
+  padding: 0;
 }
 
 .signin-modal {
   min-width: 21rem;
 }
 
+.edit-modal .note-nav-btn-left {
+  justify-content: flex-start;
+}
 .edit-modal-btn {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  margin-top: 1.5rem;
-  background-color: aquamarine;
 }
 
 .edit-modal-btn button {

@@ -5,7 +5,6 @@ import {
   useReducer,
   useState,
 } from "react";
-import { v4 as uuid } from "uuid";
 import { noteReducer } from "./noteReducer";
 import { useAuth } from "../Auth/AuthProvider";
 import { useModal } from "../Modal/ModalProvider";
@@ -16,32 +15,24 @@ const initialState = {
   allNotes: [],
   deletedMsgNotification: false,
   newInputTitle: "Take a new note..",
-  addState: "Add New Note",
   showInput: false,
-  pinnedNote: [],
   archivedNotes: [],
-  emptyNoteError: false,
-  unSavedError: false,
-  showIcon: true,
-  pinNote: false,
-  archivedNote: false,
-  errorMsgForEmptyTrash: false,
-  noteDeletedAlert: false,
-  noteRestoredAlert: false,
-  noteArchiveAlert: false,
-  noteUnarchiveAlert: false,
 };
 
 const noteContext = createContext(initialState);
 
 const NoteProvider = ({ children }) => {
   const [state, dispatch] = useReducer(noteReducer, initialState);
+  const [noteText, setNoteText] = useState("");
   const [newNote, setNewNote] = useState({
-    id: uuid(),
     title: "",
-    text: "",
+    pinned: false,
     tags: [],
+    date: new Date().toLocaleDateString(),
   });
+  const [editNote, setEditNote] = useState(false);
+  const [noteColor, setNoteColor] = useState("#f0fbff");
+  const [showColor, setShowColor] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const { auth } = useAuth();
   const { setError, setShowError } = useModal();
@@ -54,6 +45,7 @@ const NoteProvider = ({ children }) => {
             headers: { authorization: auth.token },
           });
           dispatch({ type: "getNotesFromServer", payload: res.data.notes });
+
           console.log(res.data.notes);
         } catch (error) {
           setError(error.message);
@@ -68,7 +60,22 @@ const NoteProvider = ({ children }) => {
 
   return (
     <noteContext.Provider
-      value={{ state, dispatch, newNote, setNewNote, editModal, setEditModal }}
+      value={{
+        state,
+        dispatch,
+        newNote,
+        setNewNote,
+        editNote,
+        setEditNote,
+        noteText,
+        setNoteText,
+        noteColor,
+        setNoteColor,
+        showColor,
+        setShowColor,
+        editModal,
+        setEditModal,
+      }}
     >
       {children}
     </noteContext.Provider>

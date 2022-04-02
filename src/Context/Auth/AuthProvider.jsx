@@ -23,8 +23,8 @@ const authReducer = (auth, action) => {
           lastName: action.payload.foundUser.lastName,
           email: action.payload.foundUser.email,
           dp:
-            action.payload.foundUser.firstName.slice(0, 1) +
-            action.payload.foundUser.lastName.slice(0, 1),
+            action.payload.foundUser.firstName[0] +
+            action.payload.foundUser.lastName[0],
         },
       };
 

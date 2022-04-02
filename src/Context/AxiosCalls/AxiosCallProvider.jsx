@@ -2,11 +2,14 @@ import { createContext, useContext } from "react";
 import axios from "axios";
 import { useModal, useAuth, usePebbleNote } from "../index";
 import { useNavigate } from "react-router-dom";
+import { useAlert } from "../Alerts/AlertProvider";
 
 const axiosContext = createContext(null);
 
 const AxiosCallProvider = ({ children }) => {
   const { dispatch } = usePebbleNote();
+  const { alertDispatch } = useAlert();
+
   const { setError, setShowError, setShowLogin, setShowSignupAlert } =
     useModal();
   const { authDispatch } = useAuth();
@@ -18,7 +21,6 @@ const AxiosCallProvider = ({ children }) => {
 
     try {
       const response = await axios.post(url, data);
-      console.log(response);
       setError(
         `Welcome back ${response.data.foundUser.firstName} ${response.data.foundUser.lastName}`
       );
@@ -66,6 +68,23 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.post(url, body, headers);
       //update after adding note
       dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
+      // console.log(res.data.notes);
+    } catch (error) {
+      setError(error.message);
+      setShowError(true);
+    }
+  };
+
+  // update note
+  const updateNoteOnServer = async (noteConfig) => {
+    const { url, body, headers, item } = noteConfig;
+    console.log(url, body, headers);
+    try {
+      const res = await axios.post(url, body, headers);
+      //update after adding note
+      dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
+
+      console.log("after update notes", res.data.notes);
     } catch (error) {
       setError(error.message);
       setShowError(true);
@@ -119,6 +138,7 @@ const AxiosCallProvider = ({ children }) => {
         userLogin,
         userSignup,
         addNoteOnServer,
+        updateNoteOnServer,
         addToTrashOnServer,
         addNoteToArchiveOnServer,
         restoreArchiveFromServer,

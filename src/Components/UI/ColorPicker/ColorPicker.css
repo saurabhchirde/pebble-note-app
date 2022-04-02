@@ -1,0 +1,53 @@
+.color-palette-drawer {
+  position: absolute;
+  width: 7.5rem;
+  text-align: center;
+  left: -1rem;
+  top: -4.9rem;
+  border-radius: 4px;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-bg);
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+
+.color-palette-drawer input {
+  outline: 1px solid var(--text-dark);
+  height: 1.8rem;
+}
+
+.color-palette-drawer label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.color {
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 1px solid var(--text-dark);
+  margin: 3px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.color-palette-drawer .yellow {
+  background-color: #ffffd8;
+}
+.color-palette-drawer .red {
+  background-color: #ffd9fa;
+}
+.color-palette-drawer .green {
+  background-color: #dcffe3;
+}
+
+.color-palette-drawer .blue {
+  background-color: #d9f2ff;
+}
+.color-palette-drawer .violet {
+  background-color: #ecdbff;
+}
+.color-palette-drawer .white {
+  background-color: #ffffff;
+}

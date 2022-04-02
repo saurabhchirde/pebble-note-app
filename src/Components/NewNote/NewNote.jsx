@@ -1,25 +1,82 @@
 import "./NewNote.css";
-import { useAuth, useAxiosCalls, usePebbleNote, useTheme } from "../../Context";
+import {
+  useAlert,
+  useAuth,
+  useAxiosCalls,
+  usePebbleNote,
+  useTheme,
+} from "../../Context";
 import ButtonSimple from "../UI/Button/ButtonSimple";
 import NoteAlert from "../Alerts/NoteAlert";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import labelIcon from "../../Data/Images/Icons/label.svg";
+import ColorPicker from "../UI/ColorPicker/ColorPicker";
 
 const NewNote = () => {
-  const { state, dispatch, newNote, setNewNote, editModal, setEditModal } =
-    usePebbleNote();
-  const { newInputTitle, addState, showInput, emptyNoteError, unSavedError } =
-    state;
+  const {
+    state,
+    dispatch,
+    newNote,
+    setNewNote,
+    noteText,
+    setNoteText,
+    editNote,
+    setEditNote,
+    noteColor,
+    setNoteColor,
+    showColor,
+    setShowColor,
+    editModal,
+    setEditModal,
+  } = usePebbleNote();
+
+  const { newInputTitle, showInput } = state;
+
+  const {
+    alertState: { emptyNoteError, unSavedError },
+    alertDispatch,
+  } = useAlert();
+
   const { darkTheme } = useTheme();
-  const { addNoteOnServer, addToTrashOnServer } = useAxiosCalls();
+  const { addNoteOnServer, updateNoteOnServer } = useAxiosCalls();
   const { auth } = useAuth();
+
+  const initialNoteDetails = {
+    title: "",
+    pinned: false,
+    tags: [],
+    date: new Date().toLocaleDateString(),
+  };
+
+  const modules = {
+    toolbar: [
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["blockquote", "code-block"],
+      ["link", "image", "video"],
+    ],
+  };
+
+  const resetData = () => {
+    setNewNote(initialNoteDetails);
+    setShowColor(false);
+    setNoteText("");
+    setNoteColor("#f0fbff");
+    setEditNote(false);
+  };
 
   const newNoteConfig = {
     url: "/api/notes",
-    body: { note: { ...newNote } },
+    body: { note: { ...newNote, text: noteText, color: noteColor } },
     headers: { headers: { authorization: auth.token } },
   };
 
-  const delNoteConfig = {
+  const updateNoteConfig = {
     url: `/api/notes/${newNote._id}`,
+    body: {
+      note: { ...newNote, text: noteText },
+    },
     headers: { headers: { authorization: auth.token } },
   };
 
@@ -27,77 +84,98 @@ const NewNote = () => {
     dispatch({ type: "clickOnNewNoteHandler" });
   };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    if (newNote.title.trim() === "" && newNote.text.trim() === "") {
-      dispatch({ type: "emptyNoteError" });
+  const onSubmitHandler = () => {
+    if (
+      newNote.title.trim() === "" &&
+      (noteText === "" || noteText === "<p><br></p>")
+    ) {
+      alertDispatch({ type: "emptyNoteError" });
     } else {
-      !unSavedError && addNoteOnServer(newNoteConfig);
+      if (editNote) {
+        updateNoteOnServer(updateNoteConfig);
+        alertDispatch({ type: "alertNoteEdited" });
+      } else {
+        addNoteOnServer(newNoteConfig);
+        alertDispatch({ type: "alertNewAdded" });
+      }
     }
-    setNewNote({
-      title: "",
-      text: "",
-      pinned: false,
-      tags: [],
-    });
+    resetData();
   };
 
   // alerts on clicking close button
   const clickOnCloseNewNote = () => {
-    if (unSavedError && newNote.title === "" && newNote.text === "") {
+    if (
+      unSavedError &&
+      newNote.title.trim() === "" &&
+      (noteText === "" || noteText === "<p><br></p>")
+    ) {
       dispatch({ type: "hideInputField" });
-    } else if (newNote.title === "" && newNote.text === "") {
+      alertDispatch({ type: "hideInputField" });
+      setNewNote(initialNoteDetails);
+      setNoteText("");
+    } else if (
+      newNote.title.trim() === "" &&
+      (noteText === "" || noteText === "<p><br></p>")
+    ) {
       dispatch({ type: "hideInputField" });
+      alertDispatch({ type: "hideInputField" });
+      setNewNote(initialNoteDetails);
+      setNoteText("");
     } else {
-      dispatch({ type: "hideInputWithData" });
+      alertDispatch({ type: "hideInputWithData" });
     }
+    setShowColor(false);
+    setNoteColor("#f0fbff");
   };
 
   // new note input data
   const newInputOnChangeHandler = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
-
-    setNewNote((oldNote) => {
+    setNewNote((oldData) => {
       return {
-        ...oldNote,
-        [name]: value,
+        ...oldData,
+        title: e.target.value,
       };
     });
   };
 
+  const showColorPaletteHandler = () => {
+    setShowColor(true);
+  };
+
+  const hideColorPaletteHandler = () => {
+    setShowColor(false);
+  };
+
   // unsaved alert - delete handler
   const unsavedAlertDeleteHandler = () => {
+    alertDispatch({ type: "dontSave" });
     dispatch({ type: "dontSave" });
-    addToTrashOnServer(delNoteConfig);
-    setNewNote({
-      title: "",
-      text: "",
-      pinned: false,
-      tags: [],
-    });
     setEditModal(false);
+    resetData();
   };
 
   // unsaved alert - save handler
   const unsavedAlertSaveHandler = () => {
-    addNoteOnServer(newNoteConfig);
-    setNewNote({
-      title: "",
-      text: "",
-      pinned: false,
-      tags: [],
-    });
+    alertDispatch({ type: "noteSavedAlert" });
+    dispatch({ type: "noteSavedAlert" });
+    onSubmitHandler();
     setEditModal(false);
   };
 
   const darkThemeClass = darkTheme
-    ? "new-note-input dark-mode-new-note"
-    : "new-note-input";
+    ? "new-note-input card-shadow-two dark-mode-new-note"
+    : "new-note-input card-shadow-two";
+
+  const darkThemeEditor = darkTheme
+    ? "text-editor dark-mode-new-note"
+    : "text-editor ";
 
   return (
     <>
-      <form onSubmit={onSubmitHandler} className={darkThemeClass}>
+      <div
+        className={darkThemeClass}
+        style={{ backgroundColor: editModal ? "#f0fbff" : noteColor }}
+      >
         {emptyNoteError && (
           <NoteAlert
             alert="alert-error"
@@ -133,33 +211,52 @@ const NewNote = () => {
             name="title"
             autoComplete="off"
             value={editModal ? "" : newNote.title}
+            style={{ backgroundColor: editModal ? "#f0fbff" : noteColor }}
           />
         </div>
         {showInput && (
           <div className="new-note-bottom-section">
-            <input
-              type="text"
-              placeholder="Take a note.."
-              onChange={newInputOnChangeHandler}
-              name="text"
-              autoComplete="off"
-              value={editModal ? "" : newNote.text}
-            />
-            <div>
-              <ButtonSimple
-                onClick={onSubmitHandler}
-                btnClassName="btn primary-btn-md"
-                label={addState}
+            <div className="rich-text-editor">
+              <ReactQuill
+                modules={modules}
+                value={noteText}
+                placeholder="Take a note..."
+                onChange={setNoteText}
+                className={darkThemeEditor}
+                style={{ backgroundColor: noteColor }}
               />
-              <ButtonSimple
-                onClick={clickOnCloseNewNote}
-                btnClassName="btn secondary-text-btn-md"
-                label="Close"
-              />
+            </div>
+
+            <div className="new-note-nav-btn">
+              <div className="note-nav-btn-left">
+                <div onMouseLeave={hideColorPaletteHandler}>
+                  <button
+                    onMouseEnter={showColorPaletteHandler}
+                    className="btn icon-btn-md"
+                  >
+                    <i className="fas fa-palette"></i>
+                  </button>
+                  {showColor && <ColorPicker setter={setNoteColor} />}
+                </div>
+                <img src={labelIcon} alt="label-icon" className="nav-icons" />
+                <h2>{newNote.date}</h2>
+              </div>
+              <div className="note-nav-btn-right">
+                <ButtonSimple
+                  onClick={onSubmitHandler}
+                  btnClassName="btn primary-btn-md"
+                  label={editNote ? "Edit" : "Add"}
+                />
+                <ButtonSimple
+                  onClick={clickOnCloseNewNote}
+                  btnClassName="btn secondary-text-btn-md"
+                  label="Close"
+                />
+              </div>
             </div>
           </div>
         )}
-      </form>
+      </div>
     </>
   );
 };
