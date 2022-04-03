@@ -1,0 +1,95 @@
+.profile-details {
+  background-color: var(--btn-hover);
+  width: 30rem;
+  min-height: 28rem;
+  margin: 3rem auto;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.profile-details button {
+  background-color: transparent;
+}
+
+.profile-header-section,
+.profile-bottom-section {
+  width: 95%;
+  margin: auto;
+  padding: 1rem;
+}
+
+.profile-header-section img {
+  width: 8rem;
+  height: 8rem;
+  margin-right: 1rem;
+}
+
+.user-details-section {
+  min-width: 10rem;
+  margin: 1rem;
+  text-align: center;
+}
+
+.user-details-section h2,
+.user-details-section p,
+.profile-bottom-section h2,
+.profile-bottom-section p {
+  background-color: transparent;
+  margin: 8px 0;
+}
+
+.profile-bottom-section {
+  width: 70%;
+  margin-top: 1rem;
+}
+
+.profile-bottom-section h2 {
+  margin-bottom: 1.5rem;
+}
+
+.profile-bottom-section > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-bottom-section h3 {
+  margin: 8px 0;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 580px) {
+  .profile-details {
+    width: 22rem;
+    min-height: 25rem;
+    margin: 0rem auto;
+    padding: 1rem 5px;
+  }
+
+  .profile-header-section,
+  .profile-bottom-section {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .profile-header-section img {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .user-details-section {
+    min-width: 10rem;
+    margin: 1rem 8px;
+  }
+
+  .profile-bottom-section {
+    width: 90%;
+  }
+
+  .profile-bottom-section h3 {
+    margin: 8px 0;
+    font-weight: 500;
+    font-size: 1rem;
+  }
+}
