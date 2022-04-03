@@ -20,17 +20,19 @@ const initialState = {
   tempLabels: [],
 };
 
+const initialNoteDetails = {
+  title: "",
+  pinned: false,
+  labels: [],
+  date: new Date().toLocaleDateString(),
+};
+
 const noteContext = createContext(initialState);
 
 const NoteProvider = ({ children }) => {
   const [state, dispatch] = useReducer(noteReducer, initialState);
   const [noteText, setNoteText] = useState("");
-  const [newNote, setNewNote] = useState({
-    title: "",
-    pinned: false,
-    labels: [],
-    date: new Date().toLocaleDateString(),
-  });
+  const [newNote, setNewNote] = useState(initialNoteDetails);
   const [editNote, setEditNote] = useState(false);
   const [noteColor, setNoteColor] = useState("#ffffff");
   const [showColor, setShowColor] = useState(false);
@@ -82,6 +84,7 @@ const NoteProvider = ({ children }) => {
         setLabel,
         editModal,
         setEditModal,
+        initialNoteDetails,
       }}
     >
       {children}

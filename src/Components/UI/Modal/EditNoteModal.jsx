@@ -24,6 +24,7 @@ const EditNoteModal = () => {
     setShowColor,
     setEditNote,
     setEditModal,
+    initialNoteDetails,
   } = usePebbleNote();
   const {
     alertState: { unSavedError },
@@ -54,13 +55,6 @@ const EditNoteModal = () => {
       ["blockquote", "code-block"],
       ["link", "image", "video"],
     ],
-  };
-
-  const initialNoteDetails = {
-    title: "",
-    pinned: false,
-    labels: [],
-    date: new Date().toLocaleDateString(),
   };
 
   const closeEditModal = () => {

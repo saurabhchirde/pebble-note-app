@@ -32,6 +32,7 @@ const NewNote = () => {
     setShowLabel,
     editModal,
     setEditModal,
+    initialNoteDetails,
   } = usePebbleNote();
 
   const { newInputTitle, showInput, tempLabels } = state;
@@ -44,13 +45,6 @@ const NewNote = () => {
   const { darkTheme } = useTheme();
   const { addNoteOnServer, updateNoteOnServer } = useAxiosCalls();
   const { auth } = useAuth();
-
-  const initialNoteDetails = {
-    title: "",
-    pinned: false,
-    labels: [],
-    date: new Date().toLocaleDateString(),
-  };
 
   const modules = {
     toolbar: [

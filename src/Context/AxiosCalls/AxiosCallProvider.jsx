@@ -2,7 +2,6 @@ import { createContext, useContext } from "react";
 import axios from "axios";
 import { useModal, useAuth, usePebbleNote } from "../index";
 import { useNavigate } from "react-router-dom";
-import { useAlert } from "../Alerts/AlertProvider";
 import { useAnimation } from "../Animation/AnimationProvider";
 
 const axiosContext = createContext(null);
@@ -26,7 +25,8 @@ const AxiosCallProvider = ({ children }) => {
       if (response.status === 200) {
         setError(
           `Welcome back ${response.data.foundUser.firstName} ${response.data.foundUser.lastName}`
-        ); //save login credentials
+        );
+        //save login credentials
         authDispatch({
           type: "login",
           payload: response.data,
@@ -56,8 +56,8 @@ const AxiosCallProvider = ({ children }) => {
           : "Server Error, Try Again";
 
       setError(alertText);
-      setShowError(true);
       showLoader();
+      setShowError(true);
     }
   };
 
@@ -71,8 +71,10 @@ const AxiosCallProvider = ({ children }) => {
       if (response.status === 201) {
         setShowSignupAlert(true);
       }
+      showLoader();
     } catch (error) {
       setError(error.message);
+      showLoader();
       setShowError(true);
     }
   };
@@ -82,12 +84,14 @@ const AxiosCallProvider = ({ children }) => {
     const { url, body, headers, item } = noteConfig;
 
     try {
+      showLoader();
       const res = await axios.post(url, body, headers);
       //update after adding note
       dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
-      // console.log(res.data.notes);
+      showLoader();
     } catch (error) {
       setError("Invalid Input, please try again");
+      showLoader();
       setShowError(true);
     }
   };
@@ -104,8 +108,8 @@ const AxiosCallProvider = ({ children }) => {
       console.log("after update notes", res.data.notes);
     } catch (error) {
       setError(error.message);
-      setShowError(true);
       showLoader();
+      setShowError(true);
     }
   };
 
@@ -121,8 +125,8 @@ const AxiosCallProvider = ({ children }) => {
       showLoader();
     } catch (error) {
       setError(error.message);
-      setShowError(true);
       showLoader();
+      setShowError(true);
     }
   };
 
@@ -137,8 +141,8 @@ const AxiosCallProvider = ({ children }) => {
       showLoader();
     } catch (error) {
       setError(error.message);
-      setShowError(true);
       showLoader();
+      setShowError(true);
     }
   };
 
@@ -154,8 +158,8 @@ const AxiosCallProvider = ({ children }) => {
       showLoader();
     } catch (error) {
       setError(error.message);
-      setShowError(true);
       showLoader();
+      setShowError(true);
     }
   };
 

@@ -11,12 +11,15 @@ import {
   usePebbleNote,
   useTheme,
 } from "./Context";
-import LandingPage from "./Pages/LandingPage/LandingPage";
-import HomePage from "./Pages/HomePage/HomePage";
-import LabelPage from "./Pages/LabelPage/LabelPage";
-import ArchivePage from "./Pages/ArchivePage/ArchivePage";
-import TrashPage from "./Pages/TrashPage/TrashPage";
-import ProfilePage from "./Pages/ProfilePage/ProfilePage";
+import {
+  LandingPage,
+  HomePage,
+  LabelPage,
+  ArchivePage,
+  TrashPage,
+  ProfilePage,
+  NotFound,
+} from "./Pages/index";
 import Login from "./Components/UI/Modal/Login";
 import Signup from "./Components/UI/Modal/Signup";
 import Mockman from "mockman-js";
@@ -24,7 +27,6 @@ import MobileNavBar from "./Components/UI/Navigation/MobileNavBar";
 import { useEffect } from "react";
 import SignupAlertModal from "./Components/UI/Modal/SignupAlertModal";
 import AlertModal from "./Components/UI/Modal/AlertModal";
-import NotFound from "./Pages/NotFound/NotFound";
 import AnimateLoader from "./Components/Animation/AnimateLoader";
 import AnimateNote from "./Components/Animation/AnimateNote";
 
