@@ -1,3 +1,7 @@
 .create-account-btn:hover {
   cursor: pointer;
 }
+
+.signin-modal form {
+  width: 18rem;
+}

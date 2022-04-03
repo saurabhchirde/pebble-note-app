@@ -1,8 +1,12 @@
-.new-note-input {
+.new-note-main-container {
   width: 65%;
+  margin: auto;
+}
+
+.new-note-input {
   border-radius: 4px;
   padding: 5px 1rem;
-  margin: 1rem auto 2rem;
+  margin: 1rem auto 5px;
   height: auto;
   z-index: 1;
 }
@@ -49,7 +53,7 @@
   align-items: center;
   font-size: 1rem;
   border: 1px solid var(--primary-color);
-  padding-top: 8px;
+  border-radius: 4px;
 }
 
 .rich-text-editor p {
@@ -64,11 +68,15 @@
 
 .ql-container {
   min-height: 5rem;
-  border-radius: 0 0 5px 5px;
+}
+
+.ql-container.ql-snow {
+  border: none;
 }
 
 .ql-toolbar {
-  border-radius: 0;
+  background: var(--faint-gray);
+  padding-top: 0;
 }
 
 .quill {
@@ -97,12 +105,12 @@
 }
 
 .ql-editor {
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .ql-snow.ql-toolbar button {
   border-radius: 4px;
-  color: red;
+  color: var(--text-dark);
 }
 
 .ql-snow.ql-toolbar button:hover {
@@ -135,6 +143,15 @@
 
 .ql-snow .ql-fill {
   background-color: var(--btn-hover);
+}
+
+.ql-snow .ql-fill,
+.ql-snow .ql-stroke.ql-fill {
+  fill: var(--text-dark);
+}
+
+.ql-toolbar .ql-fill {
+  stroke: none;
 }
 
 .new-note-bottom-section {
@@ -193,13 +210,50 @@
   outline: none;
 }
 
+.new-note-label {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 7px 1rem 7px 0.6rem;
+  color: var(--text-dark);
+  border-radius: 4px;
+  flex-wrap: wrap;
+  row-gap: 5px;
+}
+
+.new-note-label p {
+  background: transparent;
+  color: var(--text-dark);
+  margin-right: 8px;
+}
+
+.single-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 1px 2px 1px 5px;
+  margin: 0 2px;
+  font-size: 0.9rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+}
+
+.single-label i {
+  padding: 5px;
+  margin-left: 8px;
+  font-size: 10px;
+}
+
 .alert-error,
 .alert-warning-btn {
   margin-left: 0;
 }
 
 @media screen and (max-width: 760px) {
-  .new-note-input {
+  .new-note-main-container {
     width: 95%;
   }
 }

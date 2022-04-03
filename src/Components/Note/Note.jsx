@@ -29,6 +29,7 @@ const Note = ({
     setNoteText,
     setNoteColor,
     setEditNote,
+    editModal,
     setEditModal,
   } = usePebbleNote();
 
@@ -54,6 +55,7 @@ const Note = ({
     body: {
       note: {
         ...item,
+        color: singleNoteColor,
         pinned: pinAction === "pinnedNote" ? false : true,
       },
     },
@@ -99,6 +101,25 @@ const Note = ({
 
   const hideColorPaletteHandler = () => {
     setShowColorForNote(false);
+  };
+
+  // label
+  const removeLabelsHandler = (label) => {
+    dispatch({ type: "removeLabelFromNote", payload: label });
+
+    const updateLabelsConfig = {
+      ...updateNoteConfig,
+      body: {
+        note: {
+          ...item,
+          labels: item.labels.filter((el) => {
+            return el !== label;
+          }),
+        },
+      },
+    };
+
+    updateNoteOnServer(updateLabelsConfig);
   };
 
   const delRestoreNoteHandler = () => {
@@ -166,6 +187,26 @@ const Note = ({
         )}
         <h2>{title}</h2>
         <div className="note-text" dangerouslySetInnerHTML={{ __html: text }} />
+        {item.labels.length > 0 ? (
+          <div
+            className="new-note-label"
+            style={{ backgroundColor: editModal ? "#f0fbff" : singleNoteColor }}
+          >
+            {item.labels.map((label, index) => {
+              return (
+                <div key={index} className="single-label">
+                  <li>{label}</li>
+                  <i
+                    className="fas fa-times"
+                    onClick={() => {
+                      removeLabelsHandler(label);
+                    }}
+                  ></i>
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
         <div className="note-nav-btn">
           <div onMouseLeave={hideColorPaletteHandler}>
             {hideEditIcon && (

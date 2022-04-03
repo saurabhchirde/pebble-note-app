@@ -17,6 +17,14 @@ const initialState = {
   newInputTitle: "Take a new note..",
   showInput: false,
   archivedNotes: [],
+  tempLabels: [],
+};
+
+const initialNoteDetails = {
+  title: "",
+  pinned: false,
+  labels: [],
+  date: new Date().toLocaleDateString(),
 };
 
 const noteContext = createContext(initialState);
@@ -24,15 +32,12 @@ const noteContext = createContext(initialState);
 const NoteProvider = ({ children }) => {
   const [state, dispatch] = useReducer(noteReducer, initialState);
   const [noteText, setNoteText] = useState("");
-  const [newNote, setNewNote] = useState({
-    title: "",
-    pinned: false,
-    tags: [],
-    date: new Date().toLocaleDateString(),
-  });
+  const [newNote, setNewNote] = useState(initialNoteDetails);
   const [editNote, setEditNote] = useState(false);
-  const [noteColor, setNoteColor] = useState("#f0fbff");
+  const [noteColor, setNoteColor] = useState("#ffffff");
   const [showColor, setShowColor] = useState(false);
+  const [showLabel, setShowLabel] = useState(false);
+  const [label, setLabel] = useState("");
   const [editModal, setEditModal] = useState(false);
   const { auth } = useAuth();
   const { setError, setShowError } = useModal();
@@ -73,8 +78,13 @@ const NoteProvider = ({ children }) => {
         setNoteColor,
         showColor,
         setShowColor,
+        showLabel,
+        setShowLabel,
+        label,
+        setLabel,
         editModal,
         setEditModal,
+        initialNoteDetails,
       }}
     >
       {children}

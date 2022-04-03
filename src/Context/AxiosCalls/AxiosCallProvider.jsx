@@ -2,13 +2,13 @@ import { createContext, useContext } from "react";
 import axios from "axios";
 import { useModal, useAuth, usePebbleNote } from "../index";
 import { useNavigate } from "react-router-dom";
-import { useAlert } from "../Alerts/AlertProvider";
+import { useAnimation } from "../Animation/AnimationProvider";
 
 const axiosContext = createContext(null);
 
 const AxiosCallProvider = ({ children }) => {
   const { dispatch } = usePebbleNote();
-  const { alertDispatch } = useAlert();
+  const { showLoader } = useAnimation();
 
   const { setError, setShowError, setShowLogin, setShowSignupAlert } =
     useModal();
@@ -20,27 +20,43 @@ const AxiosCallProvider = ({ children }) => {
     const { url, data } = loginConfig;
 
     try {
+      showLoader();
       const response = await axios.post(url, data);
-      setError(
-        `Welcome back ${response.data.foundUser.firstName} ${response.data.foundUser.lastName}`
-      );
-      setShowError(true);
+      if (response.status === 200) {
+        setError(
+          `Welcome back ${response.data.foundUser.firstName} ${response.data.foundUser.lastName}`
+        );
+        //save login credentials
+        authDispatch({
+          type: "login",
+          payload: response.data,
+        });
+        //set initial data (notes and archives)
+        dispatch({
+          type: "authNoteInitiate",
+          payload: response.data.foundUser,
+        });
 
-      //save login credentials
-      authDispatch({
-        type: "login",
-        payload: response.data,
-      });
-      //set initial data (notes and archives)
-      dispatch({
-        type: "authNoteInitiate",
-        payload: response.data.foundUser,
-      });
-
-      setShowLogin(false);
-      navigate("/home");
+        showLoader();
+        setShowError(true);
+        setShowLogin(false);
+        navigate("/home");
+      }
+      if (response.status === 201) {
+        setError("Invalid Password, Try Again");
+        showLoader();
+        setShowError(true);
+      }
     } catch (error) {
-      setError(error.message);
+      let msg = JSON.stringify(error);
+      let parsedMsg = JSON.parse(msg);
+      const alertText =
+        parsedMsg.status === 404
+          ? "Email Address doesn't Exist, Please Signup"
+          : "Server Error, Try Again";
+
+      setError(alertText);
+      showLoader();
       setShowError(true);
     }
   };
@@ -50,12 +66,15 @@ const AxiosCallProvider = ({ children }) => {
     const { url, data } = signupConfig;
 
     try {
+      showLoader();
       const response = await axios.post(url, data);
       if (response.status === 201) {
         setShowSignupAlert(true);
       }
+      showLoader();
     } catch (error) {
       setError(error.message);
+      showLoader();
       setShowError(true);
     }
   };
@@ -65,28 +84,31 @@ const AxiosCallProvider = ({ children }) => {
     const { url, body, headers, item } = noteConfig;
 
     try {
+      showLoader();
       const res = await axios.post(url, body, headers);
       //update after adding note
       dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
-      // console.log(res.data.notes);
+      showLoader();
     } catch (error) {
-      setError(error.message);
+      setError("Invalid Input, please try again");
+      showLoader();
       setShowError(true);
     }
   };
 
   // update note
   const updateNoteOnServer = async (noteConfig) => {
-    const { url, body, headers, item } = noteConfig;
-    console.log(url, body, headers);
+    const { url, body, headers } = noteConfig;
     try {
+      showLoader();
       const res = await axios.post(url, body, headers);
       //update after adding note
-      dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
-
+      dispatch({ type: "notesAfterUpdating", payload: res.data.notes });
+      showLoader();
       console.log("after update notes", res.data.notes);
     } catch (error) {
       setError(error.message);
+      showLoader();
       setShowError(true);
     }
   };
@@ -96,11 +118,14 @@ const AxiosCallProvider = ({ children }) => {
     const { url, headers } = noteConfig;
     //
     try {
+      showLoader();
       const res = await axios.delete(url, headers);
       //update after deleting note
       dispatch({ type: "notesAfterDelete", payload: res.data.notes });
+      showLoader();
     } catch (error) {
       setError(error.message);
+      showLoader();
       setShowError(true);
     }
   };
@@ -109,11 +134,14 @@ const AxiosCallProvider = ({ children }) => {
   const addNoteToArchiveOnServer = async (archiveConfig) => {
     const { url, body, headers } = archiveConfig;
     try {
+      showLoader();
       const res = await axios.post(url, body, headers);
       //update after archiving note
       dispatch({ type: "notesAfterArchive", payload: res.data });
+      showLoader();
     } catch (error) {
       setError(error.message);
+      showLoader();
       setShowError(true);
     }
   };
@@ -123,11 +151,14 @@ const AxiosCallProvider = ({ children }) => {
     const { url, headers } = archiveConfig;
 
     try {
+      showLoader();
       const res = await axios.post(url, {}, headers);
       //update after un-archiving note
       dispatch({ type: "notesAfterUnArchive", payload: res.data });
+      showLoader();
     } catch (error) {
       setError(error.message);
+      showLoader();
       setShowError(true);
     }
   };

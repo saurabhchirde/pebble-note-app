@@ -47,4 +47,4 @@ const ArchivePage = () => {
   );
 };
 
-export default ArchivePage;
+export { ArchivePage };

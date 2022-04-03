@@ -1,4 +1,4 @@
-import AnimateNotePencil from "../../Components/Animation/AnimateNotePencil";
+import note_taking from "../../Data/Images/Animation/note_taking.svg";
 import ButtonSimple from "../../Components/UI/Button/ButtonSimple";
 import "./LandingPage.css";
 import logoLight from "../../Data/Images/Logo/logo-light.svg";
@@ -59,7 +59,11 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="landing-body">
-        <AnimateNotePencil />
+        <img
+          src={note_taking}
+          alt="illustration"
+          className="landing-illustration"
+        />
         <div className="landing-body-text">
           <h2 className="landing-body-header">Keep your productivity alive</h2>
           <p className="landing-body-header-text">
@@ -93,4 +97,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export { LandingPage };
