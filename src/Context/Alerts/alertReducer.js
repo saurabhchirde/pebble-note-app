@@ -102,6 +102,18 @@ const alertReducer = (alertState, action) => {
         emptyNoteError: false,
       };
 
+    case "emptyLabelError":
+      return {
+        ...alertState,
+        emptyLabelError: true,
+      };
+
+    case "hideEmptyLabelError":
+      return {
+        ...alertState,
+        emptyLabelError: false,
+      };
+
     case "noteSavedAlert":
       return {
         ...alertState,

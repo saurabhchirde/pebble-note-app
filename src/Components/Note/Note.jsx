@@ -6,6 +6,7 @@ import {
   useAlert,
   useAuth,
   useAxiosCalls,
+  useFilter,
   usePebbleNote,
   useTheme,
 } from "../../Context";
@@ -22,7 +23,7 @@ const Note = ({
   archiveAction,
   restoreAction,
 }) => {
-  const { title, text, color, _id } = item;
+  const { title, text, color, _id, date, priority } = item;
   const {
     dispatch,
     setNewNote,
@@ -45,16 +46,15 @@ const Note = ({
   const { auth } = useAuth();
   const [showColorForNote, setShowColorForNote] = useState(false);
   const [singleNoteColor, setSingleNoteColor] = useState(false);
-
-  useEffect(() => {
-    setSingleNoteColor(color);
-  }, [color]);
+  const { showFilter } = useFilter();
+  const [showDate, setShowDate] = useState(false);
 
   const updateNoteConfig = {
     url: `/api/notes/${_id}`,
     body: {
       note: {
         ...item,
+        date: new Date(date).toLocaleDateString(),
         color: singleNoteColor,
         pinned: pinAction === "pinnedNote" ? false : true,
       },
@@ -103,6 +103,10 @@ const Note = ({
     setShowColorForNote(false);
   };
 
+  const showDateToggler = () => {
+    setShowDate((show) => !show);
+  };
+
   // label
   const removeLabelsHandler = (label) => {
     dispatch({ type: "removeLabelFromNote", payload: label });
@@ -118,7 +122,6 @@ const Note = ({
         },
       },
     };
-
     updateNoteOnServer(updateLabelsConfig);
   };
 
@@ -143,6 +146,9 @@ const Note = ({
     setNoteColor(color);
   };
 
+  // yet to implement
+  const optionNoteHandler = () => {};
+
   const archiveNoteHandler = () => {
     if (archiveAction === "archive") {
       addNoteToArchiveOnServer(archiveNoteConfig);
@@ -152,6 +158,10 @@ const Note = ({
       alertDispatch({ type: "alertUnArchived" });
     }
   };
+
+  useEffect(() => {
+    setSingleNoteColor(color);
+  }, [color]);
 
   const pinSrc = pinAction === "pinnedNote" ? pin2 : pin1;
   const trashEditIcon = restoreAction === "restore" ? false : true;
@@ -177,15 +187,20 @@ const Note = ({
         onDoubleClick={onOutsideClickHandler}
       ></div>
       <div
+        onMouseEnter={showDateToggler}
+        onMouseLeave={showDateToggler}
         className={darkThemeClass}
         style={{ backgroundColor: singleNoteColor }}
       >
-        {hidePinIcon && (
-          <div onClick={pinClickHandler} className="pin-icon">
-            <img src={pinSrc} alt="pin" />
-          </div>
-        )}
-        <h2>{title}</h2>
+        <div className="note-top-section">
+          {(showDate || showFilter) && <p>{date}</p>}
+          {hidePinIcon && (
+            <div onClick={pinClickHandler} className="pin-icon">
+              <img src={pinSrc} alt="pin" />
+            </div>
+          )}
+        </div>
+        <h2 className="note-title">{title}</h2>
         <div className="note-text" dangerouslySetInnerHTML={{ __html: text }} />
         {item.labels.length > 0 ? (
           <div
@@ -205,14 +220,24 @@ const Note = ({
                 </div>
               );
             })}
+            <div
+              className={
+                priority === "High"
+                  ? "priority-label high-priority"
+                  : "priority-label low-priority"
+              }
+            >
+              {priority}
+            </div>
           </div>
         ) : null}
+
         <div className="note-nav-btn">
           <div onMouseLeave={hideColorPaletteHandler}>
             {hideEditIcon && (
               <button
                 onMouseEnter={showColorPaletteHandler}
-                className="btn icon-btn-md"
+                className="btn icon-btn-md color-palette-icon"
               >
                 <i className="fas fa-palette"></i>
               </button>
@@ -222,7 +247,7 @@ const Note = ({
           {hideDelButton && (
             <ButtonIcon
               onClick={delRestoreNoteHandler}
-              btnClassName="btn icon-btn-sm"
+              btnClassName="btn icon-btn-sm trash-icon"
               icon={icon}
             />
           )}
@@ -231,15 +256,22 @@ const Note = ({
               <img
                 src={showArchiveIcon}
                 alt="icon"
-                className="archive-btn-icon"
+                className="archive-btn-icon archive-icon"
               />
             </div>
           )}
           {hideEditIcon && (
             <ButtonIcon
               onClick={editNoteHandler}
-              btnClassName="btn icon-btn-sm"
+              btnClassName="btn icon-btn-sm edit-icon"
               icon="fas fa-edit"
+            />
+          )}
+          {hideEditIcon && (
+            <ButtonIcon
+              onClick={optionNoteHandler}
+              btnClassName="btn icon-btn-sm option-icon"
+              icon="fas fa-ellipsis-v"
             />
           )}
         </div>

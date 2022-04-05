@@ -3,6 +3,7 @@ import {
   useAlert,
   useAuth,
   useAxiosCalls,
+  useFilter,
   usePebbleNote,
   useTheme,
 } from "../../Context";
@@ -11,8 +12,10 @@ import NoteAlert from "../Alerts/NoteAlert";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import labelIcon from "../../Data/Images/Icons/label.svg";
+import filterIcon from "../../Data/Images/Icons/filter.svg";
 import ColorPicker from "../UI/ColorPicker/ColorPicker";
 import NoteLabel from "../UI/NoteLabel/NoteLabel";
+import ButtonIcon from "../UI/Button/ButtonIcon";
 
 const NewNote = () => {
   const {
@@ -35,16 +38,22 @@ const NewNote = () => {
     initialNoteDetails,
   } = usePebbleNote();
 
-  const { newInputTitle, showInput, tempLabels } = state;
+  const { newInputTitle, showInput, tempLabels, allLabels } = state;
 
   const {
-    alertState: { emptyNoteError, unSavedError },
+    alertState: { emptyNoteError, emptyLabelError, unSavedError },
     alertDispatch,
   } = useAlert();
 
   const { darkTheme } = useTheme();
   const { addNoteOnServer, updateNoteOnServer } = useAxiosCalls();
   const { auth } = useAuth();
+  const {
+    filterState: { sortByDate, sortByPriority, selectedLabel },
+    filterDispatch,
+    showFilter,
+    setShowFilter,
+  } = useFilter();
 
   const modules = {
     toolbar: [
@@ -87,6 +96,7 @@ const NewNote = () => {
 
   const clickOnNewNoteHandler = () => {
     dispatch({ type: "clickOnNewNoteHandler" });
+    setShowFilter(false);
   };
 
   const onSubmitHandler = () => {
@@ -104,6 +114,7 @@ const NewNote = () => {
         alertDispatch({ type: "alertNewAdded" });
       }
     }
+    dispatch({ type: "addLabelToAllLabels", payload: tempLabels });
     resetData();
   };
 
@@ -159,6 +170,11 @@ const NewNote = () => {
     setShowLabel(false);
   };
 
+  const onFilterToggle = () => {
+    setShowFilter((show) => !show);
+    dispatch({ type: "hideInputField" });
+  };
+
   // unsaved alert - delete handler
   const unsavedAlertDeleteHandler = () => {
     alertDispatch({ type: "dontSave" });
@@ -173,6 +189,32 @@ const NewNote = () => {
     dispatch({ type: "noteSavedAlert" });
     onSubmitHandler();
     setEditModal(false);
+  };
+
+  const onSortByDate = (e) => {
+    filterDispatch({ type: "byDate", payload: e.target.value });
+  };
+
+  const onSortByPriority = (e) => {
+    filterDispatch({ type: "byPriority", payload: e.target.value });
+  };
+
+  const onSortByLabel = (e) => {
+    filterDispatch({ type: "byLabel", payload: e.target.value });
+  };
+
+  const onResetFilterHandler = () => {
+    filterDispatch({ type: "resetFilter" });
+  };
+
+  // selecting priority
+  const selectPriorityHandler = (e) => {
+    setNewNote((oldData) => {
+      return {
+        ...oldData,
+        priority: e.target.value,
+      };
+    });
   };
 
   // label
@@ -201,6 +243,14 @@ const NewNote = () => {
               icon="fas fa-exclamation-circle alert-icon"
               text="Input cannot be blank, try again."
               dispatchType="hideEmptyNoteError"
+            />
+          )}
+          {emptyLabelError && (
+            <NoteAlert
+              alert="alert-error"
+              icon="fas fa-exclamation-circle alert-icon"
+              text="Label cannot be blank, try again."
+              dispatchType="hideEmptyLabelError"
             />
           )}
           {unSavedError && (
@@ -232,9 +282,20 @@ const NewNote = () => {
               value={editModal ? "" : newNote.title}
               style={{ backgroundColor: editModal ? "#f0fbff" : noteColor }}
             />
+            <img
+              src={filterIcon}
+              alt="icon"
+              className="filter-icon"
+              onClick={onFilterToggle}
+            />
           </div>
           {showInput && (
-            <div className="new-note-bottom-section">
+            <div
+              className="new-note-bottom-section"
+              onClick={() => {
+                setShowFilter(false);
+              }}
+            >
               <div className="rich-text-editor">
                 <ReactQuill
                   modules={modules}
@@ -250,13 +311,16 @@ const NewNote = () => {
                   <div onMouseLeave={hideColorPaletteHandler}>
                     <button
                       onMouseEnter={showColorPaletteHandler}
-                      className="btn icon-btn-md"
+                      className="btn icon-btn-sm"
                     >
                       <i className="fas fa-palette"></i>
                     </button>
                     {showColor && <ColorPicker setter={setNoteColor} />}
                   </div>
-                  <div onMouseLeave={hideLabelInputHandler}>
+                  <div
+                    className="flex-row-center"
+                    onMouseLeave={hideLabelInputHandler}
+                  >
                     <img
                       onMouseEnter={showLabelInputHandler}
                       src={labelIcon}
@@ -266,23 +330,78 @@ const NewNote = () => {
                     {showLabel && <NoteLabel />}
                   </div>
                   <h2>{newNote.date}</h2>
+                  <div className="set-priority">
+                    <p>Priority</p>
+                    <select
+                      onChange={selectPriorityHandler}
+                      value={newNote.priority}
+                    >
+                      <option>Low</option>
+                      <option>High</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="note-nav-btn-right">
-                  <ButtonSimple
+                  <ButtonIcon
                     onClick={onSubmitHandler}
-                    btnClassName="btn primary-btn-md"
-                    label={editNote ? "Edit" : "Add"}
+                    btnClassName="btn icon-btn-lg"
+                    icon="fas fa-plus-circle"
                   />
-                  <ButtonSimple
+                  <ButtonIcon
                     onClick={clickOnCloseNewNote}
-                    btnClassName="btn secondary-text-btn-md"
-                    label="Close"
+                    btnClassName="btn icon-btn-lg"
+                    icon="fas fa-times"
                   />
                 </div>
               </div>
             </div>
           )}
         </div>
+        {showFilter && (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+            className="new-note-label filter-section card-shadow-two"
+            style={{ backgroundColor: editModal ? "#f0fbff" : noteColor }}
+          >
+            <div>
+              <p>Date</p>
+              <select onChange={onSortByDate} value={sortByDate}>
+                <option>All</option>
+                <option>New First</option>
+                <option>Old First</option>
+              </select>
+            </div>
+            <div>
+              <p>Priority</p>
+              <select onChange={onSortByPriority} value={sortByPriority}>
+                <option>All</option>
+                <option>Low</option>
+                <option>High</option>
+              </select>
+            </div>
+            <div>
+              <p>Label</p>
+              <select onChange={onSortByLabel} value={selectedLabel}>
+                {allLabels.map((label, index) => {
+                  return (
+                    <option key={index} className="single-label">
+                      {label}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <button
+              onClick={onResetFilterHandler}
+              className="btn secondary-text-btn-sm"
+              type="reset"
+            >
+              Reset Filter
+            </button>
+          </form>
+        )}
         {tempLabels.length > 0 ? (
           <div
             className="new-note-label card-shadow-two"

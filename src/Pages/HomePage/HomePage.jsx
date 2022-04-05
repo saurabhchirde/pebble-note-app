@@ -1,13 +1,17 @@
 import Note from "../../Components/Note/Note";
 import NewNote from "../../Components/NewNote/NewNote";
-import { useAlert, usePebbleNote } from "../../Context";
+import { useAlert, useFilter, usePebbleNote } from "../../Context";
 import "./HomePage.css";
 import NoteAlert from "../../Components/Alerts/NoteAlert";
+import { finalFilteredData } from "../../Utils/finalFilteredData";
+import { useEffect } from "react";
 
 const HomePage = () => {
   const {
     state: { allNotes },
+    dispatch,
   } = usePebbleNote();
+  const { filterState } = useFilter();
 
   const {
     alertState: {
@@ -19,6 +23,12 @@ const HomePage = () => {
       noteArchiveAlert,
     },
   } = useAlert();
+
+  useEffect(() => {
+    if (allNotes.length < 1) {
+      dispatch({ type: "resetNotesAndLabels" });
+    }
+  }, [allNotes.length]);
 
   const pinnedNotes = [...allNotes.filter((item) => item.pinned)];
   const otherNotes = [...allNotes.filter((item) => !item.pinned)];
@@ -80,7 +90,7 @@ const HomePage = () => {
             <div>
               <h2>Pinned Notes</h2>
               <div className="allNotes">
-                {pinnedNotes.map((item) => {
+                {finalFilteredData(pinnedNotes, filterState).map((item) => {
                   return (
                     <Note
                       item={item}
@@ -102,17 +112,19 @@ const HomePage = () => {
             <h2>Other Notes</h2>
           ) : null}
           <div className="allNotes">
-            {otherNotes.map((item) => {
+            {finalFilteredData(otherNotes, filterState).map((item) => {
               return (
-                <Note
-                  item={item}
-                  key={item._id}
-                  icon={"fas fa-trash"}
-                  delAction="del"
-                  editAction="editUnPinned"
-                  archiveAction="archive"
-                  pinAction="unPinnedNote"
-                />
+                <>
+                  <Note
+                    item={item}
+                    key={item._id}
+                    icon={"fas fa-trash"}
+                    delAction="del"
+                    editAction="editUnPinned"
+                    archiveAction="archive"
+                    pinAction="unPinnedNote"
+                  />
+                </>
               );
             })}
           </div>

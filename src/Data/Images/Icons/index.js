@@ -6,6 +6,7 @@ import pin2 from "./pin2.svg";
 import trashIcon from "./trash.svg";
 import unArchiveIcon from "./unarchive.svg";
 import userIcon from "./user.svg";
+import filterIcon from "./filter.svg";
 
 export {
   archiveIcon,
@@ -16,4 +17,5 @@ export {
   trashIcon,
   unArchiveIcon,
   userIcon,
+  filterIcon,
 };

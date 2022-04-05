@@ -5,6 +5,7 @@ const alertContext = createContext(null);
 
 const alertInitialState = {
   emptyNoteError: false,
+  emptyLabelError: false,
   unSavedError: false,
   showIcon: true,
   archivedNote: false,

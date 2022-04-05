@@ -10,7 +10,7 @@ const AxiosCallProvider = ({ children }) => {
   const { dispatch } = usePebbleNote();
   const { showLoader } = useAnimation();
 
-  const { setError, setShowError, setShowLogin, setShowSignupAlert } =
+  const { setAlert, setShowAlert, setShowLogin, setShowSignupAlert } =
     useModal();
   const { authDispatch } = useAuth();
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const AxiosCallProvider = ({ children }) => {
       showLoader();
       const response = await axios.post(url, data);
       if (response.status === 200) {
-        setError(
+        setAlert(
           `Welcome back ${response.data.foundUser.firstName} ${response.data.foundUser.lastName}`
         );
         //save login credentials
@@ -38,14 +38,14 @@ const AxiosCallProvider = ({ children }) => {
         });
 
         showLoader();
-        setShowError(true);
+        setShowAlert(true);
         setShowLogin(false);
         navigate("/home");
       }
       if (response.status === 201) {
-        setError("Invalid Password, Try Again");
+        setAlert("Invalid Password, Try Again");
         showLoader();
-        setShowError(true);
+        setShowAlert(true);
       }
     } catch (error) {
       let msg = JSON.stringify(error);
@@ -55,9 +55,9 @@ const AxiosCallProvider = ({ children }) => {
           ? "Email Address doesn't Exist, Please Signup"
           : "Server Error, Try Again";
 
-      setError(alertText);
+      setAlert(alertText);
       showLoader();
-      setShowError(true);
+      setShowAlert(true);
     }
   };
 
@@ -73,9 +73,9 @@ const AxiosCallProvider = ({ children }) => {
       }
       showLoader();
     } catch (error) {
-      setError(error.message);
+      setAlert(error.message);
       showLoader();
-      setShowError(true);
+      setShowAlert(true);
     }
   };
 
@@ -90,9 +90,9 @@ const AxiosCallProvider = ({ children }) => {
       dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
       showLoader();
     } catch (error) {
-      setError("Invalid Input, please try again");
+      setAlert("Invalid Input, please try again");
       showLoader();
-      setShowError(true);
+      setShowAlert(true);
     }
   };
 
@@ -107,9 +107,9 @@ const AxiosCallProvider = ({ children }) => {
       showLoader();
       console.log("after update notes", res.data.notes);
     } catch (error) {
-      setError(error.message);
+      setAlert(error.message);
       showLoader();
-      setShowError(true);
+      setShowAlert(true);
     }
   };
 
@@ -124,9 +124,9 @@ const AxiosCallProvider = ({ children }) => {
       dispatch({ type: "notesAfterDelete", payload: res.data.notes });
       showLoader();
     } catch (error) {
-      setError(error.message);
+      setAlert(error.message);
       showLoader();
-      setShowError(true);
+      setShowAlert(true);
     }
   };
 
@@ -140,9 +140,9 @@ const AxiosCallProvider = ({ children }) => {
       dispatch({ type: "notesAfterArchive", payload: res.data });
       showLoader();
     } catch (error) {
-      setError(error.message);
+      setAlert(error.message);
       showLoader();
-      setShowError(true);
+      setShowAlert(true);
     }
   };
 
@@ -157,9 +157,9 @@ const AxiosCallProvider = ({ children }) => {
       dispatch({ type: "notesAfterUnArchive", payload: res.data });
       showLoader();
     } catch (error) {
-      setError(error.message);
+      setAlert(error.message);
       showLoader();
-      setShowError(true);
+      setShowAlert(true);
     }
   };
 

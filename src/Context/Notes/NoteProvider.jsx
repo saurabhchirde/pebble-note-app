@@ -9,22 +9,26 @@ import { noteReducer } from "./noteReducer";
 import { useAuth } from "../Auth/AuthProvider";
 import { useModal } from "../Modal/ModalProvider";
 import axios from "axios";
+import { demoNotes, allDemoLabels } from "../../Data/demoNotes";
+import moment from "moment";
 
 const initialState = {
   deletedNotes: [],
-  allNotes: [],
+  allNotes: [...demoNotes],
   deletedMsgNotification: false,
   newInputTitle: "Take a new note..",
   showInput: false,
   archivedNotes: [],
   tempLabels: [],
+  allLabels: ["All", ...allDemoLabels],
 };
 
 const initialNoteDetails = {
   title: "",
   pinned: false,
   labels: [],
-  date: new Date().toLocaleDateString(),
+  date: moment(new Date()).format("DD-MM-YYYY"),
+  priority: "Low",
 };
 
 const noteContext = createContext(initialState);
@@ -40,28 +44,31 @@ const NoteProvider = ({ children }) => {
   const [label, setLabel] = useState("");
   const [editModal, setEditModal] = useState(false);
   const { auth } = useAuth();
-  const { setError, setShowError } = useModal();
+  const { setAlert, setShowAlert } = useModal();
 
-  useEffect(() => {
-    if (auth.login) {
-      const fetchData = async () => {
-        try {
-          const res = await axios.get("/api/notes", {
-            headers: { authorization: auth.token },
-          });
-          dispatch({ type: "getNotesFromServer", payload: res.data.notes });
+  // commented for the development purpose as it will reset all the demo notes
 
-          console.log(res.data.notes);
-        } catch (error) {
-          setError(error.message);
-          setShowError(true);
-        }
-      };
-      fetchData();
-    } else {
-      dispatch({ type: "emptyAllNotes" });
-    }
-  }, [auth.login]);
+  // useEffect(() => {
+  //   if (auth.login) {
+  //     const fetchData = async () => {
+  //       try {
+  //         const res = await axios.get("/api/notes", {
+  //           headers: { authorization: auth.token },
+  //         });
+  //         dispatch({
+  //           type: "getNotesFromServer",
+  //           payload: res.data.notes,
+  //         });
+  //       } catch (error) {
+  //         setAlert(error.message);
+  //         setShowAlert(true);
+  //       }
+  //     };
+  //     fetchData();
+  //   } else {
+  //     dispatch({ type: "emptyAllNotes" });
+  //   }
+  // }, [auth.login]);
 
   return (
     <noteContext.Provider
