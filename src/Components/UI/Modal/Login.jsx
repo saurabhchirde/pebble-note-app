@@ -14,18 +14,26 @@ const Login = () => {
     data: loginInput,
   };
 
-  const onLoginClickFormHandler = () => {
-    if (loginInput.name === "" || loginInput.password === "") {
+  const emailValidate =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  const onLoginFormHandler = () => {
+    if (loginInput.email === "" || loginInput.password === "") {
       setAlert("Input cannot be blank, try again");
       setShowAlert(true);
     } else {
-      userLogin(loginConfig);
+      if (loginInput.email.match(emailValidate)) {
+        userLogin(loginConfig);
+      } else {
+        setAlert("Entered email is wrong, please try again");
+        setShowAlert(true);
+      }
     }
   };
 
   const onLoginSubmitHandler = (e) => {
     e.preventDefault();
-    onLoginClickFormHandler();
+    onLoginFormHandler();
   };
 
   const onModalInputHandler = (e) => {
@@ -96,12 +104,12 @@ const Login = () => {
             type="submit"
             label="Sign In"
             btnClassName="btn primary-btn-md"
-            onClick={onLoginClickFormHandler}
+            onClick={onLoginFormHandler}
           />
           <Button
             btnWrapper="signin-btn"
             type="submit"
-            label="Test User (double click)"
+            label="Test User"
             btnClassName="btn primary-outline-btn-md"
             onClick={onTestButtonClickFormHandler}
           />

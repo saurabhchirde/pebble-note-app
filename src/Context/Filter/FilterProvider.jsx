@@ -7,6 +7,7 @@ const filterInitialState = {
   sortByDate: "Newest",
   sortByPriority: "All",
   selectedLabel: "All",
+  bySearch: "",
 };
 
 const FilterProvider = ({ children }) => {
@@ -15,10 +16,18 @@ const FilterProvider = ({ children }) => {
     filterInitialState
   );
   const [showFilter, setShowFilter] = useState(false);
+  const [searchInput, setSearchInput] = useState("");
 
   return (
     <filterContext.Provider
-      value={{ filterState, filterDispatch, showFilter, setShowFilter }}
+      value={{
+        filterState,
+        filterDispatch,
+        showFilter,
+        setShowFilter,
+        searchInput,
+        setSearchInput,
+      }}
     >
       {children}
     </filterContext.Provider>
