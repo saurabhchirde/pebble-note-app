@@ -12,7 +12,7 @@ import ButtonIcon from "../Button/ButtonIcon";
 
 const LeftNavBar = () => {
   const { darkTheme } = useTheme();
-  const location = useLocation();
+  const { pathname } = useLocation();
   const { auth, authDispatch } = useAuth();
   const { user } = auth;
   const { setAlert, setShowAlert } = useModal();
@@ -25,11 +25,11 @@ const LeftNavBar = () => {
     navigate("/");
   };
 
-  const activeHome = location.pathname === "/home" ? "activeNav" : "";
-  const activeLabel = location.pathname === "/label" ? "activeNav" : "";
-  const activeArchive = location.pathname === "/archive" ? "activeNav" : "";
-  const activeTrash = location.pathname === "/trash" ? "activeNav" : "";
-  const activeProfile = location.pathname === "/profile" ? "activeNav" : "";
+  const activeHome = pathname === "/home" ? "activeNav" : "";
+  const activeLabel = pathname === "/label" ? "activeNav" : "";
+  const activeArchive = pathname === "/archive" ? "activeNav" : "";
+  const activeTrash = pathname === "/trash" ? "activeNav" : "";
+  const activeProfile = pathname === "/profile" ? "activeNav" : "";
 
   const navBarClass = darkTheme
     ? "left-nav-div bg-dark"
