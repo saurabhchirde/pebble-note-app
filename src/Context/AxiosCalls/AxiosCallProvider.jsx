@@ -48,14 +48,7 @@ const AxiosCallProvider = ({ children }) => {
         setShowAlert(true);
       }
     } catch (error) {
-      let msg = JSON.stringify(error);
-      let parsedMsg = JSON.parse(msg);
-      const alertText =
-        parsedMsg.status === 404
-          ? "Email Address doesn't Exist, Please Signup"
-          : "Server Error, Try Again";
-
-      setAlert(alertText);
+      setAlert(error.response.data.errors);
       showLoader();
       setShowAlert(true);
     }
@@ -73,7 +66,7 @@ const AxiosCallProvider = ({ children }) => {
       }
       showLoader();
     } catch (error) {
-      setAlert(error.message);
+      setAlert(error.response.data.errors);
       showLoader();
       setShowAlert(true);
     }
@@ -81,7 +74,7 @@ const AxiosCallProvider = ({ children }) => {
 
   // add note
   const addNoteOnServer = async (noteConfig) => {
-    const { url, body, headers, item } = noteConfig;
+    const { url, body, headers } = noteConfig;
 
     try {
       showLoader();
@@ -90,7 +83,7 @@ const AxiosCallProvider = ({ children }) => {
       dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
       showLoader();
     } catch (error) {
-      setAlert("Invalid Input, please try again");
+      setAlert(error.response.data.errors);
       showLoader();
       setShowAlert(true);
     }
@@ -107,7 +100,7 @@ const AxiosCallProvider = ({ children }) => {
       showLoader();
       console.log("after update notes", res.data.notes);
     } catch (error) {
-      setAlert(error.message);
+      setAlert(error.response.data.errors);
       showLoader();
       setShowAlert(true);
     }
@@ -124,7 +117,7 @@ const AxiosCallProvider = ({ children }) => {
       dispatch({ type: "notesAfterDelete", payload: res.data.notes });
       showLoader();
     } catch (error) {
-      setAlert(error.message);
+      setAlert(error.response.data.errors);
       showLoader();
       setShowAlert(true);
     }
@@ -140,7 +133,7 @@ const AxiosCallProvider = ({ children }) => {
       dispatch({ type: "notesAfterArchive", payload: res.data });
       showLoader();
     } catch (error) {
-      setAlert(error.message);
+      setAlert(error.response.data.errors);
       showLoader();
       setShowAlert(true);
     }
@@ -157,7 +150,7 @@ const AxiosCallProvider = ({ children }) => {
       dispatch({ type: "notesAfterUnArchive", payload: res.data });
       showLoader();
     } catch (error) {
-      setAlert(error.message);
+      setAlert(error.response.data.errors);
       showLoader();
       setShowAlert(true);
     }

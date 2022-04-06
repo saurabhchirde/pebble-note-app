@@ -80,6 +80,7 @@ const noteReducer = (state, action) => {
         ...state,
         allNotes: [],
         archivedNotes: [],
+        allLabels: [],
       };
 
     // after adding notes

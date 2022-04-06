@@ -28,7 +28,7 @@ const HomePage = () => {
     if (allNotes.length < 1) {
       dispatch({ type: "resetNotesAndLabels" });
     }
-  }, [allNotes.length]);
+  }, [allNotes.length, dispatch]);
 
   const pinnedNotes = [...allNotes.filter((item) => item.pinned)];
   const otherNotes = [...allNotes.filter((item) => !item.pinned)];
@@ -88,7 +88,9 @@ const HomePage = () => {
         <div className="pinnedNotes">
           {pinnedNotes.length !== 0 ? (
             <div>
-              <h2>Pinned Notes</h2>
+              <h2 className="title-md-wt-5 mg-1-top mg-point6-lt">
+                Pinned Notes
+              </h2>
               <div className="allNotes">
                 {finalFilteredData(pinnedNotes, filterState).map((item) => {
                   return (
@@ -109,22 +111,20 @@ const HomePage = () => {
         </div>
         <div className="otherNotes">
           {pinnedNotes.length !== 0 && otherNotes.length !== 0 ? (
-            <h2>Other Notes</h2>
+            <h2 className="title-md-wt-5 mg-1-top mg-point6-lt">Other Notes</h2>
           ) : null}
           <div className="allNotes">
             {finalFilteredData(otherNotes, filterState).map((item) => {
               return (
-                <>
-                  <Note
-                    item={item}
-                    key={item._id}
-                    icon={"fas fa-trash"}
-                    delAction="del"
-                    editAction="editUnPinned"
-                    archiveAction="archive"
-                    pinAction="unPinnedNote"
-                  />
-                </>
+                <Note
+                  item={item}
+                  key={item._id}
+                  icon={"fas fa-trash"}
+                  delAction="del"
+                  editAction="editUnPinned"
+                  archiveAction="archive"
+                  pinAction="unPinnedNote"
+                />
               );
             })}
           </div>

@@ -72,21 +72,4 @@ const demoNotes = [
   },
 ];
 
-const allDemoLabels = [
-  "study",
-  "library",
-  "movie",
-  "weekend",
-  "service",
-  "ac",
-  "coding",
-  "work",
-  "library",
-  "recharge",
-  "mobile",
-  "work",
-  "car",
-  "service",
-];
-
-export { demoNotes, allDemoLabels };
+export { demoNotes };

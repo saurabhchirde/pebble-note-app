@@ -1,16 +1,12 @@
-import { useState } from "react";
-import { useAxiosCalls, useModal } from "../../../Context";
+import { useAuth, useAxiosCalls, useModal } from "../../../Context";
 import Button from "../Button/Button";
 import InputTypeOne from "../Input/InputTypeOne";
 import "./Login.css";
 
 const Login = () => {
-  const [loginInput, setLoginInput] = useState({
-    email: "",
-    password: "",
-  });
+  const { loginInput, setLoginInput } = useAuth();
 
-  const { setShowLogin, setShowSignup } = useModal();
+  const { setShowLogin, setShowSignup, setAlert, setShowAlert } = useModal();
   const { userLogin } = useAxiosCalls();
 
   const loginConfig = {
@@ -20,7 +16,8 @@ const Login = () => {
 
   const onLoginClickFormHandler = () => {
     if (loginInput.name === "" || loginInput.password === "") {
-      return;
+      setAlert("Input cannot be blank, try again");
+      setShowAlert(true);
     } else {
       userLogin(loginConfig);
     }
@@ -73,7 +70,7 @@ const Login = () => {
           <InputTypeOne
             type="email"
             name="email"
-            // required="required"    commented for development
+            required="required"
             autoComplete="email"
             placeholder="Enter your email *"
             iconWrapper="input-icon"
@@ -85,7 +82,7 @@ const Login = () => {
           <InputTypeOne
             type="password"
             name="password"
-            // required="required"     commented for development
+            required="required"
             autoComplete="current-password"
             placeholder="Enter your password *"
             iconWrapper="input-icon"

@@ -9,18 +9,17 @@ import { noteReducer } from "./noteReducer";
 import { useAuth } from "../Auth/AuthProvider";
 import { useModal } from "../Modal/ModalProvider";
 import axios from "axios";
-import { demoNotes, allDemoLabels } from "../../Data/demoNotes";
 import moment from "moment";
 
 const initialState = {
   deletedNotes: [],
-  allNotes: [...demoNotes],
+  allNotes: [],
   deletedMsgNotification: false,
   newInputTitle: "Take a new note..",
   showInput: false,
   archivedNotes: [],
   tempLabels: [],
-  allLabels: ["All", ...allDemoLabels],
+  allLabels: ["All"],
 };
 
 const initialNoteDetails = {
@@ -46,29 +45,27 @@ const NoteProvider = ({ children }) => {
   const { auth } = useAuth();
   const { setAlert, setShowAlert } = useModal();
 
-  // commented for the development purpose as it will reset all the demo notes
-
-  // useEffect(() => {
-  //   if (auth.login) {
-  //     const fetchData = async () => {
-  //       try {
-  //         const res = await axios.get("/api/notes", {
-  //           headers: { authorization: auth.token },
-  //         });
-  //         dispatch({
-  //           type: "getNotesFromServer",
-  //           payload: res.data.notes,
-  //         });
-  //       } catch (error) {
-  //         setAlert(error.message);
-  //         setShowAlert(true);
-  //       }
-  //     };
-  //     fetchData();
-  //   } else {
-  //     dispatch({ type: "emptyAllNotes" });
-  //   }
-  // }, [auth.login]);
+  useEffect(() => {
+    if (auth.login) {
+      const fetchData = async () => {
+        try {
+          const res = await axios.get("/api/notes", {
+            headers: { authorization: auth.token },
+          });
+          dispatch({
+            type: "getNotesFromServer",
+            payload: res.data.notes,
+          });
+        } catch (error) {
+          setAlert(error.response.data.errors);
+          setShowAlert(true);
+        }
+      };
+      fetchData();
+    } else {
+      dispatch({ type: "emptyAllNotes" });
+    }
+  }, [auth.login, auth.token, dispatch, setAlert, setShowAlert]);
 
   return (
     <noteContext.Provider

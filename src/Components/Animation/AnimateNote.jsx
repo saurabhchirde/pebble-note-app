@@ -18,7 +18,7 @@ const AnimateNote = () => {
     return () => {
       clearTimeout(animateTime);
     };
-  }, []);
+  }, [setLoginAnimate]);
 
   return (
     <div className="loader-animation">
