@@ -8,6 +8,7 @@ import {
   AxiosCallProvider,
   AuthProvider,
   AlertProvider,
+  FilterProvider,
 } from "./index";
 
 const PebbleNoteProvider = ({ children }) => {
@@ -19,9 +20,11 @@ const PebbleNoteProvider = ({ children }) => {
             <ScrollToTop>
               <AnimationProvider>
                 <ModalProvider>
-                  <NoteProvider>
-                    <AxiosCallProvider>{children}</AxiosCallProvider>
-                  </NoteProvider>
+                  <FilterProvider>
+                    <NoteProvider>
+                      <AxiosCallProvider>{children}</AxiosCallProvider>
+                    </NoteProvider>
+                  </FilterProvider>
                 </ModalProvider>
               </AnimationProvider>
             </ScrollToTop>

@@ -31,7 +31,7 @@ import AnimateLoader from "./Components/Animation/AnimateLoader";
 import AnimateNote from "./Components/Animation/AnimateNote";
 
 function App() {
-  const { showLogin, showSignup, showSignupAlert, showError } = useModal();
+  const { showLogin, showSignup, showSignupAlert, showAlert } = useModal();
   const { loader, loginAnimate } = useAnimation();
   const { editModal } = usePebbleNote();
   const { darkTheme } = useTheme();
@@ -54,7 +54,7 @@ function App() {
       {showLogin && <Login />}
       {showSignup && <Signup />}
       {showSignupAlert && <SignupAlertModal />}
-      {showError && <AlertModal />}
+      {showAlert && <AlertModal />}
       {editModal && <EditNoteModal />}
       {hideNav && auth.login && <NavBar />}
       {hideNav && auth.login && <MobileNavBar />}

@@ -9,6 +9,7 @@ import { noteReducer } from "./noteReducer";
 import { useAuth } from "../Auth/AuthProvider";
 import { useModal } from "../Modal/ModalProvider";
 import axios from "axios";
+import moment from "moment";
 
 const initialState = {
   deletedNotes: [],
@@ -18,13 +19,15 @@ const initialState = {
   showInput: false,
   archivedNotes: [],
   tempLabels: [],
+  allLabels: ["All"],
 };
 
 const initialNoteDetails = {
   title: "",
   pinned: false,
   labels: [],
-  date: new Date().toLocaleDateString(),
+  date: moment(new Date()).format("DD-MM-YYYY"),
+  priority: "Low",
 };
 
 const noteContext = createContext(initialState);
@@ -40,7 +43,7 @@ const NoteProvider = ({ children }) => {
   const [label, setLabel] = useState("");
   const [editModal, setEditModal] = useState(false);
   const { auth } = useAuth();
-  const { setError, setShowError } = useModal();
+  const { setAlert, setShowAlert } = useModal();
 
   useEffect(() => {
     if (auth.login) {
@@ -49,19 +52,20 @@ const NoteProvider = ({ children }) => {
           const res = await axios.get("/api/notes", {
             headers: { authorization: auth.token },
           });
-          dispatch({ type: "getNotesFromServer", payload: res.data.notes });
-
-          console.log(res.data.notes);
+          dispatch({
+            type: "getNotesFromServer",
+            payload: res.data.notes,
+          });
         } catch (error) {
-          setError(error.message);
-          setShowError(true);
+          setAlert(error.response.data.errors);
+          setShowAlert(true);
         }
       };
       fetchData();
     } else {
       dispatch({ type: "emptyAllNotes" });
     }
-  }, [auth.login]);
+  }, [auth.login, auth.token, dispatch, setAlert, setShowAlert]);
 
   return (
     <noteContext.Provider

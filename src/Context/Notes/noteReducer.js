@@ -4,6 +4,13 @@ const noteReducer = (state, action) => {
       return {
         ...state,
         showInput: true,
+        newInputTitle: "Title",
+      };
+
+    case "resetNotesAndLabels":
+      return {
+        ...state,
+        showInput: true,
         showIcon: false,
         newInputTitle: "Title",
       };
@@ -15,23 +22,31 @@ const noteReducer = (state, action) => {
         tempLabels: [...state.tempLabels, action.payload],
       };
 
+    // add label in alllabel array
+    case "addLabelToAllLabels":
+      return {
+        ...state,
+        allLabels: [...new Set(["All", ...action.payload, ...state.allLabels])],
+      };
+
     // remove label from note
     case "removeLabelFromNote":
-      console.log(action.payload);
       return {
         ...state,
         tempLabels: [
-          ...state.tempLabels.filter((item) => item != action.payload),
+          ...state.tempLabels.filter((item) => item !== action.payload),
+        ],
+        allLabels: [
+          ...state.allLabels.filter((item) => item !== action.payload),
         ],
       };
 
     // remove label
     case "removeLabel":
-      console.log(action.payload);
       return {
         ...state,
         tempLabels: [
-          ...state.tempLabels.filter((item) => item != action.payload),
+          ...state.tempLabels.filter((item) => item !== action.payload),
         ],
       };
 
@@ -65,6 +80,7 @@ const noteReducer = (state, action) => {
         ...state,
         allNotes: [],
         archivedNotes: [],
+        allLabels: [],
       };
 
     // after adding notes
@@ -77,7 +93,6 @@ const noteReducer = (state, action) => {
 
     // after updating notes
     case "notesAfterUpdating":
-      console.log(action.payload);
       return {
         ...state,
         allNotes: [...action.payload],

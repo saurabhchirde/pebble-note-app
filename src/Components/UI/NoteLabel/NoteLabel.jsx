@@ -1,13 +1,18 @@
-import { usePebbleNote } from "../../../Context";
+import { useAlert, usePebbleNote } from "../../../Context";
 import ButtonSimple from "../Button/ButtonSimple";
 import "./NoteLabel.css";
 
 const NoteLabel = () => {
   const { label, setLabel, dispatch } = usePebbleNote();
+  const { alertDispatch } = useAlert();
 
   const submitLabel = (e) => {
     e.preventDefault();
-    dispatch({ type: "addLabelToNote", payload: label });
+    if (label.trim() === "") {
+      alertDispatch({ type: "emptyLabelError" });
+    } else {
+      dispatch({ type: "addLabelToNote", payload: label });
+    }
     setLabel("");
   };
 

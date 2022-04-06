@@ -1,13 +1,17 @@
 import Note from "../../Components/Note/Note";
 import NewNote from "../../Components/NewNote/NewNote";
-import { useAlert, usePebbleNote } from "../../Context";
+import { useAlert, useFilter, usePebbleNote } from "../../Context";
 import "./HomePage.css";
 import NoteAlert from "../../Components/Alerts/NoteAlert";
+import { finalFilteredData } from "../../Utils/finalFilteredData";
+import { useEffect } from "react";
 
 const HomePage = () => {
   const {
     state: { allNotes },
+    dispatch,
   } = usePebbleNote();
+  const { filterState } = useFilter();
 
   const {
     alertState: {
@@ -19,6 +23,12 @@ const HomePage = () => {
       noteArchiveAlert,
     },
   } = useAlert();
+
+  useEffect(() => {
+    if (allNotes.length < 1) {
+      dispatch({ type: "resetNotesAndLabels" });
+    }
+  }, [allNotes.length, dispatch]);
 
   const pinnedNotes = [...allNotes.filter((item) => item.pinned)];
   const otherNotes = [...allNotes.filter((item) => !item.pinned)];
@@ -78,9 +88,11 @@ const HomePage = () => {
         <div className="pinnedNotes">
           {pinnedNotes.length !== 0 ? (
             <div>
-              <h2>Pinned Notes</h2>
+              <h2 className="title-md-wt-5 mg-1-top mg-point6-lt">
+                Pinned Notes
+              </h2>
               <div className="allNotes">
-                {pinnedNotes.map((item) => {
+                {finalFilteredData(pinnedNotes, filterState).map((item) => {
                   return (
                     <Note
                       item={item}
@@ -99,10 +111,10 @@ const HomePage = () => {
         </div>
         <div className="otherNotes">
           {pinnedNotes.length !== 0 && otherNotes.length !== 0 ? (
-            <h2>Other Notes</h2>
+            <h2 className="title-md-wt-5 mg-1-top mg-point6-lt">Other Notes</h2>
           ) : null}
           <div className="allNotes">
-            {otherNotes.map((item) => {
+            {finalFilteredData(otherNotes, filterState).map((item) => {
               return (
                 <Note
                   item={item}

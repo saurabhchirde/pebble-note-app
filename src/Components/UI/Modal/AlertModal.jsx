@@ -3,18 +3,18 @@ import "./AlertModal.css";
 import Button from "../Button/Button";
 
 const AlertModal = () => {
-  const { error, setError, setShowError } = useModal();
+  const { alert, setAlert, setShowAlert } = useModal();
 
   const closeClickHandler = () => {
-    setShowError(false);
-    setError("");
+    setShowAlert(false);
+    setAlert("");
   };
 
   return (
     <>
       <div className="modal-backdrop"></div>
       <div className="discard-modal-md">
-        <p>{error}</p>
+        <p>{alert}</p>
         <div className="error-modal-button">
           <Button
             onClick={closeClickHandler}

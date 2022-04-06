@@ -12,10 +12,47 @@
   margin-top: 0;
 }
 
+.note-top-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 10px;
+}
+
+.note-top-section p {
+  font-size: 0.7rem;
+  position: absolute;
+  left: 6px;
+  top: 4px;
+  color: var(--text-light);
+}
+
+.priority-label {
+  padding: 3px 5px;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+  background-color: var(--primary-color);
+  color: var(--text-white);
+  border-radius: 4px;
+  width: 2.5rem;
+}
+
+.high-priority {
+  background-color: var(--primary-color);
+  color: var(--text-white);
+}
+
+.low-priority {
+  border: 1px solid var(--primary-color);
+  background: var(--faint-gray);
+  color: var(--text-dark);
+}
+
 .pin-icon {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: 8px;
+  top: 8px;
   cursor: pointer;
 }
 
@@ -35,23 +72,32 @@
   display: flex;
   flex-direction: column;
   border-radius: 4px;
-  width: 15rem;
+  width: 16rem;
   margin: 8px;
-  padding: 10px;
+  padding: 5px;
   z-index: 1;
   word-wrap: break-word;
 }
 
-.note-container h2 {
-  font-size: 1.2rem;
+.note-container .new-note-label {
+  padding: 0;
+  margin: 5px 0 0;
+}
+
+.note-title {
+  font-size: 1.1rem;
+  padding-left: 6px;
+  margin: 1rem 0 5px;
+  width: 100%;
 }
 
 .note-text {
-  padding: 1rem;
+  padding: 1rem 6px;
+  font-size: 0.9rem;
 }
 
 .note-text img {
-  width: 100%;
+  width: 8rem;
   height: auto;
 }
 
@@ -60,7 +106,7 @@
   padding-top: 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   border-top: 1px solid var(--primary-color);
   position: relative;
 }
@@ -76,7 +122,7 @@
 
 @media screen and (max-width: 760px) {
   .note-container {
-    width: 11rem;
+    width: 14rem;
     margin: 5px 8px;
   }
 
@@ -88,5 +134,28 @@
     padding: 5px;
     border-radius: 50%;
     font-size: 0.9rem;
+  }
+
+  .color-palette-icon,
+  .trash-icon,
+  .archive-icon,
+  .edit-icon,
+  .option-icon {
+    margin: 8px;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .note-container {
+    width: 48%;
+    margin: 5px auto;
+  }
+
+  .color-palette-icon,
+  .trash-icon,
+  .archive-icon,
+  .edit-icon,
+  .option-icon {
+    margin: 5px;
   }
 }

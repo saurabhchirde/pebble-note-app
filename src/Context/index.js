@@ -9,3 +9,4 @@ export {
   useAxiosCalls,
 } from "./AxiosCalls/AxiosCallProvider";
 export { AlertProvider, useAlert } from "./Alerts/AlertProvider";
+export { FilterProvider, useFilter } from "./Filter/FilterProvider";

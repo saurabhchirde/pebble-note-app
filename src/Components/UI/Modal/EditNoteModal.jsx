@@ -121,10 +121,6 @@ const EditNoteModal = () => {
     setShowColor(false);
   };
 
-  const darkThemeClass = darkTheme
-    ? "new-note-input card-shadow-two dark-mode-new-note"
-    : "new-note-input card-shadow-two";
-
   const darkThemeEditor = darkTheme
     ? "text-editor dark-mode-new-note"
     : "text-editor ";

@@ -11,7 +11,7 @@ const NoteAlert = (props) => {
     return () => {
       clearTimeout(alertTime);
     };
-  }, []);
+  }, [alertDispatch, props.dispatchType]);
 
   return (
     <div className={props.alert}>

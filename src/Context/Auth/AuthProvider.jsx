@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 
 const initialAuthState = {
   login: false,
@@ -43,9 +43,16 @@ const AuthProvider = ({ children }) => {
     authReducer,
     JSON.parse(localStorage.getItem("authState")) ?? initialAuthState
   );
+  const [loginInput, setLoginInput] = useState({
+    email: "",
+    password: "",
+  });
+
   localStorage.setItem("authState", JSON.stringify(auth));
   return (
-    <authContext.Provider value={{ auth, authDispatch }}>
+    <authContext.Provider
+      value={{ auth, authDispatch, loginInput, setLoginInput }}
+    >
       {children}
     </authContext.Provider>
   );

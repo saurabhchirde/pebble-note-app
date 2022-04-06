@@ -38,14 +38,9 @@
 .landing-body {
   display: flex;
   align-items: center;
-  margin-top: 2rem;
   justify-content: space-between;
-  position: fixed;
-  width: 80%;
-  margin: 0 auto;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  width: 100%;
+  margin: 4rem auto 0;
 }
 
 .landing-illustration {
@@ -54,8 +49,8 @@
 
 .landing-body-header {
   font-size: 2.4rem;
-  margin: 1rem 1rem 2rem;
 }
+
 .landing-body-header-text {
   font-size: 1.4rem;
   margin: 0 1rem;
@@ -112,7 +107,7 @@
 
   .landing-body-header {
     font-size: 2rem;
-    margin: 1rem 1rem 2rem;
+    margin: 0 1rem 2rem;
   }
 
   .landing-body-header-text {
@@ -161,7 +156,7 @@
   .landing {
     margin: auto;
     padding: 0;
-    height: 110vh;
+    height: 100vh;
   }
 
   .landing-header {

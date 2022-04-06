@@ -13,14 +13,14 @@ const ProfilePage = () => {
   const {
     state: { deletedNotes, allNotes, archivedNotes },
   } = usePebbleNote();
-  const { setError, setShowError } = useModal();
+  const { setAlert, setShowAlert } = useModal();
   const navigate = useNavigate();
 
   const logOutHandler = () => {
-    authDispatch({ type: "logout" });
-    setError("Your have been logged out");
-    setShowError(true);
+    setAlert("Your have been logged out");
+    setShowAlert(true);
     navigate("/");
+    authDispatch({ type: "logout" });
   };
 
   const pinnedNotes = [...allNotes.filter((item) => item.pinned)];

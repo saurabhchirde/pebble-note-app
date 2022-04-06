@@ -15,13 +15,13 @@ const LeftNavBar = () => {
   const location = useLocation();
   const { auth, authDispatch } = useAuth();
   const { user } = auth;
-  const { setError, setShowError } = useModal();
+  const { setAlert, setShowAlert } = useModal();
   const navigate = useNavigate();
 
   const logOutClickHandler = () => {
     authDispatch({ type: "logout" });
-    setError("Logout Successfully");
-    setShowError(true);
+    setAlert("Logout Successfully");
+    setShowAlert(true);
     navigate("/");
   };
 

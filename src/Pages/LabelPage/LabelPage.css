@@ -1,0 +1,29 @@
+.label-page-title {
+  font-size: 1.4rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.label-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.label-list .single-label {
+  margin: 5px;
+  padding: 5px 8px;
+  font-size: 1.1rem;
+}
+
+.single-label {
+  cursor: pointer;
+}
+
+.label-icon {
+  margin-left: 50%;
+  margin-top: 3rem;
+  transform: translate(-50%, 0);
+}
