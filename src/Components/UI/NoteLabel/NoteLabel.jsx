@@ -9,7 +9,7 @@ const NoteLabel = () => {
   const submitLabel = (e) => {
     e.preventDefault();
     if (label.trim() === "") {
-      alertDispatch({ type: "emptyLael" });
+      alertDispatch({ type: "emptyLabelError" });
     } else {
       dispatch({ type: "addLabelToNote", payload: label });
     }
