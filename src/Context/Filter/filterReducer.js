@@ -15,11 +15,18 @@ const filterReducer = (filterState, action) => {
         selectedLabel: action.payload,
       };
 
+    case "bySearch":
+      return {
+        ...filterState,
+        bySearch: action.payload,
+      };
+
     case "resetFilter":
       return {
         sortByDate: "Newest",
         sortByPriority: "All",
         selectedLabel: "All",
+        bySearch: "",
       };
 
     default:

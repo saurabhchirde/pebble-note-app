@@ -12,7 +12,7 @@ const initialSignupState = {
 };
 
 const Signup = () => {
-  const { setShowLogin, setShowSignup } = useModal();
+  const { setShowLogin, setShowSignup, setAlert, setShowAlert } = useModal();
   const [user, setUser] = useState(initialSignupState);
   const { userSignup } = useAxiosCalls();
 
@@ -21,8 +21,26 @@ const Signup = () => {
     data: user,
   };
 
+  const emailValidate =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  const passwordValidate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+
   const onSignupFormSubmitHandler = (e) => {
     e.preventDefault();
+    if (
+      user.password.match(passwordValidate) &&
+      user.email.match(emailValidate)
+    ) {
+      userSignup(signupConfig);
+      setShowSignup(false);
+      setUser(initialSignupState);
+    } else {
+      setAlert(
+        "Minimum 8 char, 1 Uppercase, 1 Lowercase, 1 number & 1 Special Character required"
+      );
+      setShowAlert(true);
+    }
     userSignup(signupConfig);
     setShowSignup(false);
     setUser(initialSignupState);
