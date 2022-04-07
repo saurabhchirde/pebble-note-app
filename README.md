@@ -14,6 +14,10 @@
 
 [Pebble Note](https://pebblenote.netlify.app/)
 
+![161397883-ada7bb33-30d3-431c-8cdb-98452f603628](https://user-images.githubusercontent.com/92800463/162272744-db089563-e3e1-4865-8a0d-f6c1b769575a.gif)
+
+Filter Notes -
+
 ![161713434-27b3e087-7b91-4a56-b031-2c7b6b5bbbcd](https://user-images.githubusercontent.com/92800463/162271670-0d3985a1-a6dc-42ae-b9b6-4535736cf174.gif)
 
 
@@ -25,12 +29,12 @@
   - Sign Up
   - Sign Out
 - Protected/Private Routes
-- Products Listing
 - Note Management
 - Add New Note
-- Archive Notes
+- Archive Note
 - Delete Note
-- Filter Notes by Date, priority, labels
+- Edit Note
+- Filter Notes by Date, priority,and labels
 - User Account Page 
 
 ## Tech Stack
