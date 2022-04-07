@@ -200,7 +200,12 @@ const Note = ({
             </div>
           )}
         </div>
-        <h2 className="note-title">{title}</h2>
+        <h2
+          className="note-title"
+          style={{ color: darkTheme ? "#0f96df" : "#333" }}
+        >
+          {title}
+        </h2>
         <div className="note-text" dangerouslySetInnerHTML={{ __html: text }} />
         {item.labels.length > 0 ? (
           <div

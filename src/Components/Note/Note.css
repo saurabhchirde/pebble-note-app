@@ -33,7 +33,6 @@
   color: var(--text-dark);
   font-size: 0.9rem;
   background-color: var(--primary-color);
-  color: var(--text-white);
   border-radius: 4px;
   width: 2.5rem;
 }
@@ -94,6 +93,10 @@
 .note-text {
   padding: 1rem 6px;
   font-size: 0.9rem;
+}
+
+.dark-mode-card .note-text p {
+  color: var(--primary-color);
 }
 
 .note-text img {

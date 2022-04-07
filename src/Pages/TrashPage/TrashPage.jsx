@@ -55,13 +55,13 @@ const TrashPage = () => {
           dispatchType="hideRestoredAlert"
         />
       )}
-      <div className="flex-row-center flex-justify-space-between mg-point6-rt mg-2-bot">
-        <p>
+      <div className="trash-page-title flex-row mg-point6-rt mg-2-bot">
+        <p className="mg-1-rt">
           Trash will be automatically cleared after <strong> 30 days</strong>.
         </p>
         <ButtonSimple
           label="Empty Trash"
-          btnClassName="btn secondary-outline-btn-md"
+          btnClassName="btn primary-outline-btn-sm"
           onClick={emptyTrashClickHandler}
         />
       </div>

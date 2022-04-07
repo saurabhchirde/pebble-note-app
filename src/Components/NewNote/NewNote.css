@@ -56,12 +56,12 @@
   border-radius: 4px;
 }
 
-.rich-text-editor p {
+.dark-mode-new-note .rich-text-editor p {
   background-color: transparent;
-  color: black;
+  color: var(--primary-color);
 }
 
-.text-editor {
+.rich-text-editor p .text-editor {
   width: 100%;
   border: none;
 }
@@ -125,6 +125,10 @@
   background-color: var(--btn-hover);
 }
 
+.dark-mode-new-note .ql-snow.ql-toolbar button.ql-active {
+  background-color: var(--btn-hover);
+}
+
 .ql-snow.ql-toolbar button:hover .ql-stroke {
   background-color: var(--btn-hover);
 }
@@ -156,6 +160,38 @@
 
 .ql-toolbar .ql-fill {
   stroke: none;
+}
+
+.ql-editor.ql-blank::before {
+  color: var(--primary-color);
+}
+
+.dark-mode-new-note .ql-editor.ql-blank::before {
+  color: var(--text-lighter);
+}
+
+.ql-toolbar .ql-stroke {
+  fill: none;
+  stroke: var(--primary-color);
+}
+
+.dark-mode-new-note .ql-toolbar .ql-stroke {
+  fill: none;
+  stroke: var(--primary-color);
+}
+
+.ql-toolbar .ql-picker {
+  color: var(--primary-color);
+}
+
+.ql-snow .ql-fill,
+.ql-snow .ql-stroke.ql-fill {
+  fill: var(--primary-color);
+}
+
+.dark-mode-new-note .ql-snow .ql-fill,
+.dark-mode-new-note .ql-snow .ql-stroke.ql-fill {
+  fill: var(--primary-color);
 }
 
 .new-note-bottom-section {
@@ -284,6 +320,10 @@
   padding: 5px 3px;
 }
 
+.dark-mode-new-note .new-note-label {
+  border: 1px solid var(--primary-color);
+}
+
 .filter-section p {
   font-size: 0.8rem;
 }
@@ -302,6 +342,7 @@ select {
   margin: 0 2px;
   font-size: 0.9rem;
   border: 1px solid var(--primary-color);
+  color: var(--primary-color);
   border-radius: 4px;
 }
 

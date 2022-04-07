@@ -68,7 +68,7 @@ const NewNote = () => {
     setNewNote(initialNoteDetails);
     setShowColor(false);
     setNoteText("");
-    setNoteColor("#ffffff");
+    setNoteColor("");
     setEditNote(false);
     dispatch({ type: "clearTempLabel" });
   };
@@ -141,7 +141,7 @@ const NewNote = () => {
       alertDispatch({ type: "hideInputWithData" });
     }
     setShowColor(false);
-    setNoteColor("#ffffff");
+    noteColor ? setNoteColor(noteColor) : setNoteColor("");
   };
 
   // new note input data
@@ -235,7 +235,7 @@ const NewNote = () => {
       <div className="new-note-main-container">
         <div
           className={darkThemeClass}
-          style={{ backgroundColor: editModal ? "#f0fbff" : noteColor }}
+          style={{ backgroundColor: editModal ? "" : noteColor }}
         >
           {emptyNoteError && (
             <NoteAlert
@@ -280,7 +280,10 @@ const NewNote = () => {
               name="title"
               autoComplete="off"
               value={editModal ? "" : newNote.title}
-              style={{ backgroundColor: editModal ? "#f0fbff" : noteColor }}
+              style={{
+                backgroundColor: editModal ? "" : noteColor,
+                color: darkTheme ? "#0f96df" : "#333",
+              }}
             />
             <img
               src={filterIcon}
@@ -303,7 +306,9 @@ const NewNote = () => {
                   placeholder="Take a note..."
                   onChange={setNoteText}
                   className={darkThemeEditor}
-                  style={{ backgroundColor: noteColor }}
+                  style={{
+                    backgroundColor: noteColor,
+                  }}
                 />
               </div>
               <div className="new-note-nav-btn">
@@ -329,9 +334,13 @@ const NewNote = () => {
                     />
                     {showLabel && <NoteLabel />}
                   </div>
-                  <h2>{newNote.date}</h2>
+                  <h2 style={{ color: darkTheme ? "#0f96df" : "#333" }}>
+                    {newNote.date}
+                  </h2>
                   <div className="set-priority">
-                    <p>Priority</p>
+                    <p style={{ color: darkTheme ? "#0f96df" : "#333" }}>
+                      Priority
+                    </p>
                     <select
                       onChange={selectPriorityHandler}
                       value={newNote.priority}
@@ -363,27 +372,51 @@ const NewNote = () => {
               e.preventDefault();
             }}
             className="new-note-label filter-section card-shadow-two"
-            style={{ backgroundColor: editModal ? "#f0fbff" : noteColor }}
+            style={{
+              backgroundColor: editModal ? "" : noteColor,
+              border: darkTheme ? "1px solid #0f96df" : "",
+            }}
           >
             <div>
-              <p>Date</p>
-              <select onChange={onSortByDate} value={sortByDate}>
+              <p style={{ color: darkTheme ? "#0f96df" : "#333" }}>Date</p>
+              <select
+                onChange={onSortByDate}
+                value={sortByDate}
+                style={{
+                  backgroundColor: darkTheme ? (noteColor ? "" : "#333") : "",
+                  color: darkTheme ? (noteColor ? "#000" : "#fff") : "",
+                }}
+              >
                 <option>All</option>
                 <option>New First</option>
                 <option>Old First</option>
               </select>
             </div>
             <div>
-              <p>Priority</p>
-              <select onChange={onSortByPriority} value={sortByPriority}>
+              <p style={{ color: darkTheme ? "#0f96df" : "#333" }}>Priority</p>
+              <select
+                onChange={onSortByPriority}
+                value={sortByPriority}
+                style={{
+                  backgroundColor: darkTheme ? (noteColor ? "" : "#333") : "",
+                  color: darkTheme ? (noteColor ? "#000" : "#fff") : "",
+                }}
+              >
                 <option>All</option>
                 <option>Low</option>
                 <option>High</option>
               </select>
             </div>
             <div>
-              <p>Label</p>
-              <select onChange={onSortByLabel} value={selectedLabel}>
+              <p style={{ color: darkTheme ? "#0f96df" : "#333" }}>Label</p>
+              <select
+                onChange={onSortByLabel}
+                value={selectedLabel}
+                style={{
+                  backgroundColor: darkTheme ? (noteColor ? "" : "#333") : "",
+                  color: darkTheme ? (noteColor ? "#000" : "#fff") : "",
+                }}
+              >
                 {allLabels.map((label, index) => {
                   return (
                     <option key={index} className="single-label">
@@ -405,9 +438,12 @@ const NewNote = () => {
         {tempLabels.length > 0 ? (
           <div
             className="new-note-label card-shadow-two"
-            style={{ backgroundColor: editModal ? "#f0fbff" : noteColor }}
+            style={{
+              backgroundColor: editModal ? "" : noteColor,
+              border: darkTheme ? "1px solid #0f96df" : "",
+            }}
           >
-            <p>Labels: </p>
+            <p style={{ color: darkTheme ? "#0f96df" : "#333" }}>Labels: </p>
             {tempLabels.map((label, index) => {
               return (
                 <div key={index} className="single-label">

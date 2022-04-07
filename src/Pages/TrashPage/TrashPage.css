@@ -3,3 +3,9 @@
   margin: 3rem auto 0;
   color: var(--primary-color);
 }
+
+.trash-page-title {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}

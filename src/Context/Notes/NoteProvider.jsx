@@ -37,7 +37,7 @@ const NoteProvider = ({ children }) => {
   const [noteText, setNoteText] = useState("");
   const [newNote, setNewNote] = useState(initialNoteDetails);
   const [editNote, setEditNote] = useState(false);
-  const [noteColor, setNoteColor] = useState("#ffffff");
+  const [noteColor, setNoteColor] = useState("");
   const [showColor, setShowColor] = useState(false);
   const [showLabel, setShowLabel] = useState(false);
   const [label, setLabel] = useState("");
