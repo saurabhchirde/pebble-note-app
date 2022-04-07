@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+# Pebble Note
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Simple and Easy note keeping app to increase productivity.
 
-## Available Scripts
+#### - by Saurabh Chirde
 
-In the project directory, you can run:
+<img src="https://user-images.githubusercontent.com/92800463/162270499-993891c3-0498-4d73-a0cf-e5d9349f69b8.svg" width="500px" height="auto" alt="logo" />
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Demo
 
-### `npm test`
+### Link
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[Pebble Note](https://pebblenote.netlify.app/)
 
-### `npm run build`
+![161713434-27b3e087-7b91-4a56-b031-2c7b6b5bbbcd](https://user-images.githubusercontent.com/92800463/162271670-0d3985a1-a6dc-42ae-b9b6-4535736cf174.gif)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Features
 
-### `npm run eject`
+- User Authorization
+  - Sign In
+  - Sign Up
+  - Sign Out
+- Protected/Private Routes
+- Products Listing
+- Note Management
+- Add New Note
+- Archive Notes
+- Delete Note
+- Filter Notes by Date, priority, labels
+- User Account Page 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Tech Stack
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Client:** React, React Router, Context API, Pebble UI
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+**Server:** Mockbee (Mock Backend)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Run Locally
 
-## Learn More
+Clone the project
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+  git clone https://github.com/saurabhchirde/pebble-note-app.git
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Go to the project directory
 
-### Code Splitting
+```bash
+  cd pebble-note-app
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Install dependencies
 
-### Analyzing the Bundle Size
+```bash
+  npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Start the server
 
-### Making a Progressive Web App
+```bash
+  npm run start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+<br>
 
-### Advanced Configuration
+#### 👨‍💻 lets connect !
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<br>
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<a href="https://twitter.com/saurabhchirde"><img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" width="93px"/></a>
+<a href="https://www.linkedin.com/in/saurabhchirde/"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" width="100px"/></a>
