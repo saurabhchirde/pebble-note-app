@@ -177,8 +177,8 @@ const Note = ({
   const hideDelButton = archiveAction === "restore" ? false : true;
 
   const darkThemeClass = darkTheme
-    ? "note-container card-shadow-two dark-mode-card"
-    : "note-container card-shadow-two";
+    ? "note-container dark-mode-card"
+    : "note-container";
 
   return (
     <>

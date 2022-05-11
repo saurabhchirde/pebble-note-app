@@ -223,8 +223,8 @@ const NewNote = () => {
   };
 
   const darkThemeClass = darkTheme
-    ? "new-note-input card-shadow-two dark-mode-new-note"
-    : "new-note-input card-shadow-two";
+    ? "new-note-input dark-mode-new-note"
+    : "new-note-input";
 
   const darkThemeEditor = darkTheme
     ? "text-editor dark-mode-new-note"

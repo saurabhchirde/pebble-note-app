@@ -76,6 +76,7 @@
   padding: 5px;
   z-index: 1;
   word-wrap: break-word;
+  box-shadow: 0 2px 4px var(--card-shadow);
 }
 
 .note-container .new-note-label {
