@@ -53,11 +53,11 @@ const LandingPage = () => {
                 />
               </Link>
             )}
-            <ButtonIcon
+            {/* <ButtonIcon
               onClick={onThemeTogglerClick}
               icon={themeIcon}
               btnClassName="btn icon-btn-lg"
-            />
+            /> */}
           </div>
         </div>
         <div className="landing-body">

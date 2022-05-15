@@ -25,13 +25,13 @@ const MobileNavBar = () => {
         icon="fas fa-search"
         placeholder="Search"
       />
-      <div className="nav-bar-btns">
+      {/* <div className="nav-bar-btns">
         <ButtonIcon
           onClick={onThemeTogglerClick}
           icon={themeIcon}
           btnClassName="btn icon-btn-md"
         />
-      </div>
+      </div> */}
     </nav>
   );
 };

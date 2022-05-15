@@ -2,6 +2,7 @@
   position: fixed;
   width: 100%;
   display: hide;
+  box-shadow: 0 2px 3px var(--navbar-shadow);
 }
 
 .mobile-navigation-bar {

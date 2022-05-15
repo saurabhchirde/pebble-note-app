@@ -51,11 +51,11 @@ const NavBar = () => {
           value={searchInput}
         />
       )}
-      <ButtonIcon
+      {/* <ButtonIcon
         onClick={onThemeTogglerClick}
         icon={themeIcon}
         btnClassName="btn icon-btn-md"
-      />
+      /> */}
     </div>
   );
 };

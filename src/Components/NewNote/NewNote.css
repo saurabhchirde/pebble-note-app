@@ -1,6 +1,7 @@
 .new-note-main-container {
   width: 80%;
   margin: auto;
+  background-color: var(--primary-bg);
 }
 
 .new-note-input {

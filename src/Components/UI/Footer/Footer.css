@@ -26,6 +26,13 @@
   color: var(--text-dark);
 }
 
+@media screen and (max-width: 768px) {
+  .footer-body {
+    padding: 2rem;
+    justify-content: center;
+  }
+}
+
 @media screen and (max-width: 400px) {
   .footer-body {
     justify-content: center;

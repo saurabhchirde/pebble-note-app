@@ -1,12 +1,14 @@
 .left-nav-div {
   width: 16rem;
-  padding: 0.6rem 1rem 1rem;
+  padding: 1.5rem 1rem 1rem;
   position: sticky;
-  height: 90vh;
+  height: 95vh;
   top: 4.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: var(--primary-bg);
+  border-right: 1px solid #ddd;
 }
 
 .left-nav-div li {
