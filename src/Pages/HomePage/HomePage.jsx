@@ -14,14 +14,7 @@ const HomePage = () => {
   const { filterState } = useFilter();
 
   const {
-    alertState: {
-      noteAddedAlert,
-      noteEditedAlert,
-      noteSavedAlert,
-      noteDiscardAlert,
-      noteDeletedAlert,
-      noteArchiveAlert,
-    },
+    alertState: { noteDiscardAlert },
   } = useAlert();
 
   useEffect(() => {
@@ -35,52 +28,12 @@ const HomePage = () => {
 
   return (
     <div className="body-content">
-      {noteAddedAlert && (
-        <NoteAlert
-          alert="alert-info"
-          icon="fas fa-info alert-icon"
-          text="New Note added"
-          dispatchType="hideNoteAddedAlert"
-        />
-      )}
-      {noteEditedAlert && (
-        <NoteAlert
-          alert="alert-info"
-          icon="fas fa-info alert-icon"
-          text="Note Edited Successfully"
-          dispatchType="hideNoteEditedAlert"
-        />
-      )}
-      {noteSavedAlert && (
-        <NoteAlert
-          alert="alert-info"
-          icon="fas fa-info alert-icon"
-          text="Note Saved"
-          dispatchType="hideNoteSavedAlert"
-        />
-      )}
       {noteDiscardAlert && (
         <NoteAlert
           alert="alert-info"
           icon="fas fa-info alert-icon"
           text="Note Discarded"
           dispatchType="hideDiscardAlert"
-        />
-      )}
-      {noteDeletedAlert && (
-        <NoteAlert
-          alert="alert-info"
-          icon="fas fa-info alert-icon"
-          text="Note Deleted"
-          dispatchType="hideDeletedAlert"
-        />
-      )}
-      {noteArchiveAlert && (
-        <NoteAlert
-          alert="alert-info"
-          icon="fas fa-info alert-icon"
-          text="Note Archived"
-          dispatchType="hideArchiveAlert"
         />
       )}
       <NewNote />

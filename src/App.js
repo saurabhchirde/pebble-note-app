@@ -22,6 +22,7 @@ import SignupAlertModal from "./Components/UI/Modal/SignupAlertModal";
 import AlertModal from "./Components/UI/Modal/AlertModal";
 import AnimateLoader from "./Components/Animation/AnimateLoader";
 import AnimateNote from "./Components/Animation/AnimateNote";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const { showLogin, showSignup, showSignupAlert, showAlert } = useModal();
@@ -37,6 +38,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       {loginAnimate && <AnimateNote />}
       {loader && <AnimateLoader />}
       {showLogin && <Login />}

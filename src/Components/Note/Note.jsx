@@ -13,6 +13,7 @@ import archiveIcon from "../../Data/Images/Icons/archive.svg";
 import unarchiveIcon from "../../Data/Images/Icons/unarchive.svg";
 import ColorPicker from "../UI/ColorPicker/ColorPicker";
 import { useEffect, useState } from "react";
+import { AlertToast } from "../Alerts/AlertToast";
 
 const Note = ({
   item,
@@ -72,7 +73,7 @@ const Note = ({
 
   const archiveNoteConfig = {
     url: `/api/notes/archives/${_id}`,
-    body: { note: { ...item } },
+    body: { note: { ...item, color: singleNoteColor } },
     headers: { headers: { authorization: auth.token } },
   };
 
@@ -83,8 +84,8 @@ const Note = ({
 
   const pinClickHandler = () => {
     pinAction === "pinnedNote"
-      ? alertDispatch({ type: "alertUnPinned" })
-      : alertDispatch({ type: "alertPinned" });
+      ? AlertToast("info", "Note Unpinned")
+      : AlertToast("success", "Note Pinned");
     updateNoteOnServer(updateNoteConfig);
   };
 
@@ -120,17 +121,17 @@ const Note = ({
       },
     };
     updateNoteOnServer(updateLabelsConfig);
+    AlertToast("info", "Label removed from a note");
   };
 
   const delRestoreNoteHandler = () => {
     if (delAction === "del") {
       addToTrashOnServer(delNoteConfig);
       dispatch({ type: "deleteNote", payload: item });
-      alertDispatch({ type: "alertDeleted" });
     } else {
       addNoteOnServer(restoreFromTrashConfig);
       dispatch({ type: "restoreNote", payload: item });
-      alertDispatch({ type: "alertRestored" });
+      AlertToast("info", "Note Restored from trash");
     }
   };
 
@@ -146,10 +147,8 @@ const Note = ({
   const archiveNoteHandler = () => {
     if (archiveAction === "archive") {
       addNoteToArchiveOnServer(archiveNoteConfig);
-      alertDispatch({ type: "alertArchived" });
     } else {
       restoreArchiveFromServer(restoreFromArchiveConfig);
-      alertDispatch({ type: "alertUnArchived" });
     }
   };
 
@@ -205,10 +204,7 @@ const Note = ({
           style={{ color: singleNoteColor ? "black" : "" }}
         />
         {item.labels.length > 0 ? (
-          <div
-            className="note-labels"
-            style={{ backgroundColor: editModal ? "#f0fbff" : singleNoteColor }}
-          >
+          <div className="note-labels">
             {item.labels.map((label, index) => {
               return (
                 <div

@@ -8,7 +8,6 @@ import {
   useTheme,
 } from "../../Context";
 import ButtonSimple from "../UI/Button/ButtonSimple";
-import NoteAlert from "../Alerts/NoteAlert";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import labelIcon from "../../Data/Images/Icons/label.svg";
@@ -18,6 +17,7 @@ import ButtonIcon from "../UI/Button/ButtonIcon";
 import { FilterIconSvg } from "./FilterIconSvg/FilterIconSvg";
 import { AllLabels } from "./AllLabels/AllLabels";
 import { FilterSection } from "./FilterSection/FilterSection";
+import { AlertToast } from "../Alerts/AlertToast";
 
 const NewNote = () => {
   const {
@@ -43,7 +43,7 @@ const NewNote = () => {
   const { newInputTitle, showInput, tempLabels, allLabels } = state;
 
   const {
-    alertState: { emptyNoteError, emptyLabelError, unSavedError },
+    alertState: { unSavedError },
     alertDispatch,
   } = useAlert();
 
@@ -106,14 +106,14 @@ const NewNote = () => {
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
-      alertDispatch({ type: "emptyNoteError" });
+      AlertToast("error", "Input cannot be blank, try again.");
     } else {
       if (editNote) {
         updateNoteOnServer(updateNoteConfig);
         alertDispatch({ type: "alertNoteEdited" });
       } else {
         addNoteOnServer(newNoteConfig);
-        alertDispatch({ type: "alertNewAdded" });
+        AlertToast("success", "New Note added");
       }
     }
     dispatch({ type: "addLabelToAllLabels", payload: tempLabels });
@@ -187,7 +187,7 @@ const NewNote = () => {
   // unsaved alert - save handler
   const unsavedAlertSaveHandler = () => {
     alertDispatch({ type: "noteSavedAlert" });
-    dispatch({ type: "noteSavedAlert" });
+    AlertToast("info", "Note Saved");
     onSubmitHandler();
     setEditModal(false);
   };
@@ -234,22 +234,6 @@ const NewNote = () => {
           backgroundColor: editModal ? "" : noteColor,
         }}
       >
-        {emptyNoteError && (
-          <NoteAlert
-            alert="alert-error"
-            icon="fas fa-exclamation-circle alert-icon"
-            text="Input cannot be blank, try again."
-            dispatchType="hideEmptyNoteError"
-          />
-        )}
-        {emptyLabelError && (
-          <NoteAlert
-            alert="alert-error"
-            icon="fas fa-exclamation-circle alert-icon"
-            text="Label cannot be blank, try again."
-            dispatchType="hideEmptyLabelError"
-          />
-        )}
         {unSavedError && (
           <div className="alert-warning-btn">
             <div className="alert-text">
