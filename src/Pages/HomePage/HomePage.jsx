@@ -84,7 +84,7 @@ const HomePage = () => {
         />
       )}
       <NewNote />
-      <div>
+      <div className="all-notes-container">
         <div className="pinnedNotes">
           {pinnedNotes.length !== 0 ? (
             <div>

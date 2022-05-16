@@ -20,6 +20,7 @@ const NoteLabel = () => {
     <form className="note-label">
       <input
         type="text"
+        autoFocus
         value={label}
         placeholder="Enter label..."
         onChange={(e) => {

@@ -7,14 +7,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: var(--primary-bg);
-  border-right: 1px solid #ddd;
+  background-color: var(--nav-bar);
+  border-right: 1px solid var(--left-nav-outline);
 }
 
 .left-nav-div li {
   display: flex;
   align-items: center;
-  color: var(--text-dark);
+  color: var(--title-color);
   padding: 5px 1rem;
   margin: 8px 0;
   cursor: pointer;
@@ -55,7 +55,7 @@
   color: var(--primary-color);
   padding: 8px 10px;
   border-radius: 50%;
-  margin: 0%;
+  margin: 0;
 }
 
 .activeNav {
@@ -72,19 +72,10 @@
     padding: 5px 0;
     top: 100%;
     transform: translate(0, -100%);
-    box-shadow: 0 -4px 10px var(--modal-shadow);
     z-index: 3;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .bg-white {
-    background-color: var(--primary-bg);
-  }
-
-  .bg-dark {
-    background-color: var(--dark-bg-color);
   }
 
   .left-nav-div ul {

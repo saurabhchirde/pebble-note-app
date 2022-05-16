@@ -3,7 +3,6 @@ import {
   useAuth,
   useAxiosCalls,
   usePebbleNote,
-  useTheme,
 } from "../../../Context";
 import "./EditNoteModal.css";
 import ReactQuill from "react-quill";
@@ -32,7 +31,6 @@ const EditNoteModal = () => {
   } = useAlert();
   const { addNoteOnServer, updateNoteOnServer } = useAxiosCalls();
   const { auth } = useAuth();
-  const { darkTheme } = useTheme();
 
   const newNoteConfig = {
     url: "/api/notes",
@@ -109,7 +107,7 @@ const EditNoteModal = () => {
       setNewNote(initialNoteDetails);
       setShowColor(false);
       setNoteText("");
-      setNoteColor("#f0fbff");
+      setNoteColor("");
     }
   };
 
@@ -120,10 +118,6 @@ const EditNoteModal = () => {
   const hideColorPaletteHandler = () => {
     setShowColor(false);
   };
-
-  const darkThemeEditor = darkTheme
-    ? "text-editor dark-mode-new-note"
-    : "text-editor ";
 
   return (
     <>
@@ -149,7 +143,7 @@ const EditNoteModal = () => {
               value={noteText}
               placeholder="Take a note..."
               onChange={setNoteText}
-              className={darkThemeEditor}
+              className="text-editor"
               style={{ backgroundColor: noteColor }}
             />
           </div>

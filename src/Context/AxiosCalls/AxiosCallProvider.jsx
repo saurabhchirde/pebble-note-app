@@ -98,7 +98,6 @@ const AxiosCallProvider = ({ children }) => {
       //update after adding note
       dispatch({ type: "notesAfterUpdating", payload: res.data.notes });
       showLoader();
-      console.log("after update notes", res.data.notes);
     } catch (error) {
       setAlert(error.response.data.errors);
       showLoader();

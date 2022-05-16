@@ -1,8 +1,5 @@
-import { useTheme } from "../../../Context";
 import "./Footer.css";
 export const Footer = () => {
-  const { darkTheme } = useTheme();
-
   return (
     <div className="footer-body">
       <h3>
@@ -10,7 +7,7 @@ export const Footer = () => {
         <a
           href="https://twitter.com/SaurabhChirde"
           target="_blank"
-          className={darkTheme ? "footer-title-dark" : "footer-title-light"}
+          className="footer-title"
         >
           Saurabh Chirde
         </a>
@@ -19,7 +16,7 @@ export const Footer = () => {
         <a
           href="https://github.com/saurabhchirde/pebble-note-app"
           target="_blank"
-          className={darkTheme ? "footer-title-dark" : "footer-title-light"}
+          className="footer-title"
         >
           Github
         </a>

@@ -4,13 +4,7 @@ import EditNoteModal from "./Components/UI/Modal/EditNoteModal";
 import LeftNavBar from "./Components/UI/Navigation/LeftNavBar";
 import NavBar from "./Components/UI/Navigation/NavBar";
 import BodyWrapper from "./Components/UI/Wrapper/BodyWrapper";
-import {
-  useAnimation,
-  useAuth,
-  useModal,
-  usePebbleNote,
-  useTheme,
-} from "./Context";
+import { useAnimation, useAuth, useModal, usePebbleNote } from "./Context";
 import {
   LandingPage,
   HomePage,
@@ -24,7 +18,6 @@ import Login from "./Components/UI/Modal/Login";
 import Signup from "./Components/UI/Modal/Signup";
 import Mockman from "mockman-js";
 import MobileNavBar from "./Components/UI/Navigation/MobileNavBar";
-import { useEffect } from "react";
 import SignupAlertModal from "./Components/UI/Modal/SignupAlertModal";
 import AlertModal from "./Components/UI/Modal/AlertModal";
 import AnimateLoader from "./Components/Animation/AnimateLoader";
@@ -34,7 +27,6 @@ function App() {
   const { showLogin, showSignup, showSignupAlert, showAlert } = useModal();
   const { loader, loginAnimate } = useAnimation();
   const { editModal } = usePebbleNote();
-  const { darkTheme } = useTheme();
   const { auth } = useAuth();
 
   const location = useLocation();
@@ -42,10 +34,6 @@ function App() {
     location.pathname === "/" || location.pathname === "/mockman"
       ? false
       : true;
-
-  useEffect(() => {
-    localStorage.setItem("darkTheme", JSON.stringify(darkTheme));
-  }, [darkTheme]);
 
   return (
     <>

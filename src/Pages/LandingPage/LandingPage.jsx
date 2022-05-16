@@ -7,9 +7,10 @@ import { useAuth, useModal, useTheme } from "../../Context";
 import ButtonIcon from "../../Components/UI/Button/ButtonIcon";
 import { Footer } from "../../Components/UI/Footer/Footer";
 import { Link } from "react-router-dom";
+import { ThemeToggle } from "../../Components/UI/ThemeToggle/ThemeToggle";
 
 const LandingPage = () => {
-  const { darkTheme, setDarkTheme } = useTheme();
+  const { theme } = useTheme();
   const { setShowLogin, setShowSignup } = useModal();
   const { auth } = useAuth();
 
@@ -23,21 +24,17 @@ const LandingPage = () => {
     setShowSignup(false);
   };
 
-  const onThemeTogglerClick = () => {
-    setDarkTheme((preTheme) => !preTheme);
-  };
-  const themeIcon = darkTheme ? "fa fa-sun" : "fa fa-moon";
-
   return (
     <div className="landing">
-      <>
+      <div>
         <div className="landing-header">
           <img
-            src={darkTheme ? logoLight : logoDark}
+            src={theme === "dark" ? logoLight : logoDark}
             alt="logo"
             className="landing-logo"
           />
           <div className="landing-join-section">
+            <ThemeToggle />
             {!auth.login && (
               <ButtonSimple
                 onClick={joinNowClickHandler}
@@ -53,11 +50,6 @@ const LandingPage = () => {
                 />
               </Link>
             )}
-            {/* <ButtonIcon
-              onClick={onThemeTogglerClick}
-              icon={themeIcon}
-              btnClassName="btn icon-btn-lg"
-            /> */}
           </div>
         </div>
         <div className="landing-body">
@@ -97,7 +89,7 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-      </>
+      </div>
       <Footer />
     </div>
   );

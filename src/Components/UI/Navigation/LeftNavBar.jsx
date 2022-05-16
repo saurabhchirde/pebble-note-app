@@ -7,11 +7,10 @@ import {
   trashIcon,
   userIcon,
 } from "../../../Data/Images/Icons";
-import { useAuth, useModal, useTheme } from "../../../Context";
+import { useAuth, useModal } from "../../../Context";
 import ButtonIcon from "../Button/ButtonIcon";
 
 const LeftNavBar = () => {
-  const { darkTheme } = useTheme();
   const { pathname } = useLocation();
   const { auth, authDispatch } = useAuth();
   const { user } = auth;
@@ -31,12 +30,8 @@ const LeftNavBar = () => {
   const activeTrash = pathname === "/trash" ? "activeNav" : "";
   const activeProfile = pathname === "/profile" ? "activeNav" : "";
 
-  const navBarClass = darkTheme
-    ? "left-nav-div bg-dark"
-    : "left-nav-div bg-white";
-
   return (
-    <div className={navBarClass}>
+    <div className="left-nav-div">
       <ul>
         <Link to="/home">
           <li className={activeHome}>

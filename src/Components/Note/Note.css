@@ -25,12 +25,11 @@
   position: absolute;
   left: 6px;
   top: 4px;
-  color: var(--text-light);
 }
 
 .priority-label {
   padding: 3px 5px;
-  color: var(--text-dark);
+  color: var(--title-color);
   font-size: 0.9rem;
   background-color: var(--primary-color);
   border-radius: 4px;
@@ -39,7 +38,7 @@
 
 .high-priority {
   background-color: var(--primary-color);
-  color: var(--text-white);
+  color: var(--title-color);
 }
 
 .low-priority {
@@ -77,6 +76,8 @@
   z-index: 1;
   word-wrap: break-word;
   box-shadow: 0 2px 4px var(--card-shadow);
+  background-color: transparent;
+  outline: 1px solid var(--text-lighter);
 }
 
 .note-container .new-note-label {
@@ -94,10 +95,6 @@
 .note-text {
   padding: 1rem 6px;
   font-size: 0.9rem;
-}
-
-.dark-mode-card .note-text p {
-  color: var(--primary-color);
 }
 
 .note-text img {
@@ -122,6 +119,30 @@
   padding: 8px;
   border-radius: 50%;
   font-size: 0.9rem;
+}
+
+.note-labels {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 7px 1rem 7px 0.6rem;
+  border-radius: 4px;
+  flex-wrap: wrap;
+  row-gap: 5px;
+}
+
+.note-labels > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 5px;
+}
+
+.note-labels p {
+  background: transparent;
+  margin-right: 8px;
 }
 
 @media screen and (max-width: 760px) {
@@ -151,7 +172,6 @@
 
 @media screen and (max-width: 580px) {
   .note-container {
-    width: 48%;
     margin: 5px auto;
   }
 

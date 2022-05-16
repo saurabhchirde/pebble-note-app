@@ -1,8 +1,13 @@
 .desktop-navigation-bar {
   position: fixed;
   width: 100%;
-  display: hide;
   box-shadow: 0 2px 3px var(--navbar-shadow);
+  background-color: var(--nav-bar);
+}
+
+.desktop-navigation-bar input {
+  background: transparent;
+  color: var(--title-color);
 }
 
 .mobile-navigation-bar {
@@ -17,9 +22,17 @@
   .desktop-navigation-bar {
     display: none;
   }
+
   .mobile-navigation-bar {
     position: fixed;
     width: 100%;
     display: flex;
+    box-shadow: 0 2px 3px var(--navbar-shadow);
+    background-color: var(--nav-bar);
+  }
+
+  .mobile-navigation-bar input {
+    background: transparent;
+    color: var(--title-color);
   }
 }

@@ -8,7 +8,6 @@ import {
   useAxiosCalls,
   useFilter,
   usePebbleNote,
-  useTheme,
 } from "../../Context";
 import archiveIcon from "../../Data/Images/Icons/archive.svg";
 import unarchiveIcon from "../../Data/Images/Icons/unarchive.svg";
@@ -35,7 +34,6 @@ const Note = ({
   } = usePebbleNote();
 
   const { alertDispatch } = useAlert();
-  const { darkTheme } = useTheme();
   const {
     addToTrashOnServer,
     addNoteOnServer,
@@ -54,7 +52,6 @@ const Note = ({
     body: {
       note: {
         ...item,
-        date: new Date(date).toLocaleDateString(),
         color: singleNoteColor,
         pinned: pinAction === "pinnedNote" ? false : true,
       },
@@ -146,9 +143,6 @@ const Note = ({
     setNoteColor(color);
   };
 
-  // yet to implement
-  const optionNoteHandler = () => {};
-
   const archiveNoteHandler = () => {
     if (archiveAction === "archive") {
       addNoteToArchiveOnServer(archiveNoteConfig);
@@ -176,10 +170,6 @@ const Note = ({
 
   const hideDelButton = archiveAction === "restore" ? false : true;
 
-  const darkThemeClass = darkTheme
-    ? "note-container dark-mode-card"
-    : "note-container";
-
   return (
     <>
       <div
@@ -189,8 +179,11 @@ const Note = ({
       <div
         onMouseEnter={showDateToggler}
         onMouseLeave={showDateToggler}
-        className={darkThemeClass}
-        style={{ backgroundColor: singleNoteColor }}
+        className="note-container"
+        style={{
+          backgroundColor: singleNoteColor,
+          color: singleNoteColor ? "black" : "",
+        }}
       >
         <div className="note-top-section">
           {(showDate || showFilter) && <p>{date}</p>}
@@ -202,19 +195,31 @@ const Note = ({
         </div>
         <h2
           className="note-title"
-          style={{ color: darkTheme ? "#0f96df" : "#333" }}
+          style={{ color: singleNoteColor ? "black" : "" }}
         >
           {title}
         </h2>
-        <div className="note-text" dangerouslySetInnerHTML={{ __html: text }} />
+        <div
+          className="note-text"
+          dangerouslySetInnerHTML={{ __html: text }}
+          style={{ color: singleNoteColor ? "black" : "" }}
+        />
         {item.labels.length > 0 ? (
           <div
-            className="new-note-label"
+            className="note-labels"
             style={{ backgroundColor: editModal ? "#f0fbff" : singleNoteColor }}
           >
             {item.labels.map((label, index) => {
               return (
-                <div key={index} className="single-label">
+                <div
+                  key={index}
+                  className="single-label"
+                  style={{
+                    border: singleNoteColor
+                      ? "1px solid #0f6df"
+                      : "1px solid gray",
+                  }}
+                >
                   <li>{label}</li>
                   <i
                     className="fas fa-times"
@@ -270,13 +275,6 @@ const Note = ({
               onClick={editNoteHandler}
               btnClassName="btn icon-btn-sm edit-icon"
               icon="fas fa-edit"
-            />
-          )}
-          {hideEditIcon && (
-            <ButtonIcon
-              onClick={optionNoteHandler}
-              btnClassName="btn icon-btn-sm option-icon"
-              icon="fas fa-ellipsis-v"
             />
           )}
         </div>

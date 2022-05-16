@@ -56,12 +56,12 @@ const TrashPage = () => {
         />
       )}
       <div className="trash-page-title flex-row mg-point6-rt mg-2-bot">
-        <p className="mg-1-rt">
+        <p className="mg-1-lr">
           Trash will be automatically cleared after <strong> 30 days</strong>.
         </p>
         <ButtonSimple
           label="Empty Trash"
-          btnClassName="btn primary-outline-btn-sm"
+          btnClassName="btn primary-outline-btn-md"
           onClick={emptyTrashClickHandler}
         />
       </div>

@@ -2,22 +2,24 @@
   margin: auto;
   width: 80%;
   height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: center;
   padding: 0;
   position: relative;
 }
 
-.landing > button {
+/* .landing > button {
   bottom: 1rem;
   font-size: 5rem;
-}
+} */
 
 .landing-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: auto auto 2rem;
-  padding: 0 2rem;
 }
 
 .landing-header img {
@@ -28,11 +30,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 12rem;
 }
 
-.landing-join-section button:nth-child(1) {
-  width: 100%;
+.landing-theme-toggle {
+  margin: 0;
+  margin-right: 1rem;
 }
 
 .landing-body {
