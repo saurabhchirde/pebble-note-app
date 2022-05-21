@@ -1,13 +1,12 @@
-import note_taking from "../../Data/Images/Animation/note_taking.svg";
-import ButtonSimple from "../../Components/UI/Button/ButtonSimple";
+import note_taking from "Data/Images/Animation/note_taking.svg";
+import ButtonSimple from "Components/UI/Button/ButtonSimple";
 import "./LandingPage.css";
-import logoLight from "../../Data/Images/Logo/logo-light.svg";
-import logoDark from "../../Data/Images/Logo/logo-dark.svg";
-import { useAuth, useModal, useTheme } from "../../Context";
-import ButtonIcon from "../../Components/UI/Button/ButtonIcon";
-import { Footer } from "../../Components/UI/Footer/Footer";
+import logoLight from "Data/Images/Logo/logo-light.svg";
+import logoDark from "Data/Images/Logo/logo-dark.svg";
+import { useAuth, useModal, useTheme } from "Context";
+import { Footer } from "Components/UI/Footer/Footer";
 import { Link } from "react-router-dom";
-import { ThemeToggle } from "../../Components/UI/ThemeToggle/ThemeToggle";
+import { ThemeToggle } from "Components/UI/ThemeToggle/ThemeToggle";
 
 const LandingPage = () => {
   const { theme } = useTheme();

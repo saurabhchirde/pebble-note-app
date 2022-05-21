@@ -1,7 +1,8 @@
-import { useAuth, useModal, usePebbleNote } from "../../Context";
+import { useAuth, usePebbleNote } from "Context";
 import "./ProfilePage.css";
-import Button from "../../Components/UI/Button/Button";
+import Button from "Components/UI/Button/Button";
 import { useNavigate } from "react-router-dom";
+import { AlertToast } from "Components/Alerts/AlertToast";
 
 const ProfilePage = () => {
   const {
@@ -13,12 +14,10 @@ const ProfilePage = () => {
   const {
     state: { deletedNotes, allNotes, archivedNotes },
   } = usePebbleNote();
-  const { setAlert, setShowAlert } = useModal();
   const navigate = useNavigate();
 
   const logOutHandler = () => {
-    setAlert("Your have been logged out");
-    setShowAlert(true);
+    AlertToast("info", "Your have been logged out");
     navigate("/");
     authDispatch({ type: "logout" });
   };

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import loader from "../../Data/Images/Animation/loader.json";
+import loader from "Data/Images/Animation/loader.json";
 import lottie from "lottie-web";
 import "./Animation.css";
 

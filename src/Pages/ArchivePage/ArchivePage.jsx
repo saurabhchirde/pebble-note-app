@@ -1,8 +1,8 @@
-import Note from "../../Components/Note/Note";
-import { usePebbleNote } from "../../Context";
+import Note from "Components/Note/Note";
+import { usePebbleNote } from "Context";
 import { useEffect } from "react";
 import "./ArchivePage.css";
-import archiveIcon from "../../Data/Images/Icons/archive.svg";
+import archiveIcon from "Data/Images/Icons/archive.svg";
 
 const ArchivePage = () => {
   const { state } = usePebbleNote();

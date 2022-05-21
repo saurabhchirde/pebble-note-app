@@ -1,9 +1,4 @@
-import {
-  useAlert,
-  useAuth,
-  useAxiosCalls,
-  usePebbleNote,
-} from "../../../Context";
+import { useAlert, useAuth, useAxiosCalls, usePebbleNote } from "Context";
 import "./EditNoteModal.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";

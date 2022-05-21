@@ -1,16 +1,10 @@
 import "./Note.css";
-import pin1 from "../../Data/Images/Icons/pin1.svg";
-import pin2 from "../../Data/Images/Icons/pin2.svg";
+import pin1 from "Data/Images/Icons/pin1.svg";
+import pin2 from "Data/Images/Icons/pin2.svg";
 import ButtonIcon from "../UI/Button/ButtonIcon";
-import {
-  useAlert,
-  useAuth,
-  useAxiosCalls,
-  useFilter,
-  usePebbleNote,
-} from "../../Context";
-import archiveIcon from "../../Data/Images/Icons/archive.svg";
-import unarchiveIcon from "../../Data/Images/Icons/unarchive.svg";
+import { useAuth, useAxiosCalls, useFilter, usePebbleNote } from "Context";
+import archiveIcon from "Data/Images/Icons/archive.svg";
+import unarchiveIcon from "Data/Images/Icons/unarchive.svg";
 import ColorPicker from "../UI/ColorPicker/ColorPicker";
 import { useEffect, useState } from "react";
 import { AlertToast } from "../Alerts/AlertToast";
@@ -30,11 +24,9 @@ const Note = ({
     setNoteText,
     setNoteColor,
     setEditNote,
-    editModal,
     setEditModal,
   } = usePebbleNote();
 
-  const { alertDispatch } = useAlert();
   const {
     addToTrashOnServer,
     addNoteOnServer,

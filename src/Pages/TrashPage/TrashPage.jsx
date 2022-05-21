@@ -1,9 +1,9 @@
-import Note from "../../Components/Note/Note";
-import { usePebbleNote } from "../../Context";
+import Note from "Components/Note/Note";
+import { usePebbleNote } from "Context";
 import { useEffect } from "react";
-import ButtonSimple from "../../Components/UI/Button/ButtonSimple";
+import ButtonSimple from "Components/UI/Button/ButtonSimple";
 import "./TrashPage.css";
-import { AlertToast } from "../../Components/Alerts/AlertToast";
+import { AlertToast } from "Components/Alerts/AlertToast";
 
 const TrashPage = () => {
   const { state, dispatch } = usePebbleNote();

@@ -7,9 +7,9 @@ import {
 } from "react";
 import { noteReducer } from "./noteReducer";
 import { useAuth } from "../Auth/AuthProvider";
-import { useModal } from "../Modal/ModalProvider";
 import axios from "axios";
 import moment from "moment";
+import { AlertToast } from "Components/Alerts/AlertToast";
 
 const initialState = {
   deletedNotes: [],
@@ -27,7 +27,7 @@ const initialNoteDetails = {
   pinned: false,
   labels: [],
   date: moment(new Date()).format("DD-MM-YYYY"),
-  priority: "Low",
+  priority: "Select",
 };
 
 const noteContext = createContext(initialState);
@@ -43,7 +43,6 @@ const NoteProvider = ({ children }) => {
   const [label, setLabel] = useState("");
   const [editModal, setEditModal] = useState(false);
   const { auth } = useAuth();
-  const { setAlert, setShowAlert } = useModal();
 
   useEffect(() => {
     if (auth.login) {
@@ -57,15 +56,14 @@ const NoteProvider = ({ children }) => {
             payload: res.data.notes,
           });
         } catch (error) {
-          setAlert(error.response.data.errors);
-          setShowAlert(true);
+          AlertToast("error", error.response.data.errors);
         }
       };
       fetchData();
     } else {
       dispatch({ type: "emptyAllNotes" });
     }
-  }, [auth.login, auth.token, dispatch, setAlert, setShowAlert]);
+  }, [auth.login, auth.token, dispatch]);
 
   return (
     <noteContext.Provider

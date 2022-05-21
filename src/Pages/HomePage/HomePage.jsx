@@ -1,9 +1,9 @@
-import Note from "../../Components/Note/Note";
-import NewNote from "../../Components/NewNote/NewNote";
-import { useAlert, useFilter, usePebbleNote } from "../../Context";
+import Note from "Components/Note/Note";
+import NewNote from "Components/NewNote/NewNote";
+import { useAlert, useFilter, usePebbleNote } from "Context";
 import "./HomePage.css";
-import NoteAlert from "../../Components/Alerts/NoteAlert";
-import { finalFilteredData } from "../../Utils/finalFilteredData";
+import NoteAlert from "Components/Alerts/NoteAlert";
+import { finalFilteredData } from "Utils/finalFilteredData";
 import { useEffect } from "react";
 
 const HomePage = () => {

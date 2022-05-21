@@ -3,16 +3,25 @@ import axios from "axios";
 import { useModal, useAuth, usePebbleNote } from "../index";
 import { useNavigate } from "react-router-dom";
 import { useAnimation } from "../Animation/AnimationProvider";
-import { AlertToast } from "../../Components/Alerts/AlertToast";
+import { AlertToast } from "Components/Alerts/AlertToast";
+import Login from "Components/UI/Modal/Login";
+import Signup from "Components/UI/Modal/Signup";
+import SignupAlertModal from "Components/UI/Modal/SignupAlertModal";
+import EditNoteModal from "Components/UI/Modal/EditNoteModal";
 
 const axiosContext = createContext(null);
 
 const AxiosCallProvider = ({ children }) => {
-  const { dispatch } = usePebbleNote();
+  const { dispatch, editModal } = usePebbleNote();
   const { showLoader } = useAnimation();
 
-  const { setAlert, setShowAlert, setShowLogin, setShowSignupAlert } =
-    useModal();
+  const {
+    showLogin,
+    showSignup,
+    showSignupAlert,
+    setShowLogin,
+    setShowSignupAlert,
+  } = useModal();
   const { authDispatch } = useAuth();
   const navigate = useNavigate();
 
@@ -24,7 +33,8 @@ const AxiosCallProvider = ({ children }) => {
       showLoader();
       const response = await axios.post(url, data);
       if (response.status === 200) {
-        setAlert(
+        AlertToast(
+          "success",
           `Welcome back ${response.data.foundUser.firstName} ${response.data.foundUser.lastName}`
         );
         //save login credentials
@@ -39,7 +49,6 @@ const AxiosCallProvider = ({ children }) => {
         });
 
         showLoader();
-        setShowAlert(true);
         setShowLogin(false);
         navigate("/home");
       }
@@ -79,7 +88,6 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.post(url, body, headers);
       //update after adding note
       dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
-
       showLoader();
     } catch (error) {
       AlertToast("error", error.response.data.errors);
@@ -165,6 +173,10 @@ const AxiosCallProvider = ({ children }) => {
         restoreArchiveFromServer,
       }}
     >
+      {showLogin && <Login />}
+      {showSignup && <Signup />}
+      {showSignupAlert && <SignupAlertModal />}
+      {editModal && <EditNoteModal />}
       {children}
     </axiosContext.Provider>
   );

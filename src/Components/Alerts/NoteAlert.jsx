@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAlert } from "../../Context";
+import { useAlert } from "Context";
 
 const NoteAlert = (props) => {
   const { alertDispatch } = useAlert();

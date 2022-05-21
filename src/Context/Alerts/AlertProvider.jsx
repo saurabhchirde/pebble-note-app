@@ -4,19 +4,8 @@ import { alertReducer } from "./alertReducer";
 const alertContext = createContext(null);
 
 const alertInitialState = {
-  emptyNoteError: false,
-  emptyLabelError: false,
   unSavedError: false,
-  showIcon: true,
-  archivedNote: false,
-  errorMsgForEmptyTrash: false,
-  noteAddedAlert: false,
-  noteEditedAlert: false,
   noteDiscardAlert: false,
-  noteDeletedAlert: false,
-  noteRestoredAlert: false,
-  noteArchiveAlert: false,
-  noteUnarchiveAlert: false,
 };
 
 const AlertProvider = ({ children }) => {

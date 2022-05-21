@@ -48,6 +48,7 @@
 .user h2 {
   font-size: 0.9rem;
   margin-left: 8px;
+  font-weight: 500;
 }
 
 .user button {

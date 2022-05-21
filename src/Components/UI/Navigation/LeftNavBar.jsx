@@ -1,26 +1,20 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./LeftNavBar.css";
-import noteIcon from "../../../Data/Images/Logo/logo-icon.svg";
-import {
-  archiveIcon,
-  labelIcon,
-  trashIcon,
-  userIcon,
-} from "../../../Data/Images/Icons";
-import { useAuth, useModal } from "../../../Context";
+import noteIcon from "Data/Images/Logo/logo-icon.svg";
+import { archiveIcon, labelIcon, trashIcon, userIcon } from "Data/Images/Icons";
+import { useAuth } from "Context";
 import ButtonIcon from "../Button/ButtonIcon";
+import { AlertToast } from "../../Alerts/AlertToast";
 
 const LeftNavBar = () => {
   const { pathname } = useLocation();
   const { auth, authDispatch } = useAuth();
   const { user } = auth;
-  const { setAlert, setShowAlert } = useModal();
   const navigate = useNavigate();
 
   const logOutClickHandler = () => {
     authDispatch({ type: "logout" });
-    setAlert("Logout Successfully");
-    setShowAlert(true);
+    AlertToast("info", "Logout Successfully");
     navigate("/");
   };
 

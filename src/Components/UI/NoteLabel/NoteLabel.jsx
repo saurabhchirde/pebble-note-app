@@ -1,4 +1,4 @@
-import { usePebbleNote } from "../../../Context";
+import { usePebbleNote } from "Context";
 import { AlertToast } from "../../Alerts/AlertToast";
 import ButtonSimple from "../Button/ButtonSimple";
 import "./NoteLabel.css";

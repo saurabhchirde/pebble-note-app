@@ -1,8 +1,9 @@
 import Button from "../Button/Button";
 import "./Signup.css";
 import InputTypeOne from "../Input/InputTypeOne";
-import { useAxiosCalls, useModal } from "../../../Context";
+import { useAxiosCalls, useModal } from "Context";
 import { useState } from "react";
+import { AlertToast } from "../../Alerts/AlertToast";
 
 const initialSignupState = {
   firstName: "",
@@ -12,9 +13,10 @@ const initialSignupState = {
 };
 
 const Signup = () => {
-  const { setShowLogin, setShowSignup, setAlert, setShowAlert } = useModal();
+  const { setShowLogin, setShowSignup } = useModal();
   const [user, setUser] = useState(initialSignupState);
   const { userSignup } = useAxiosCalls();
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const signupConfig = {
     url: "/api/auth/signup",
@@ -28,22 +30,28 @@ const Signup = () => {
 
   const onSignupFormSubmitHandler = (e) => {
     e.preventDefault();
-    if (
-      user.password.match(passwordValidate) &&
-      user.email.match(emailValidate)
-    ) {
-      userSignup(signupConfig);
-      setShowSignup(false);
-      setUser(initialSignupState);
+    if (user.email.trim() === "") {
+      AlertToast("error", "Enter valid email");
     } else {
-      setAlert(
-        "Minimum 8 char, 1 Uppercase, 1 Lowercase, 1 number & 1 Special Character required"
-      );
-      setShowAlert(true);
+      if (
+        user.password.match(passwordValidate) &&
+        user.email.match(emailValidate)
+      ) {
+        if (user.password === confirmPassword) {
+          userSignup(signupConfig);
+          setShowSignup(false);
+          setUser(initialSignupState);
+        } else {
+          AlertToast("error", "Password Mismatched");
+          setConfirmPassword("");
+        }
+      } else {
+        AlertToast(
+          "error",
+          "Password should be, Minimum 8 char, 1 Uppercase, 1 Lowercase, 1 number & 1 Special Character"
+        );
+      }
     }
-    userSignup(signupConfig);
-    setShowSignup(false);
-    setUser(initialSignupState);
   };
 
   const onInputChangeHandler = (e) => {
@@ -56,6 +64,10 @@ const Signup = () => {
         [name]: value,
       };
     });
+  };
+
+  const onConfirmPasswordHandler = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
   const onCloseClick = () => {
@@ -111,7 +123,7 @@ const Signup = () => {
           />
           <InputTypeOne
             label="Password *"
-            type="text"
+            type="password"
             name="password"
             required="required"
             autoComplete="current-password"
@@ -120,17 +132,24 @@ const Signup = () => {
             onChange={onInputChangeHandler}
             value={user.password}
           />
+          <InputTypeOne
+            label="Confirm Password *"
+            type="text"
+            required="required"
+            placeholder="Confirm password"
+            inputWrapper="outline-password-input"
+            onChange={onConfirmPasswordHandler}
+            value={confirmPassword}
+          />
           <p>
             By continuing you agree to our Terms of Service and
-            <span>
-              <a href=""> Privacy Policy</a>
-            </span>
+            <span className="signup-policy">Privacy Policy</span>
           </p>
           <Button
             btnWrapper="signup-btn"
             type="submit"
             btnClassName="btn primary-btn-md"
-            label=" Sign Up"
+            label="Sign Up"
           />
           <a className="existing-account-btn" onClick={onLoginClick}>
             <h2>

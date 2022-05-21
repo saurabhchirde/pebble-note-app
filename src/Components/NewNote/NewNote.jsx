@@ -6,11 +6,11 @@ import {
   useFilter,
   usePebbleNote,
   useTheme,
-} from "../../Context";
+} from "Context";
 import ButtonSimple from "../UI/Button/ButtonSimple";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import labelIcon from "../../Data/Images/Icons/label.svg";
+import labelIcon from "Data/Images/Icons/label.svg";
 import ColorPicker from "../UI/ColorPicker/ColorPicker";
 import NoteLabel from "../UI/NoteLabel/NoteLabel";
 import ButtonIcon from "../UI/Button/ButtonIcon";

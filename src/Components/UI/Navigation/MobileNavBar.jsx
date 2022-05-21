@@ -1,5 +1,5 @@
 import SearchBar from "../SearchBar/SearchBar";
-import logoIcon from "../../../Data/Images/Logo/logo-icon.svg";
+import logoIcon from "Data/Images/Logo/logo-icon.svg";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 
 const MobileNavBar = () => {

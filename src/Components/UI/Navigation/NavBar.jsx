@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import logo_light from "../../../Data/Images/Logo/logo-light.svg";
-import logo_dark from "../../../Data/Images/Logo/logo-dark.svg";
+import logo_light from "Data/Images/Logo/logo-light.svg";
+import logo_dark from "Data/Images/Logo/logo-dark.svg";
 import SearchBar from "../SearchBar/SearchBar";
 import "./NavBar.css";
-import { useTheme } from "../../../Context/ThemeProvider/ThemeProvider";
-import { useFilter } from "../../../Context";
+import { useTheme } from "Context/ThemeProvider/ThemeProvider";
+import { useFilter } from "Context";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 
 const NavBar = () => {

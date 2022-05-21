@@ -1,4 +1,4 @@
-import { useTheme } from "../../../Context/ThemeProvider/ThemeProvider";
+import { useTheme } from "Context/ThemeProvider/ThemeProvider";
 import "./ThemeToggle.css";
 
 export const ThemeToggle = () => {
