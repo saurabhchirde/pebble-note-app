@@ -71,7 +71,7 @@ const LandingPage = () => {
                 <li>Share notes</li>
                 <li>Change Background Color</li>
                 <li>Add Labels</li>
-                <li>Filtering and Sorting</li>
+                <li>Filter and Sorting</li>
               </ul>
             </div>
             <div className="landing-nav-btn">
