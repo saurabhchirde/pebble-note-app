@@ -68,7 +68,7 @@ const LandingPage = () => {
             <div className="landing-body-features">
               <h3>Features</h3>
               <ul className="list-basic list-style-circle">
-                <li>Share notes</li>
+                <li>Priority Option</li>
                 <li>Change Background Color</li>
                 <li>Add Labels</li>
                 <li>Filter and Sorting</li>
