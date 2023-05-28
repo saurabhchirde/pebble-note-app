@@ -8,7 +8,7 @@
   padding: 1rem 10px;
   z-index: 2;
   display: flex;
-  top: -0.6rem;
+  right: 5.2rem;
   margin-left: 1rem;
   align-items: center;
   border: 1px solid var(--primary-color);
@@ -22,4 +22,5 @@
   border-top: none;
   border-left: none;
   border-right: none;
+  outline: none;
 }

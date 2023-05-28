@@ -1,14 +1,18 @@
 .new-note-main-container {
   width: 80%;
-  margin: auto;
+  margin: 1rem auto;
+  background-color: transparent;
+  border-radius: 4px;
 }
 
 .new-note-input {
-  border-radius: 4px;
   padding: 5px 1rem;
-  margin: 1rem auto 5px;
+  margin: auto;
   height: auto;
   z-index: 1;
+  outline: 1px solid var(--text-lighter);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px var(--card-shadow);
 }
 
 .new-note-top-section {
@@ -16,7 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 2.5rem;
+  height: 2.5rem;
 }
 
 .new-note-top-section > input {
@@ -25,15 +29,8 @@
   font-weight: 500;
   font-size: 1.1rem;
   padding: 3px 0;
-  color: var(--text-dark);
-}
-
-.new-note-icons {
-  font-size: 1.3rem;
-  color: rgb(103, 103, 103);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: var(--title-color);
+  background: transparent;
 }
 
 .new-note-icons i {
@@ -52,13 +49,11 @@
   flex-direction: column;
   align-items: center;
   font-size: 1rem;
-  border: 1px solid var(--primary-color);
   border-radius: 4px;
 }
 
-.dark-mode-new-note .rich-text-editor p {
+.rich-text-editor p {
   background-color: transparent;
-  color: var(--primary-color);
 }
 
 .rich-text-editor p .text-editor {
@@ -87,6 +82,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
 }
 
 .ql-toolbar.ql-snow {
@@ -114,7 +110,6 @@
 
 .ql-snow.ql-toolbar button {
   border-radius: 4px;
-  color: var(--text-dark);
 }
 
 .ql-snow.ql-toolbar button:hover {
@@ -125,7 +120,7 @@
   background-color: var(--btn-hover);
 }
 
-.dark-mode-new-note .ql-snow.ql-toolbar button.ql-active {
+.ql-snow.ql-toolbar button.ql-active {
   background-color: var(--btn-hover);
 }
 
@@ -153,45 +148,20 @@
   background-color: var(--btn-hover);
 }
 
-.ql-snow .ql-fill,
-.ql-snow .ql-stroke.ql-fill {
-  fill: var(--text-dark);
-}
-
 .ql-toolbar .ql-fill {
   stroke: none;
 }
 
 .ql-editor.ql-blank::before {
-  color: var(--primary-color);
-}
-
-.dark-mode-new-note .ql-editor.ql-blank::before {
   color: var(--text-lighter);
 }
 
 .ql-toolbar .ql-stroke {
   fill: none;
-  stroke: var(--primary-color);
 }
 
-.dark-mode-new-note .ql-toolbar .ql-stroke {
+.ql-toolbar .ql-stroke {
   fill: none;
-  stroke: var(--primary-color);
-}
-
-.ql-toolbar .ql-picker {
-  color: var(--primary-color);
-}
-
-.ql-snow .ql-fill,
-.ql-snow .ql-stroke.ql-fill {
-  fill: var(--primary-color);
-}
-
-.dark-mode-new-note .ql-snow .ql-fill,
-.dark-mode-new-note .ql-snow .ql-stroke.ql-fill {
-  fill: var(--primary-color);
 }
 
 .new-note-bottom-section {
@@ -209,7 +179,7 @@
 
 .note-nav-btn-left {
   position: relative;
-  width: 70%;
+  width: 20rem;
 }
 
 .note-nav-btn-left h2 {
@@ -218,7 +188,6 @@
   margin-left: 1rem;
   text-align: center;
   background: transparent;
-  color: var(--text-dark);
 }
 
 .note-nav-btn-left > button {
@@ -247,7 +216,6 @@
 .new-note-bottom-section-icons i {
   padding: 0.6rem;
   font-size: 0.9rem;
-  color: rgb(79, 79, 79);
   flex-wrap: wrap;
 }
 
@@ -268,10 +236,10 @@
   align-items: center;
   justify-content: flex-start;
   padding: 7px 1rem 7px 0.6rem;
-  color: var(--text-dark);
   border-radius: 4px;
   flex-wrap: wrap;
   row-gap: 5px;
+  margin: 10px 0;
 }
 
 .new-note-label > div {
@@ -283,7 +251,6 @@
 
 .new-note-label p {
   background: transparent;
-  color: var(--text-dark);
   margin-right: 8px;
 }
 
@@ -296,7 +263,6 @@
 .set-priority p {
   margin-right: 5px;
   background-color: transparent;
-  color: var(--text-dark);
 }
 
 .set-priority select {
@@ -313,15 +279,16 @@
   position: sticky;
   min-height: 2.5rem;
   z-index: 3;
-  margin: 6px auto 1rem;
+  margin: 10px auto 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 5px 3px;
+  box-shadow: 0 2px 4px var(--card-shadow);
 }
 
-.dark-mode-new-note .new-note-label {
-  border: 1px solid var(--primary-color);
+.new-note-label {
+  outline: 1px solid var(--text-lighter);
 }
 
 .filter-section p {
@@ -331,6 +298,9 @@
 select {
   min-width: 2.5rem;
   height: 1.5rem;
+  background: transparent;
+  color: var(--title-color);
+  border-radius: 4px;
 }
 
 .single-label {
@@ -341,8 +311,7 @@ select {
   padding: 1px 2px 1px 5px;
   margin: 0 2px;
   font-size: 0.9rem;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
+  border: 1px solid var(--title-color);
   border-radius: 4px;
 }
 
@@ -355,6 +324,15 @@ select {
 .alert-error,
 .alert-warning-btn {
   margin-left: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .new-note-main-container {
+    width: 95%;
+    margin: 1rem auto;
+    background-color: transparent;
+    border-radius: 4px;
+  }
 }
 
 @media screen and (max-width: 760px) {

@@ -1,4 +1,5 @@
-import { useAuth, useAxiosCalls, useModal } from "../../../Context";
+import { useAuth, useAxiosCalls, useModal } from "Context";
+import { AlertToast } from "../../Alerts/AlertToast";
 import Button from "../Button/Button";
 import InputTypeOne from "../Input/InputTypeOne";
 import "./Login.css";
@@ -6,7 +7,7 @@ import "./Login.css";
 const Login = () => {
   const { loginInput, setLoginInput } = useAuth();
 
-  const { setShowLogin, setShowSignup, setAlert, setShowAlert } = useModal();
+  const { setShowLogin, setShowSignup } = useModal();
   const { userLogin } = useAxiosCalls();
 
   const loginConfig = {
@@ -18,15 +19,14 @@ const Login = () => {
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const onLoginFormHandler = () => {
-    if (loginInput.email === "" || loginInput.password === "") {
-      setAlert("Input cannot be blank, try again");
-      setShowAlert(true);
+    if (loginInput.email.trim() === "") {
+      AlertToast("error", "Input cannot be blank, try again");
     } else {
       if (loginInput.email.match(emailValidate)) {
         userLogin(loginConfig);
+        setLoginInput({ email: "", password: "" });
       } else {
-        setAlert("Entered email is wrong, please try again");
-        setShowAlert(true);
+        AlertToast("error", "Entered email is wrong, please try again");
       }
     }
   };
@@ -48,11 +48,14 @@ const Login = () => {
   };
 
   const onTestButtonClickFormHandler = () => {
-    setLoginInput({
-      email: "test@gmail.com",
-      password: "test@123",
-    });
-    userLogin(loginConfig);
+    const testConfig = {
+      url: "/api/auth/login",
+      data: {
+        email: "test@gmail.com",
+        password: "test@123",
+      },
+    };
+    userLogin(testConfig);
   };
 
   return (
@@ -106,31 +109,30 @@ const Login = () => {
             btnClassName="btn primary-btn-md"
             onClick={onLoginFormHandler}
           />
-          <Button
-            btnWrapper="signin-btn"
-            type="submit"
-            label="Test User"
-            btnClassName="btn primary-outline-btn-md"
-            onClick={onTestButtonClickFormHandler}
-          />
-          <p>
-            Forgot your password?{" "}
-            <span>
-              <a> Reset Password </a>
-            </span>
-          </p>
-          <a
-            className="create-account-btn"
-            onClick={() => {
-              setShowLogin(false);
-              setShowSignup(true);
-            }}
-          >
-            <h2>
-              Create New Account <i className="fas fa-angle-right"></i>
-            </h2>
-          </a>
         </form>
+        <Button
+          btnWrapper="signin-btn test-button"
+          label="Test User"
+          btnClassName="btn primary-outline-btn-md"
+          onClick={onTestButtonClickFormHandler}
+        />
+        <p>
+          Forgot your password?
+          <span>
+            <a> Reset Password </a>
+          </span>
+        </p>
+        <a
+          className="create-account-btn"
+          onClick={() => {
+            setShowLogin(false);
+            setShowSignup(true);
+          }}
+        >
+          <h2>
+            Create New Account <i className="fas fa-angle-right"></i>
+          </h2>
+        </a>
       </div>
     </>
   );

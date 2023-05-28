@@ -1,15 +1,15 @@
-import { useAlert, usePebbleNote } from "../../../Context";
+import { usePebbleNote } from "Context";
+import { AlertToast } from "../../Alerts/AlertToast";
 import ButtonSimple from "../Button/ButtonSimple";
 import "./NoteLabel.css";
 
 const NoteLabel = () => {
   const { label, setLabel, dispatch } = usePebbleNote();
-  const { alertDispatch } = useAlert();
 
   const submitLabel = (e) => {
     e.preventDefault();
     if (label.trim() === "") {
-      alertDispatch({ type: "emptyLabelError" });
+      AlertToast("error", "Label cannot be blank, try again.");
     } else {
       dispatch({ type: "addLabelToNote", payload: label });
     }
@@ -20,6 +20,7 @@ const NoteLabel = () => {
     <form className="note-label">
       <input
         type="text"
+        autoFocus
         value={label}
         placeholder="Enter label..."
         onChange={(e) => {
@@ -34,4 +35,5 @@ const NoteLabel = () => {
     </form>
   );
 };
+
 export default NoteLabel;

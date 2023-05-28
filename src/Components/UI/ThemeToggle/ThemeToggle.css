@@ -1,0 +1,56 @@
+.theme-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin: 0.7rem 0;
+  padding: 5px 10px;
+}
+
+.theme-toggle i {
+  color: var(--title-color);
+  font-size: 1.2rem;
+  padding: 6px;
+}
+
+.theme-toggle h2 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-left: 0.9rem;
+}
+
+.theme-toggle:hover p {
+  display: flex;
+}
+
+.theme-title-desktop {
+  display: flex;
+}
+
+.theme-title-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .theme-toggle {
+    right: 0;
+    top: 0;
+  }
+  .theme-title-desktop {
+    display: none;
+  }
+
+  .theme-title-mobile {
+    display: flex;
+  }
+
+  .theme-toggle i {
+    font-size: 1.2rem;
+    padding: 6px;
+  }
+
+  .theme-toggle h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 0;
+  }
+}

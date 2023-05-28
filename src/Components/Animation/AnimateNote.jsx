@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import loader from "../../Data/Images/Animation/loader.json";
+import loader from "Data/Images/Animation/loader.json";
 import lottie from "lottie-web";
-import { useAnimation } from "../../Context/Animation/AnimationProvider";
+import { useAnimation } from "Context/Animation/AnimationProvider";
 import "./Animation.css";
 
 const AnimateNote = () => {

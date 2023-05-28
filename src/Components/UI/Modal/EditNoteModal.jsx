@@ -1,15 +1,9 @@
-import {
-  useAlert,
-  useAuth,
-  useAxiosCalls,
-  usePebbleNote,
-  useTheme,
-} from "../../../Context";
+import { useAlert, useAuth, useAxiosCalls, usePebbleNote } from "Context";
 import "./EditNoteModal.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import labelIcon from "../../../Data/Images/Icons/label.svg";
 import ColorPicker from "../ColorPicker/ColorPicker";
+import { AlertToast } from "../../Alerts/AlertToast";
 
 const EditNoteModal = () => {
   const {
@@ -32,7 +26,6 @@ const EditNoteModal = () => {
   } = useAlert();
   const { addNoteOnServer, updateNoteOnServer } = useAxiosCalls();
   const { auth } = useAuth();
-  const { darkTheme } = useTheme();
 
   const newNoteConfig = {
     url: "/api/notes",
@@ -77,7 +70,7 @@ const EditNoteModal = () => {
       alertDispatch({ type: "hideInputWithData" });
     }
     setShowColor(false);
-    setNoteColor("#f0fbff");
+    setNoteColor("");
   };
 
   const onChangeHandler = (e) => {
@@ -94,36 +87,30 @@ const EditNoteModal = () => {
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
-      alertDispatch({ type: "emptyNoteError" });
+      AlertToast("error", "Input cannot be blank, try again.");
       setEditModal(true);
     } else {
       if (editNote) {
         updateNoteOnServer(updateNoteConfig);
-        alertDispatch({ type: "alertNoteEdited" });
       } else {
         addNoteOnServer(newNoteConfig);
-        alertDispatch({ type: "alertNewAdded" });
       }
       setEditNote(false);
       setEditModal(false);
       setNewNote(initialNoteDetails);
       setShowColor(false);
       setNoteText("");
-      setNoteColor("#f0fbff");
+      setNoteColor("");
     }
   };
 
   const showColorPaletteHandler = () => {
-    setShowColor(true);
+    setShowColor((show) => !show);
   };
 
   const hideColorPaletteHandler = () => {
     setShowColor(false);
   };
-
-  const darkThemeEditor = darkTheme
-    ? "text-editor dark-mode-new-note"
-    : "text-editor ";
 
   return (
     <>
@@ -133,6 +120,7 @@ const EditNoteModal = () => {
           <i className="fas fa-times"></i>
         </a>
         <div className="edit-modal mg-1-top">
+          <p className="mg-point6-bot">Title</p>
           <div className="edit-title">
             <input
               onChange={onChangeHandler}
@@ -149,21 +137,20 @@ const EditNoteModal = () => {
               value={noteText}
               placeholder="Take a note..."
               onChange={setNoteText}
-              className={darkThemeEditor}
+              className="text-editor"
               style={{ backgroundColor: noteColor }}
             />
           </div>
           <div className="note-nav-btn-left">
             <div onMouseLeave={hideColorPaletteHandler}>
               <button
-                onMouseEnter={showColorPaletteHandler}
+                onClick={showColorPaletteHandler}
                 className="btn icon-btn-md"
               >
                 <i className="fas fa-palette"></i>
               </button>
               {showColor && <ColorPicker setter={setNoteColor} />}
             </div>
-            <img src={labelIcon} alt="label-icon" className="nav-icons" />
           </div>
           <div className="signin-btn edit-modal-btn">
             <button

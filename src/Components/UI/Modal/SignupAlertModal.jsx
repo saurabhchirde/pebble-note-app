@@ -1,4 +1,4 @@
-import { useModal } from "../../../Context";
+import { useModal } from "Context";
 import "./SignupAlertModal.css";
 import Button from "../Button/Button";
 

@@ -1,14 +1,23 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const themeContext = createContext(null);
 
 const ThemeProvider = ({ children }) => {
-  const [darkTheme, setDarkTheme] = useState(
-    JSON.parse(localStorage.getItem("darkTheme")) ?? false
+  const [theme, setTheme] = useState(
+    localStorage.getItem("data-pebbleNote-theme") ?? "light"
   );
 
+  useEffect(() => {
+    document.documentElement.setAttribute("data-pebbleNote-theme", theme);
+    localStorage.setItem("data-pebbleNote-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((preTheme) => (preTheme === "light" ? "dark" : "light"));
+  };
+
   return (
-    <themeContext.Provider value={{ darkTheme, setDarkTheme }}>
+    <themeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </themeContext.Provider>
   );

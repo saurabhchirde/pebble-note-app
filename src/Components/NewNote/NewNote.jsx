@@ -6,16 +6,18 @@ import {
   useFilter,
   usePebbleNote,
   useTheme,
-} from "../../Context";
+} from "Context";
 import ButtonSimple from "../UI/Button/ButtonSimple";
-import NoteAlert from "../Alerts/NoteAlert";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import labelIcon from "../../Data/Images/Icons/label.svg";
-import filterIcon from "../../Data/Images/Icons/filter.svg";
+import labelIcon from "Data/Images/Icons/label.svg";
 import ColorPicker from "../UI/ColorPicker/ColorPicker";
 import NoteLabel from "../UI/NoteLabel/NoteLabel";
 import ButtonIcon from "../UI/Button/ButtonIcon";
+import { FilterIconSvg } from "./FilterIconSvg/FilterIconSvg";
+import { AllLabels } from "./AllLabels/AllLabels";
+import { FilterSection } from "./FilterSection/FilterSection";
+import { AlertToast } from "../Alerts/AlertToast";
 
 const NewNote = () => {
   const {
@@ -41,11 +43,11 @@ const NewNote = () => {
   const { newInputTitle, showInput, tempLabels, allLabels } = state;
 
   const {
-    alertState: { emptyNoteError, emptyLabelError, unSavedError },
+    alertState: { unSavedError },
     alertDispatch,
   } = useAlert();
 
-  const { darkTheme } = useTheme();
+  const { theme } = useTheme();
   const { addNoteOnServer, updateNoteOnServer } = useAxiosCalls();
   const { auth } = useAuth();
   const {
@@ -104,14 +106,14 @@ const NewNote = () => {
       newNote.title.trim() === "" &&
       (noteText === "" || noteText === "<p><br></p>")
     ) {
-      alertDispatch({ type: "emptyNoteError" });
+      AlertToast("error", "Input cannot be blank, try again.");
     } else {
       if (editNote) {
         updateNoteOnServer(updateNoteConfig);
         alertDispatch({ type: "alertNoteEdited" });
       } else {
         addNoteOnServer(newNoteConfig);
-        alertDispatch({ type: "alertNewAdded" });
+        AlertToast("success", "New Note added");
       }
     }
     dispatch({ type: "addLabelToAllLabels", payload: tempLabels });
@@ -155,19 +157,18 @@ const NewNote = () => {
   };
 
   const showColorPaletteHandler = () => {
-    setShowColor(true);
+    setShowColor((show) => !show);
+    setShowLabel(false);
   };
 
-  const hideColorPaletteHandler = () => {
+  const hidePaletteLabelHandler = () => {
     setShowColor(false);
+    setShowLabel(false);
   };
 
   const showLabelInputHandler = () => {
-    setShowLabel(true);
-  };
-
-  const hideLabelInputHandler = () => {
-    setShowLabel(false);
+    setShowLabel((show) => !show);
+    setShowColor(false);
   };
 
   const onFilterToggle = () => {
@@ -186,7 +187,7 @@ const NewNote = () => {
   // unsaved alert - save handler
   const unsavedAlertSaveHandler = () => {
     alertDispatch({ type: "noteSavedAlert" });
-    dispatch({ type: "noteSavedAlert" });
+    AlertToast("info", "Note Saved");
     onSubmitHandler();
     setEditModal(false);
   };
@@ -222,245 +223,161 @@ const NewNote = () => {
     dispatch({ type: "removeLabel", payload: label });
   };
 
-  const darkThemeClass = darkTheme
-    ? "new-note-input card-shadow-two dark-mode-new-note"
-    : "new-note-input card-shadow-two";
-
-  const darkThemeEditor = darkTheme
-    ? "text-editor dark-mode-new-note"
-    : "text-editor ";
+  const filterIconColor =
+    theme === "dark" ? (noteColor ? "black" : "white") : "black";
 
   return (
-    <>
-      <div className="new-note-main-container">
-        <div
-          className={darkThemeClass}
-          style={{ backgroundColor: editModal ? "" : noteColor }}
-        >
-          {emptyNoteError && (
-            <NoteAlert
-              alert="alert-error"
-              icon="fas fa-exclamation-circle alert-icon"
-              text="Input cannot be blank, try again."
-              dispatchType="hideEmptyNoteError"
-            />
-          )}
-          {emptyLabelError && (
-            <NoteAlert
-              alert="alert-error"
-              icon="fas fa-exclamation-circle alert-icon"
-              text="Label cannot be blank, try again."
-              dispatchType="hideEmptyLabelError"
-            />
-          )}
-          {unSavedError && (
-            <div className="alert-warning-btn">
-              <div className="alert-text">
-                <i className="fas fa-exclamation-triangle alert-icon"></i>
-                <span className="p-md">You have unsaved note! </span>
-              </div>
-              <ButtonSimple
-                onClick={unsavedAlertSaveHandler}
-                btnClassName="btn secondary-text-btn-sm mg-2-lt"
-                label="Save"
-              />
-              <ButtonSimple
-                onClick={unsavedAlertDeleteHandler}
-                btnClassName="btn secondary-text-btn-sm"
-                label="Delete"
-              />
+    <div className="new-note-main-container">
+      <div
+        className="new-note-input"
+        style={{
+          backgroundColor: editModal ? "" : noteColor,
+        }}
+      >
+        {unSavedError && (
+          <div className="alert-warning-btn">
+            <div className="alert-text">
+              <i className="fas fa-exclamation-triangle alert-icon"></i>
+              <span className="p-md">You have unsaved note! </span>
             </div>
-          )}
-          <div className="new-note-top-section">
-            <input
-              type="text"
-              placeholder={newInputTitle}
-              onMouseDownCapture={clickOnNewNoteHandler}
-              onChange={newInputOnChangeHandler}
-              name="title"
-              autoComplete="off"
-              value={editModal ? "" : newNote.title}
-              style={{
-                backgroundColor: editModal ? "" : noteColor,
-                color: darkTheme ? "#0f96df" : "#333",
-              }}
+            <ButtonSimple
+              onClick={unsavedAlertSaveHandler}
+              btnClassName="btn secondary-text-btn-sm mg-2-lt"
+              label="Save"
             />
-            <img
-              src={filterIcon}
-              alt="icon"
-              className="filter-icon"
-              onClick={onFilterToggle}
+            <ButtonSimple
+              onClick={unsavedAlertDeleteHandler}
+              btnClassName="btn secondary-text-btn-sm"
+              label="Delete"
             />
           </div>
-          {showInput && (
-            <div
-              className="new-note-bottom-section"
-              onClick={() => {
-                setShowFilter(false);
-              }}
-            >
-              <div className="rich-text-editor">
-                <ReactQuill
-                  modules={modules}
-                  value={noteText}
-                  placeholder="Take a note..."
-                  onChange={setNoteText}
-                  className={darkThemeEditor}
+        )}
+        <div className="new-note-top-section">
+          <input
+            type="text"
+            placeholder={newInputTitle}
+            onMouseDownCapture={clickOnNewNoteHandler}
+            onChange={newInputOnChangeHandler}
+            name="title"
+            autoComplete="off"
+            value={editModal ? "" : newNote.title}
+            style={{
+              backgroundColor: editModal ? "" : noteColor,
+              color: noteColor ? "black" : "",
+            }}
+          />
+          <FilterIconSvg
+            onFilterToggle={onFilterToggle}
+            filterIconColor={filterIconColor}
+          />
+        </div>
+        {showInput && (
+          <div
+            className="new-note-bottom-section"
+            onClick={() => {
+              setShowFilter(false);
+            }}
+          >
+            <div className="rich-text-editor">
+              <ReactQuill
+                modules={modules}
+                value={noteText}
+                placeholder="Take a note..."
+                onChange={setNoteText}
+                className="text-editor"
+                style={{
+                  backgroundColor: noteColor,
+                  color: noteColor ? "black" : "",
+                }}
+              />
+            </div>
+            <div className="new-note-nav-btn">
+              <div
+                className="note-nav-btn-left"
+                onMouseLeave={hidePaletteLabelHandler}
+              >
+                <div>
+                  <button
+                    onClick={showColorPaletteHandler}
+                    className="btn icon-btn-sm"
+                  >
+                    <i className="fas fa-palette"></i>
+                  </button>
+                  {showColor && <ColorPicker setter={setNoteColor} />}
+                </div>
+                <div className="flex-row-center pd-point6-all">
+                  <img
+                    onClick={showLabelInputHandler}
+                    src={labelIcon}
+                    alt="label-icon"
+                    className="nav-icons"
+                  />
+                  {showLabel && <NoteLabel />}
+                </div>
+                <h2
                   style={{
-                    backgroundColor: noteColor,
+                    color: noteColor ? "black" : "",
                   }}
+                >
+                  {newNote.date}
+                </h2>
+                <div className="set-priority">
+                  <p
+                    style={{
+                      color: noteColor ? "black" : "",
+                    }}
+                  >
+                    Priority
+                  </p>
+                  <select
+                    onChange={selectPriorityHandler}
+                    value={newNote.priority}
+                    style={{ color: noteColor ? "black" : "" }}
+                  >
+                    <option>Low</option>
+                    <option>High</option>
+                  </select>
+                </div>
+              </div>
+              <div className="note-nav-btn-right">
+                <ButtonIcon
+                  onClick={onSubmitHandler}
+                  btnClassName="btn icon-btn-lg"
+                  icon="fas fa-plus-circle"
+                />
+                <ButtonIcon
+                  onClick={clickOnCloseNewNote}
+                  btnClassName="btn icon-btn-lg"
+                  icon="fas fa-times"
                 />
               </div>
-              <div className="new-note-nav-btn">
-                <div className="note-nav-btn-left">
-                  <div onMouseLeave={hideColorPaletteHandler}>
-                    <button
-                      onMouseEnter={showColorPaletteHandler}
-                      className="btn icon-btn-sm"
-                    >
-                      <i className="fas fa-palette"></i>
-                    </button>
-                    {showColor && <ColorPicker setter={setNoteColor} />}
-                  </div>
-                  <div
-                    className="flex-row-center"
-                    onMouseLeave={hideLabelInputHandler}
-                  >
-                    <img
-                      onMouseEnter={showLabelInputHandler}
-                      src={labelIcon}
-                      alt="label-icon"
-                      className="nav-icons"
-                    />
-                    {showLabel && <NoteLabel />}
-                  </div>
-                  <h2 style={{ color: darkTheme ? "#0f96df" : "#333" }}>
-                    {newNote.date}
-                  </h2>
-                  <div className="set-priority">
-                    <p style={{ color: darkTheme ? "#0f96df" : "#333" }}>
-                      Priority
-                    </p>
-                    <select
-                      onChange={selectPriorityHandler}
-                      value={newNote.priority}
-                    >
-                      <option>Low</option>
-                      <option>High</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="note-nav-btn-right">
-                  <ButtonIcon
-                    onClick={onSubmitHandler}
-                    btnClassName="btn icon-btn-lg"
-                    icon="fas fa-plus-circle"
-                  />
-                  <ButtonIcon
-                    onClick={clickOnCloseNewNote}
-                    btnClassName="btn icon-btn-lg"
-                    icon="fas fa-times"
-                  />
-                </div>
-              </div>
             </div>
-          )}
-        </div>
-        {showFilter && (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-            className="new-note-label filter-section card-shadow-two"
-            style={{
-              backgroundColor: editModal ? "" : noteColor,
-              border: darkTheme ? "1px solid #0f96df" : "",
-            }}
-          >
-            <div>
-              <p style={{ color: darkTheme ? "#0f96df" : "#333" }}>Date</p>
-              <select
-                onChange={onSortByDate}
-                value={sortByDate}
-                style={{
-                  backgroundColor: darkTheme ? (noteColor ? "" : "#333") : "",
-                  color: darkTheme ? (noteColor ? "#000" : "#fff") : "",
-                }}
-              >
-                <option>All</option>
-                <option>New First</option>
-                <option>Old First</option>
-              </select>
-            </div>
-            <div>
-              <p style={{ color: darkTheme ? "#0f96df" : "#333" }}>Priority</p>
-              <select
-                onChange={onSortByPriority}
-                value={sortByPriority}
-                style={{
-                  backgroundColor: darkTheme ? (noteColor ? "" : "#333") : "",
-                  color: darkTheme ? (noteColor ? "#000" : "#fff") : "",
-                }}
-              >
-                <option>All</option>
-                <option>Low</option>
-                <option>High</option>
-              </select>
-            </div>
-            <div>
-              <p style={{ color: darkTheme ? "#0f96df" : "#333" }}>Label</p>
-              <select
-                onChange={onSortByLabel}
-                value={selectedLabel}
-                style={{
-                  backgroundColor: darkTheme ? (noteColor ? "" : "#333") : "",
-                  color: darkTheme ? (noteColor ? "#000" : "#fff") : "",
-                }}
-              >
-                {allLabels.map((label, index) => {
-                  return (
-                    <option key={index} className="single-label">
-                      {label}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <button
-              onClick={onResetFilterHandler}
-              className="btn secondary-text-btn-sm"
-              type="reset"
-            >
-              Reset Filter
-            </button>
-          </form>
-        )}
-        {tempLabels.length > 0 ? (
-          <div
-            className="new-note-label card-shadow-two"
-            style={{
-              backgroundColor: editModal ? "" : noteColor,
-              border: darkTheme ? "1px solid #0f96df" : "",
-            }}
-          >
-            <p style={{ color: darkTheme ? "#0f96df" : "#333" }}>Labels: </p>
-            {tempLabels.map((label, index) => {
-              return (
-                <div key={index} className="single-label">
-                  <li>{label}</li>
-                  <i
-                    className="fas fa-times"
-                    onClick={() => {
-                      removeLabelsHandler(label);
-                    }}
-                  ></i>
-                </div>
-              );
-            })}
           </div>
-        ) : null}
+        )}
       </div>
-    </>
+      {showFilter && (
+        <FilterSection
+          editModal={editModal}
+          noteColor={noteColor}
+          onSortByDate={onSortByDate}
+          sortByDate={sortByDate}
+          onSortByPriority={onSortByPriority}
+          sortByPriority={sortByPriority}
+          onSortByLabel={onSortByLabel}
+          selectedLabel={selectedLabel}
+          allLabels={allLabels}
+          onResetFilterHandler={onResetFilterHandler}
+        />
+      )}
+      {tempLabels.length > 0 ? (
+        <AllLabels
+          editModal={editModal}
+          noteColor={noteColor}
+          tempLabels={tempLabels}
+          removeLabelsHandler={removeLabelsHandler}
+        />
+      ) : null}
+    </div>
   );
 };
 

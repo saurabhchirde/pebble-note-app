@@ -1,7 +1,7 @@
-import Note from "../../Components/Note/Note";
-import { usePebbleNote } from "../../Context/Notes/NoteProvider";
+import Note from "Components/Note/Note";
+import { usePebbleNote } from "Context/Notes/NoteProvider";
 import "./LabelPage.css";
-import labelIcon from "../../Data/Images/Icons/label.svg";
+import labelIcon from "Data/Images/Icons/label.svg";
 
 const LabelPage = () => {
   const {

@@ -3,15 +3,25 @@ import axios from "axios";
 import { useModal, useAuth, usePebbleNote } from "../index";
 import { useNavigate } from "react-router-dom";
 import { useAnimation } from "../Animation/AnimationProvider";
+import { AlertToast } from "Components/Alerts/AlertToast";
+import Login from "Components/UI/Modal/Login";
+import Signup from "Components/UI/Modal/Signup";
+import SignupAlertModal from "Components/UI/Modal/SignupAlertModal";
+import EditNoteModal from "Components/UI/Modal/EditNoteModal";
 
 const axiosContext = createContext(null);
 
 const AxiosCallProvider = ({ children }) => {
-  const { dispatch } = usePebbleNote();
+  const { dispatch, editModal } = usePebbleNote();
   const { showLoader } = useAnimation();
 
-  const { setAlert, setShowAlert, setShowLogin, setShowSignupAlert } =
-    useModal();
+  const {
+    showLogin,
+    showSignup,
+    showSignupAlert,
+    setShowLogin,
+    setShowSignupAlert,
+  } = useModal();
   const { authDispatch } = useAuth();
   const navigate = useNavigate();
 
@@ -23,7 +33,8 @@ const AxiosCallProvider = ({ children }) => {
       showLoader();
       const response = await axios.post(url, data);
       if (response.status === 200) {
-        setAlert(
+        AlertToast(
+          "success",
           `Welcome back ${response.data.foundUser.firstName} ${response.data.foundUser.lastName}`
         );
         //save login credentials
@@ -38,19 +49,16 @@ const AxiosCallProvider = ({ children }) => {
         });
 
         showLoader();
-        setShowAlert(true);
         setShowLogin(false);
         navigate("/home");
       }
       if (response.status === 201) {
-        setAlert("Invalid Password, Try Again");
+        AlertToast("error", "Invalid Password, Try Again");
         showLoader();
-        setShowAlert(true);
       }
     } catch (error) {
-      setAlert(error.response.data.errors);
+      AlertToast("error", error.response.data.errors);
       showLoader();
-      setShowAlert(true);
     }
   };
 
@@ -66,9 +74,8 @@ const AxiosCallProvider = ({ children }) => {
       }
       showLoader();
     } catch (error) {
-      setAlert(error.response.data.errors);
+      AlertToast("error", error.response.data.errors);
       showLoader();
-      setShowAlert(true);
     }
   };
 
@@ -83,9 +90,8 @@ const AxiosCallProvider = ({ children }) => {
       dispatch({ type: "notesAfterAddingNew", payload: res.data.notes });
       showLoader();
     } catch (error) {
-      setAlert(error.response.data.errors);
+      AlertToast("error", error.response.data.errors);
       showLoader();
-      setShowAlert(true);
     }
   };
 
@@ -97,12 +103,11 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.post(url, body, headers);
       //update after adding note
       dispatch({ type: "notesAfterUpdating", payload: res.data.notes });
+      AlertToast("info", "Note updated");
       showLoader();
-      console.log("after update notes", res.data.notes);
     } catch (error) {
-      setAlert(error.response.data.errors);
+      AlertToast("error", error.response.data.errors);
       showLoader();
-      setShowAlert(true);
     }
   };
 
@@ -115,11 +120,11 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.delete(url, headers);
       //update after deleting note
       dispatch({ type: "notesAfterDelete", payload: res.data.notes });
+      AlertToast("success", "Note Deleted");
       showLoader();
     } catch (error) {
-      setAlert(error.response.data.errors);
+      AlertToast("error", error.response.data.errors);
       showLoader();
-      setShowAlert(true);
     }
   };
 
@@ -131,11 +136,11 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.post(url, body, headers);
       //update after archiving note
       dispatch({ type: "notesAfterArchive", payload: res.data });
+      AlertToast("success", "Note Archieved");
       showLoader();
     } catch (error) {
-      setAlert(error.response.data.errors);
+      AlertToast("error", error.response.data.errors);
       showLoader();
-      setShowAlert(true);
     }
   };
 
@@ -148,11 +153,11 @@ const AxiosCallProvider = ({ children }) => {
       const res = await axios.post(url, {}, headers);
       //update after un-archiving note
       dispatch({ type: "notesAfterUnArchive", payload: res.data });
+      AlertToast("info", "Moved to all notes");
       showLoader();
     } catch (error) {
-      setAlert(error.response.data.errors);
+      AlertToast("error", error.response.data.errors);
       showLoader();
-      setShowAlert(true);
     }
   };
 
@@ -168,6 +173,10 @@ const AxiosCallProvider = ({ children }) => {
         restoreArchiveFromServer,
       }}
     >
+      {showLogin && <Login />}
+      {showSignup && <Signup />}
+      {showSignupAlert && <SignupAlertModal />}
+      {editModal && <EditNoteModal />}
       {children}
     </axiosContext.Provider>
   );

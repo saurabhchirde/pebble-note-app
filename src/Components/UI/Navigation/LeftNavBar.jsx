@@ -1,27 +1,20 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./LeftNavBar.css";
-import noteIcon from "../../../Data/Images/Logo/logo-icon.svg";
-import {
-  archiveIcon,
-  labelIcon,
-  trashIcon,
-  userIcon,
-} from "../../../Data/Images/Icons";
-import { useAuth, useModal, useTheme } from "../../../Context";
+import noteIcon from "Data/Images/Logo/logo-icon.svg";
+import { archiveIcon, labelIcon, trashIcon, userIcon } from "Data/Images/Icons";
+import { useAuth } from "Context";
 import ButtonIcon from "../Button/ButtonIcon";
+import { AlertToast } from "../../Alerts/AlertToast";
 
 const LeftNavBar = () => {
-  const { darkTheme } = useTheme();
   const { pathname } = useLocation();
   const { auth, authDispatch } = useAuth();
   const { user } = auth;
-  const { setAlert, setShowAlert } = useModal();
   const navigate = useNavigate();
 
   const logOutClickHandler = () => {
     authDispatch({ type: "logout" });
-    setAlert("Logout Successfully");
-    setShowAlert(true);
+    AlertToast("info", "Logout Successfully");
     navigate("/");
   };
 
@@ -31,12 +24,8 @@ const LeftNavBar = () => {
   const activeTrash = pathname === "/trash" ? "activeNav" : "";
   const activeProfile = pathname === "/profile" ? "activeNav" : "";
 
-  const navBarClass = darkTheme
-    ? "left-nav-div bg-dark"
-    : "left-nav-div bg-white";
-
   return (
-    <div className={navBarClass}>
+    <div className="left-nav-div">
       <ul>
         <Link to="/home">
           <li className={activeHome}>

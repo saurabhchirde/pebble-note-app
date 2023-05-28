@@ -5,3 +5,20 @@
 .signin-modal form {
   width: 18rem;
 }
+
+.test-button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-bottom: 10px;
+}
+
+.test-button button {
+  margin: 0 1px;
+}
+
+.create-account-btn h2 {
+  font-size: 0.9rem;
+  margin-top: 10px;
+  font-weight: 500;
+}

@@ -85,7 +85,6 @@ const noteReducer = (state, action) => {
 
     // after adding notes
     case "notesAfterAddingNew":
-      console.log("after adding note", action.payload);
       return {
         ...state,
         allNotes: [...action.payload],

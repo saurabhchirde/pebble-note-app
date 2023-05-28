@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import ButtonSimple from "../../Components/UI/Button/ButtonSimple";
-import { useAuth } from "../../Context";
+import ButtonSimple from "Components/UI/Button/ButtonSimple";
+import { useAuth } from "Context";
 import "./NotFound.css";
 
 const NotFound = () => {
