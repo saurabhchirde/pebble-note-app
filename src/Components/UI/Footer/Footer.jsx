@@ -5,7 +5,7 @@ export const Footer = () => {
       <h3>
         made with ❤️ by
         <a
-          href="https://twitter.com/SaurabhChirde"
+          href="https://saurabhchirde.com"
           target="_blank"
           className="footer-title"
         >
