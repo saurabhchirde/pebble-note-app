@@ -6,21 +6,17 @@
 
 <img src="https://user-images.githubusercontent.com/92800463/162270499-993891c3-0498-4d73-a0cf-e5d9349f69b8.svg" width="500px" height="auto" alt="logo" />
 
-
-
 ## Demo
 
 ### Link
 
-[Pebble Note](https://pebblenote.netlify.app/)
+[Pebble Note](https://note.saurabhchirde.com/)
 
 ![161397883-ada7bb33-30d3-431c-8cdb-98452f603628](https://user-images.githubusercontent.com/92800463/162272744-db089563-e3e1-4865-8a0d-f6c1b769575a.gif)
 
 Filter Notes -
 
 ![161713434-27b3e087-7b91-4a56-b031-2c7b6b5bbbcd](https://user-images.githubusercontent.com/92800463/162271670-0d3985a1-a6dc-42ae-b9b6-4535736cf174.gif)
-
-
 
 ## Features
 
@@ -35,7 +31,7 @@ Filter Notes -
 - Delete Note
 - Edit Note
 - Filter Notes by Date, priority,and labels
-- User Account Page 
+- User Account Page
 
 ## Tech Stack
 
